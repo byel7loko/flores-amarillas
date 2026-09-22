@@ -1,13 +1,12 @@
-:root {
-  --black: #030200;
-  --black-2: #090601;
-  --gold: #ffd52f;
-  --gold-light: #fff19a;
-  --gold-dark: #b47b00;
-  --green: #173515;
-  --green-2: #28551e;
-  --white: #fffde9;
-}
+/* =========================================================
+   🌻 FELIZ DÍA DE LAS FLORES AMARILLAS
+   GALAXIA INTERACTIVA + JARDÍN + CARTA
+========================================================= */
+
+
+/* =========================================================
+   RESET / BASE
+========================================================= */
 
 * {
   box-sizing: border-box;
@@ -15,23 +14,22 @@
 
 html,
 body {
-  margin: 0;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  min-height: 100svh;
   overflow: hidden;
-  background: #020100;
-  color: var(--white);
+
+  background: #010200;
+
+  color: #fff7bd;
+
   font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
+    Arial,
+    Helvetica,
     sans-serif;
 }
 
@@ -39,1622 +37,519 @@ button {
   font: inherit;
 }
 
-/* =========================
-   ESCENA
-========================= */
+button:focus-visible {
+  outline:
+    2px solid
+    rgba(255, 221, 70, .9);
+
+  outline-offset: 4px;
+}
+
+
+/* =========================================================
+   ESCENA PRINCIPAL
+========================================================= */
 
 .scene {
+
   position: relative;
+
   width: 100%;
-  height: 100svh;
-  min-height: 600px;
+  height: 100vh;
+
+  height: 100dvh;
+
   overflow: hidden;
-  isolation: isolate;
 
-  background:
-    radial-gradient(
-      ellipse at 50% 30%,
-      rgba(100, 74, 8, 0.28),
-      transparent 38%
-    ),
-    radial-gradient(
-      ellipse at 50% 90%,
-      #17250b 0,
-      #070901 48%,
-      #020100 100%
-    );
+  background: #010200;
 }
 
-.scene::before {
-  content: "";
+
+/* =========================================================
+   FONDO GENERAL
+========================================================= */
+
+.stars {
+
   position: absolute;
+
   inset: 0;
-  z-index: 40;
+
+  z-index: 0;
+
   pointer-events: none;
 
   background:
+
     radial-gradient(
-      ellipse at center,
-      transparent 40%,
-      rgba(0, 0, 0, 0.2) 70%,
-      rgba(0, 0, 0, 0.75) 100%
-    );
-}
-
-/* =========================
-   ESTRELLAS
-========================= */
-
-.stars,
-.stars::before,
-.stars::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  pointer-events: none;
-
-  background-image:
-    radial-gradient(
-      circle,
-      rgba(255, 239, 139, 0.9) 0 1px,
-      transparent 1.7px
+      1px 1px at 8% 15%,
+      rgba(255,255,255,.9),
+      transparent 2px
     ),
+
     radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.7) 0 1px,
-      transparent 1.6px
+      1px 1px at 18% 72%,
+      rgba(255,240,150,.8),
+      transparent 2px
     ),
+
     radial-gradient(
-      circle,
-      rgba(255, 211, 54, 0.6) 0 1px,
-      transparent 1.5px
+      1px 1px at 31% 28%,
+      rgba(255,255,255,.8),
+      transparent 2px
+    ),
+
+    radial-gradient(
+      1px 1px at 48% 12%,
+      rgba(255,238,150,.8),
+      transparent 2px
+    ),
+
+    radial-gradient(
+      1px 1px at 66% 24%,
+      rgba(255,255,255,.8),
+      transparent 2px
+    ),
+
+    radial-gradient(
+      1px 1px at 81% 17%,
+      rgba(255,231,130,.8),
+      transparent 2px
+    ),
+
+    radial-gradient(
+      1px 1px at 92% 68%,
+      rgba(255,255,255,.7),
+      transparent 2px
+    ),
+
+    radial-gradient(
+      1px 1px at 74% 86%,
+      rgba(255,235,130,.7),
+      transparent 2px
     );
 
-  background-size:
-    100px 100px,
-    145px 145px,
-    190px 190px;
-
-  background-position:
-    15px 20px,
-    50px 80px,
-    90px 40px;
-
-  opacity: 0.3;
-  animation: starsMove 25s linear infinite;
+  animation:
+    starsTwinkle
+    5s
+    ease-in-out
+    infinite
+    alternate;
 }
 
-.stars::before {
-  transform: translateY(-40px);
-  opacity: 0.15;
-  animation-duration: 35s;
+
+@keyframes starsTwinkle {
+
+  from {
+    opacity: .55;
+  }
+
+  to {
+    opacity: 1;
+  }
+
 }
 
-.stars::after {
-  transform: translateY(40px);
-  opacity: 0.12;
-  animation-duration: 45s;
-}
 
-/* =========================
+/* =========================================================
    POLVO DORADO
-========================= */
+========================================================= */
 
 .gold-dust {
+
   position: absolute;
+
   inset: 0;
-  z-index: 2;
+
+  z-index: 1;
+
   pointer-events: none;
-  opacity: 0.6;
 
-  background-image:
-    radial-gradient(circle, #ffe873 0 1px, transparent 1.5px),
-    radial-gradient(circle, #ffca19 0 1px, transparent 1.4px);
+  opacity: .65;
 
-  background-size:
-    70px 80px,
-    120px 140px;
+  background:
 
-  animation: dustMove 18s linear infinite;
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(255,213,47,.18),
+      transparent 2px
+    ),
+
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(255,213,47,.16),
+      transparent 2px
+    ),
+
+    radial-gradient(
+      circle at 60% 70%,
+      rgba(255,213,47,.14),
+      transparent 2px
+    );
+
+  animation:
+    dustMove
+    9s
+    ease-in-out
+    infinite
+    alternate;
 }
 
-/* =========================
-   BRILLOS
-========================= */
+
+@keyframes dustMove {
+
+  from {
+    transform: translateY(0);
+    opacity: .4;
+  }
+
+  to {
+    transform: translateY(-18px);
+    opacity: .8;
+  }
+
+}
+
+
+/* =========================================================
+   RESPLANDORES
+========================================================= */
 
 .glow {
+
   position: absolute;
+
   border-radius: 50%;
-  filter: blur(60px);
+
   pointer-events: none;
+
+  filter: blur(60px);
+
   z-index: 1;
 }
 
+
 .glow-1 {
-  width: 65vw;
-  height: 65vw;
-  max-width: 550px;
-  max-height: 550px;
-  left: -25%;
-  top: -20%;
-  background: #d49d09;
-  opacity: 0.12;
+
+  width: 300px;
+  height: 300px;
+
+  left: -120px;
+  top: 20%;
+
+  background:
+    rgba(255,190,20,.08);
 }
+
 
 .glow-2 {
-  width: 60vw;
-  height: 60vw;
-  max-width: 500px;
-  max-height: 500px;
-  right: -25%;
-  bottom: -20%;
-  background: #8a6b09;
-  opacity: 0.1;
+
+  width: 350px;
+  height: 350px;
+
+  right: -150px;
+  top: 45%;
+
+  background:
+    rgba(255,215,50,.07);
 }
+
 
 .glow-3 {
-  width: 35vw;
-  height: 35vw;
-  max-width: 300px;
-  max-height: 300px;
-  left: 35%;
-  top: 40%;
-  background: #ffcf21;
-  opacity: 0.08;
+
+  width: 250px;
+  height: 250px;
+
+  left: 40%;
+  bottom: -130px;
+
+  background:
+    rgba(255,190,30,.08);
 }
 
-/* =========================
+
+/* =========================================================
    INTRO
-========================= */
+========================================================= */
 
 .intro {
+
   position: absolute;
+
   inset: 0;
+
   z-index: 100;
 
   display: flex;
-  align-items: center;
-  justify-content: center;
+
   flex-direction: column;
 
-  padding: 30px;
+  align-items: center;
+
+  justify-content: center;
+
   text-align: center;
 
+  padding: 30px;
+
+  background:
+
+    radial-gradient(
+      circle at 50% 52%,
+      rgba(255,196,25,.12),
+      transparent 28%
+    );
+
   transition:
-    opacity 0.9s ease,
-    transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity .9s ease,
+    visibility .9s ease;
 }
 
+
 .intro.hide {
+
   opacity: 0;
-  transform: scale(1.12);
+
+  visibility: hidden;
+
   pointer-events: none;
 }
 
+
 .intro-small {
-  margin: 0 0 10px;
-  color: var(--gold-light);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+
+  margin:
+    0 0 15px;
+
+  color:
+    rgba(255,221,88,.8);
+
+  font-size:
+    .72rem;
+
+  letter-spacing:
+    .25em;
+
 }
+
 
 .intro h1 {
-  margin: 0;
 
-  color: var(--white);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.4rem, 9vw, 5.5rem);
-  line-height: 0.96;
+  margin:
+    0;
+
+  color:
+    #ffd83d;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(
+      2.3rem,
+      8vw,
+      5rem
+    );
+
+  line-height:
+    1.05;
 
   text-shadow:
-    0 0 12px rgba(255, 213, 47, 0.2),
-    0 0 40px rgba(255, 213, 47, 0.12);
+
+    0 0 10px
+    rgba(255,211,47,.7),
+
+    0 0 30px
+    rgba(255,211,47,.35);
 }
+
 
 .intro > p:not(.intro-small):not(.hint) {
-  margin: 20px 0 28px;
-  max-width: 600px;
-  color: rgba(255, 241, 154, 0.8);
+
+  color:
+    rgba(255,242,185,.75);
+
+  margin:
+    20px 0 28px;
+
 }
 
-.hint {
-  margin-top: 15px;
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 0.75rem;
-}
 
-/* =========================
-   FLOR INICIAL
-========================= */
+/* =========================================================
+   FLOR DE INTRO
+========================================================= */
 
 .intro-flower {
+
   position: relative;
-  width: 72px;
-  height: 72px;
-  margin-bottom: 18px;
-  animation: introFlower 3s ease-in-out infinite;
+
+  width: 110px;
+  height: 110px;
+
+  margin-bottom: 20px;
+
+  animation:
+    introFlowerFloat
+    4s
+    ease-in-out
+    infinite;
 }
 
+
 .intro-flower span {
+
   position: absolute;
+
   left: 50%;
   top: 50%;
 
-  width: 34px;
-  height: 48px;
+  width: 38px;
+  height: 58px;
 
-  border-radius: 50% 50% 45% 45%;
+  border-radius:
+    50% 50% 45% 45%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(var(--r))
+    translateY(-25px);
 
   background:
     linear-gradient(
       180deg,
-      #fff29a 0%,
-      #ffca19 60%,
-      #d99a00 100%
+      #fff59c,
+      #ffd42f,
+      #e49b00
     );
 
-  transform-origin: 50% 100%;
-  box-shadow: 0 0 15px rgba(255, 210, 45, 0.3);
+  box-shadow:
+    0 0 10px
+    rgba(255,211,47,.35);
 }
 
+
 .intro-flower span:nth-child(1) {
-  transform: translate(-50%, -100%) rotate(0deg) translateY(-12px);
+  --r: 0deg;
 }
 
 .intro-flower span:nth-child(2) {
-  transform: translate(-50%, -100%) rotate(60deg) translateY(-12px);
+  --r: 60deg;
 }
 
 .intro-flower span:nth-child(3) {
-  transform: translate(-50%, -100%) rotate(120deg) translateY(-12px);
+  --r: 120deg;
 }
 
 .intro-flower span:nth-child(4) {
-  transform: translate(-50%, -100%) rotate(180deg) translateY(-12px);
+  --r: 180deg;
 }
 
 .intro-flower span:nth-child(5) {
-  transform: translate(-50%, -100%) rotate(240deg) translateY(-12px);
+  --r: 240deg;
 }
 
 .intro-flower span:nth-child(6) {
-  transform: translate(-50%, -100%) rotate(300deg) translateY(-12px);
+  --r: 300deg;
 }
+
 
 .intro-flower b {
+
   position: absolute;
+
   left: 50%;
   top: 50%;
 
-  width: 22px;
-  height: 22px;
+  width: 35px;
+  height: 35px;
 
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #ffd95a,
-      #a96800 65%,
-      #543000 100%
-    );
-
-  box-shadow:
-    0 0 10px rgba(255, 213, 47, 0.5),
-    0 0 25px rgba(255, 213, 47, 0.2);
-}
-
-/* =========================
-   BOTÓN ABRIR
-========================= */
-
-.open-button {
-  border: 0;
-  border-radius: 999px;
-
-  padding: 15px 26px;
-
-  color: #2a1a00;
-  background:
-    linear-gradient(
-      135deg,
-      #fff19a,
-      #ffd52f 45%,
-      #d99a00
-    );
-
-  font-weight: 800;
-  cursor: pointer;
-
-  box-shadow:
-    0 8px 25px rgba(0, 0, 0, 0.35),
-    0 0 25px rgba(255, 213, 47, 0.18);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.open-button:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.4),
-    0 0 35px rgba(255, 213, 47, 0.25);
-}
-
-.open-button:active {
-  transform: translateY(1px) scale(0.98);
-}
-
-/* =========================
-   JARDÍN
-========================= */
-
-.garden {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-
-  opacity: 0;
-  pointer-events: none;
-  overflow: hidden;
-
-  background:
-    radial-gradient(
-      ellipse at 50% 35%,
-      rgba(119, 87, 13, 0.18),
-      transparent 38%
-    ),
-    linear-gradient(
-      180deg,
-      #030403 0%,
-      #080a04 42%,
-      #111a08 72%,
-      #020301 100%
-    );
-
-  transition: opacity 1.2s ease;
-}
-
-.garden.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* =========================
-   LUNA
-========================= */
-
-.moon {
-  position: absolute;
-  z-index: 3;
-
-  width: clamp(70px, 12vw, 145px);
-  height: clamp(70px, 12vw, 145px);
-
-  right: 8%;
-  top: 7%;
+  transform:
+    translate(-50%, -50%);
 
   border-radius: 50%;
 
   background:
     radial-gradient(
       circle at 35% 30%,
-      #fffde9 0%,
-      #fff19a 45%,
-      #e9b91f 100%
+      #c4891a,
+      #583303 55%,
+      #170d01
     );
 
   box-shadow:
-    0 0 25px rgba(255, 241, 154, 0.4),
-    0 0 70px rgba(255, 213, 47, 0.15);
+    0 0 12px
+    rgba(255,213,47,.45);
 }
 
-.moon::after {
-  content: "";
-  position: absolute;
-  inset: 0;
 
-  border-radius: 50%;
+@keyframes introFlowerFloat {
 
-  background: #050604;
-
-  transform: translate(-24%, -3%);
-}
-
-/* =========================
-   RESPLANDOR CENTRAL
-========================= */
-
-.sun-glow {
-  position: absolute;
-  z-index: 1;
-
-  left: 50%;
-  top: 42%;
-
-  width: 70vw;
-  height: 70vw;
-  max-width: 600px;
-  max-height: 600px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255, 213, 47, 0.55) 0%,
-      rgba(255, 213, 47, 0.2) 35%,
-      transparent 70%
-    );
-
-  filter: blur(25px);
-
-  transform: translate(-50%, -50%);
-  animation: breathingGlow 5s ease-in-out infinite;
-}
-
-/* =========================
-   MENSAJE PRINCIPAL
-========================= */
-
-.hero-message {
-  position: absolute;
-  z-index: 10;
-
-  left: 50%;
-  top: 14%;
-
-  width: min(92vw, 650px);
-
-  text-align: center;
-
-  transform: translateX(-50%);
-  animation: heroAppear 1.5s ease both;
-}
-
-.hero-kicker {
-  margin-bottom: 10px;
-
-  color: var(--gold-light);
-
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-}
-
-.hero-message h2 {
-  margin: 0;
-
-  color: var(--white);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.2rem, 8vw, 4.6rem);
-  line-height: 0.98;
-
-  text-shadow:
-    0 0 20px rgba(255, 213, 47, 0.2),
-    0 0 45px rgba(255, 213, 47, 0.1);
-}
-
-.hero-message h2 strong {
-  color: var(--gold);
-}
-
-.hero-message p {
-  margin: 15px auto 0;
-  max-width: 520px;
-
-  color: rgba(255, 253, 233, 0.7);
-  font-size: 0.95rem;
-}
-
-/* =========================
-   TEXTOS FLOTANTES
-========================= */
-
-.floating-text {
-  position: absolute;
-  z-index: 8;
-
-  color: rgba(255, 241, 154, 0.55);
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 0.78rem;
-
-  pointer-events: none;
-
-  animation: floatText 4s ease-in-out infinite alternate;
-}
-
-.text-1 {
-  left: 6%;
-  top: 30%;
-}
-
-.text-2 {
-  right: 6%;
-  top: 27%;
-  animation-delay: -1s;
-}
-
-.text-3 {
-  left: 8%;
-  top: 48%;
-  animation-delay: -2s;
-}
-
-.text-4 {
-  right: 5%;
-  top: 45%;
-  animation-delay: -3s;
-}
-
-.text-5 {
-  left: 16%;
-  top: 61%;
-  animation-delay: -1.5s;
-}
-
-.text-6 {
-  right: 10%;
-  top: 65%;
-  animation-delay: -2.5s;
-}
-
-.text-7 {
-  left: 35%;
-  top: 76%;
-  animation-delay: -3.5s;
-}
-
-.text-8 {
-  right: 27%;
-  top: 34%;
-  opacity: 0.5;
-}
-
-/* =========================
-   CORAZÓN
-========================= */
-
-.heart {
-  position: absolute;
-  z-index: 9;
-
-  left: 50%;
-  top: 53%;
-
-  width: 135px;
-  height: 125px;
-
-  transform: translate(-50%, -50%) rotate(-45deg);
-
-  animation: heartBeat 2.8s ease-in-out infinite;
-
-  filter:
-    drop-shadow(0 0 12px rgba(255, 213, 47, 0.5))
-    drop-shadow(0 0 35px rgba(255, 213, 47, 0.18));
-}
-
-.heart::before,
-.heart::after {
-  content: "";
-  position: absolute;
-
-  width: 135px;
-  height: 125px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at 50% 35%,
-      #fff19a 0%,
-      #ffd52f 35%,
-      #c58a00 75%,
-      #6c4300 100%
-    );
-}
-
-.heart::before {
-  top: -62px;
-  left: 0;
-}
-
-.heart::after {
-  top: 0;
-  left: 62px;
-}
-
-.heart {
-  background:
-    radial-gradient(
-      circle at 35% 35%,
-      #fff19a 0%,
-      #ffd52f 35%,
-      #c58a00 75%,
-      #6c4300 100%
-    );
-}
-
-/* =========================
-   PARTÍCULAS DEL CORAZÓN
-========================= */
-
-.heart-particles {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.heart-particles p {
-  position: absolute;
-
-  width: 5px;
-  height: 5px;
-
-  margin: 0;
-
-  border-radius: 50%;
-
-  background: var(--gold-light);
-
-  box-shadow:
-    0 0 8px var(--gold),
-    0 0 15px rgba(255, 213, 47, 0.5);
-
-  animation: heartSpark 1.8s ease-in-out infinite alternate;
-}
-
-.heart-particles p:nth-child(1) {
-  left: 20%;
-  top: 30%;
-}
-
-.heart-particles p:nth-child(2) {
-  left: 80%;
-  top: 25%;
-  animation-delay: -0.3s;
-}
-
-.heart-particles p:nth-child(3) {
-  left: 10%;
-  top: 50%;
-  animation-delay: -0.6s;
-}
-
-.heart-particles p:nth-child(4) {
-  left: 90%;
-  top: 48%;
-  animation-delay: -0.9s;
-}
-
-.heart-particles p:nth-child(5) {
-  left: 25%;
-  top: 65%;
-  animation-delay: -1.2s;
-}
-
-.heart-particles p:nth-child(6) {
-  left: 75%;
-  top: 70%;
-  animation-delay: -1.5s;
-}
-
-.heart-particles p:nth-child(7) {
-  left: 40%;
-  top: 18%;
-  animation-delay: -0.4s;
-}
-
-.heart-particles p:nth-child(8) {
-  left: 60%;
-  top: 16%;
-  animation-delay: -0.8s;
-}
-
-.heart-particles p:nth-child(9) {
-  left: 15%;
-  top: 78%;
-  animation-delay: -1.1s;
-}
-
-.heart-particles p:nth-child(10) {
-  left: 85%;
-  top: 80%;
-  animation-delay: -1.4s;
-}
-
-.heart-particles p:nth-child(11) {
-  left: 48%;
-  top: 82%;
-  animation-delay: -0.7s;
-}
-
-.heart-particles p:nth-child(12) {
-  left: 52%;
-  top: 8%;
-  animation-delay: -1.7s;
-}
-
-/* =========================
-   SUELO
-========================= */
-
-.ground {
-  position: absolute;
-  z-index: 6;
-
-  left: -15%;
-  right: -15%;
-  bottom: -15%;
-
-  height: 45%;
-
-  border-radius: 50% 50% 0 0;
-
-  background:
-    radial-gradient(
-      ellipse at 50% 20%,
-      #28551e 0%,
-      #173515 45%,
-      #071005 75%,
-      #020301 100%
-    );
-
-  filter: blur(1px);
-}
-
-/* =========================
-   FLORES
-========================= */
-
-.flowers,
-.petals,
-.fireflies {
-  position: absolute;
-  inset: 0;
-
-  pointer-events: none;
-}
-
-.flower {
-  position: absolute;
-
-  left: var(--left);
-  bottom: 0;
-
-  width: 90px;
-  height: 180px;
-
-  transform-origin: bottom center;
-
-  animation:
-    grow 1.8s cubic-bezier(0.2, 0.8, 0.2, 1)
-    var(--delay)
-    both;
-}
-
-.flower .stem {
-  position: absolute;
-
-  left: 50%;
-  bottom: 0;
-
-  width: 5px;
-  height: 120px;
-
-  border-radius: 999px;
-
-  background:
-    linear-gradient(
-      90deg,
-      #10250e,
-      #28551e,
-      #10250e
-    );
-
-  transform: translateX(-50%);
-}
-
-.flower .leaf {
-  position: absolute;
-
-  width: 55px;
-  height: 25px;
-
-  border-radius: 100% 0 100% 0;
-
-  background:
-    linear-gradient(
-      135deg,
-      #356f25,
-      #173515
-    );
-
-  transform-origin: right center;
-}
-
-.flower .leaf.left {
-  left: -2px;
-  bottom: 55px;
-  transform: rotate(25deg);
-}
-
-.flower .leaf.right {
-  right: -2px;
-  bottom: 85px;
-  transform: scaleX(-1) rotate(25deg);
-}
-
-.flower .head {
-  position: absolute;
-
-  left: 50%;
-  bottom: 104px;
-
-  width: 70px;
-  height: 70px;
-
-  transform: translateX(-50%);
-
-  transform-origin: center bottom;
-}
-
-.flower .petal {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 32px;
-  height: 48px;
-
-  border-radius: 50%;
-
-  background:
-    linear-gradient(
-      180deg,
-      #fff19a,
-      #ffd52f 55%,
-      #b47b00
-    );
-
-  transform-origin: 50% 90%;
-}
-
-.flower .petal:nth-child(1) {
-  transform: translate(-50%, -90%) rotate(0deg) translateY(-7px);
-}
-
-.flower .petal:nth-child(2) {
-  transform: translate(-50%, -90%) rotate(60deg) translateY(-7px);
-}
-
-.flower .petal:nth-child(3) {
-  transform: translate(-50%, -90%) rotate(120deg) translateY(-7px);
-}
-
-.flower .petal:nth-child(4) {
-  transform: translate(-50%, -90%) rotate(180deg) translateY(-7px);
-}
-
-.flower .petal:nth-child(5) {
-  transform: translate(-50%, -90%) rotate(240deg) translateY(-7px);
-}
-
-.flower .petal:nth-child(6) {
-  transform: translate(-50%, -90%) rotate(300deg) translateY(-7px);
-}
-
-.flower .center {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 25px;
-  height: 25px;
-
-  border-radius: 50%;
-
-  transform: translate(-50%, -50%);
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #fff19a,
-      #b47b00 70%,
-      #533200 100%
-    );
-
-  box-shadow:
-    0 0 12px rgba(255, 213, 47, 0.45);
-}
-
-/* =========================
-   PÉTALOS FLOTANTES
-========================= */
-
-.petal-float {
-  position: absolute;
-
-  left: var(--left);
-  top: -10%;
-
-  width: var(--size, 12px);
-  height: var(--size, 18px);
-
-  border-radius: 70% 30% 70% 30%;
-
-  background:
-    linear-gradient(
-      135deg,
-      #fff19a,
-      #ffd52f,
-      #b47b00
-    );
-
-  opacity: 0.7;
-
-  animation:
-    fall var(--duration, 12s)
-    linear infinite;
-
-  animation-delay: var(--delay, 0s);
-}
-
-/* =========================
-   LUCIÉRNAGAS
-========================= */
-
-.firefly {
-  position: absolute;
-
-  left: var(--left);
-  top: var(--top);
-
-  width: 5px;
-  height: 5px;
-
-  border-radius: 50%;
-
-  background: var(--gold-light);
-
-  box-shadow:
-    0 0 7px var(--gold),
-    0 0 15px rgba(255, 213, 47, 0.55);
-
-  animation:
-    twinkle 1.8s ease-in-out
-    infinite alternate;
-
-  animation-delay: var(--delay, 0s);
-}
-
-/* =========================
-   BOTÓN DE CARTA
-========================= */
-
-.letter-button {
-  position: absolute;
-  z-index: 50;
-
-  right: 20px;
-  bottom: 50px;
-
-  width: 56px;
-  height: 56px;
-
-  border: 1px solid rgba(255, 241, 154, 0.7);
-  border-radius: 50%;
-
-  color: #2a1a00;
-
-  background:
-    linear-gradient(
-      135deg,
-      #fff19a,
-      #ffd52f 55%,
-      #b47b00
-    );
-
-  cursor: pointer;
-
-  box-shadow:
-    0 0 18px rgba(255, 213, 47, 0.3),
-    0 8px 25px rgba(0, 0, 0, 0.35);
-
-  animation: buttonFloat 3s ease-in-out infinite;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.letter-button:hover {
-  transform: scale(1.06);
-  box-shadow:
-    0 0 28px rgba(255, 213, 47, 0.4),
-    0 8px 30px rgba(0, 0, 0, 0.4);
-}
-
-.letter-button:active {
-  transform: scale(0.95);
-}
-
-/* =========================
-   OVERLAY DE CARTA
-========================= */
-
-.letter-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 20px;
-
-  background: rgba(0, 0, 0, 0.72);
-  backdrop-filter: blur(8px);
-
-  opacity: 0;
-  pointer-events: none;
-
-  transition: opacity 0.4s ease;
-}
-
-.letter-overlay.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* =========================
-   CARTA
-========================= */
-
-.letter-card {
-  position: relative;
-
-  width: min(90vw, 470px);
-  max-height: 82vh;
-
-  overflow-y: auto;
-
-  padding: 34px 28px 28px;
-
-  border: 1px solid rgba(255, 213, 47, 0.55);
-  border-radius: 24px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(20, 17, 5, 0.98),
-      rgba(6, 8, 4, 0.98)
-    );
-
-  box-shadow:
-    0 30px 80px rgba(0, 0, 0, 0.65),
-    0 0 50px rgba(255, 213, 47, 0.1);
-
-  transform: translateY(25px) scale(0.96);
-
-  transition:
-    transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.letter-overlay.open .letter-card {
-  transform: translateY(0) scale(1);
-}
-
-.letter-close {
-  position: absolute;
-
-  top: 12px;
-  right: 14px;
-
-  width: 34px;
-  height: 34px;
-
-  border: 0;
-  border-radius: 50%;
-
-  color: var(--gold-light);
-  background: rgba(255, 213, 47, 0.08);
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
-}
-
-.letter-close:hover {
-  background: rgba(255, 213, 47, 0.16);
-  transform: rotate(8deg);
-}
-
-.letter-flower {
-  margin-bottom: 10px;
-  font-size: 2rem;
-}
-
-.letter-kicker {
-  color: var(--gold-light);
-
-  font-size: 0.68rem;
-  font-weight: 800;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-}
-
-.letter-card h3 {
-  margin: 8px 0 12px;
-
-  color: var(--white);
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 2rem;
-  line-height: 1.05;
-}
-
-.letter-line {
-  width: 70px;
-  height: 2px;
-
-  margin: 0 0 20px;
-
-  background:
-    linear-gradient(
-      90deg,
-      var(--gold),
-      transparent
-    );
-}
-
-.letter-text {
-  color: rgba(255, 253, 233, 0.78);
-
-  font-size: 0.95rem;
-  line-height: 1.75;
-}
-
-.letter-sign {
-  margin-top: 25px;
-
-  color: var(--gold-light);
-
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.05rem;
-}
-
-/* =========================
-   BOTÓN REPETIR
-========================= */
-
-.replay {
-  position: absolute;
-  z-index: 50;
-
-  left: 50%;
-  bottom: 20px;
-
-  border: 1px solid rgba(255, 213, 47, 0.25);
-  border-radius: 999px;
-
-  padding: 9px 15px;
-
-  color: rgba(255, 241, 154, 0.7);
-  background: rgba(0, 0, 0, 0.25);
-
-  font-size: 0.75rem;
-
-  cursor: pointer;
-
-  transform: translateX(-50%);
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.replay:hover {
-  color: var(--gold-light);
-  background: rgba(255, 213, 47, 0.08);
-}
-
-/* =========================
-   PIE
-========================= */
-
-.footer-note {
-  position: absolute;
-  z-index: 45;
-
-  left: 50%;
-  bottom: 5px;
-
-  width: 90%;
-
-  color: rgba(255, 255, 255, 0.25);
-
-  font-size: 0.55rem;
-  text-align: center;
-
-  transform: translateX(-50%);
-}
-
-/* =========================
-   ANIMACIONES
-========================= */
-
-@keyframes introFlower {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-3deg);
-  }
-
-  50% {
-    transform: translateY(-8px) rotate(3deg);
-  }
-}
-
-@keyframes heroAppear {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -25px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-}
-
-@keyframes starsMove {
-  to {
-    transform: translateY(35px);
-  }
-}
-
-@keyframes dustMove {
-  to {
-    background-position:
-      70px 80px,
-      -120px 140px;
-  }
-}
-
-@keyframes breathingGlow {
-  0%,
-  100% {
-    opacity: 0.45;
-    transform: translate(-50%, -50%) scale(0.9);
-  }
-
-  50% {
-    opacity: 0.9;
-    transform: translate(-50%, -50%) scale(1.08);
-  }
-}
-
-@keyframes floatText {
-  from {
-    transform: translateY(0);
-    opacity: 0.42;
-  }
-
-  to {
-    transform: translateY(-9px);
-    opacity: 0.8;
-  }
-}
-
-@keyframes heartBeat {
   0%,
   100% {
     transform:
-      translate(-50%, -50%)
-      rotate(-45deg)
-      scale(0.95);
+      translateY(0)
+      rotate(-2deg);
   }
 
   50% {
     transform:
-      translate(-50%, -50%)
-      rotate(-45deg)
-      scale(1.06);
+      translateY(-9px)
+      rotate(2deg);
   }
+
 }
 
-@keyframes heartSpark {
-  from {
-    opacity: 0.35;
-    transform: rotate(45deg) scale(0.7);
-  }
 
-  to {
-    opacity: 1;
-    transform: rotate(45deg) scale(1.25);
-  }
-}
-
-@keyframes grow {
-  from {
-    opacity: 0;
-    transform:
-      scale(0)
-      rotate(var(--rot));
-  }
-
-  to {
-    opacity: 1;
-    transform:
-      scale(var(--scale))
-      rotate(var(--rot));
-  }
-}
-
-@keyframes fall {
-  to {
-    transform:
-      translate3d(var(--drift), 115vh, 0)
-      rotate(560deg);
-  }
-}
-
-@keyframes twinkle {
-  from {
-    opacity: 0.15;
-    transform: scale(0.7);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1.6);
-  }
-}
-
-@keyframes dustParticle {
-  from {
-    transform:
-      translate3d(0, 0, 0)
-      scale(0.7);
-
-    opacity: 0.15;
-  }
-
-  to {
-    transform:
-      translate3d(0, -12px, 0)
-      scale(1.25);
-
-    opacity: 0.8;
-  }
-}
-
-@keyframes buttonFloat {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-/* =========================
-   MÓVILES
-========================= */
-
-@media (max-width: 600px) {
-  .scene {
-    min-height: 100svh;
-  }
-
-  .intro {
-    padding: 22px;
-  }
-
-  .intro h1 {
-    font-size: clamp(2.2rem, 11vw, 3.8rem);
-  }
-
-  .intro-small {
-    font-size: 0.58rem;
-  }
-
-  .hero-message {
-    top: 12%;
-    width: 92vw;
-  }
-
-  .hero-message h2 {
-    font-size: clamp(1.9rem, 10vw, 3.4rem);
-  }
-
-  .floating-text {
-    font-size: 0.62rem;
-  }
-
-  .text-1 {
-    left: 4%;
-    top: 31%;
-  }
-
-  .text-2 {
-    right: 4%;
-    top: 29%;
-  }
-
-  .text-3 {
-    left: 4%;
-    top: 48%;
-  }
-
-  .text-4 {
-    right: 4%;
-    top: 46%;
-  }
-
-  .text-5 {
-    left: 8%;
-    top: 63%;
-  }
-
-  .text-6 {
-    right: 5%;
-    top: 66%;
-  }
-
-  .text-7 {
-    left: 30%;
-    top: 77%;
-  }
-
-  .text-8 {
-    display: none;
-  }
-
-  .heart {
-    width: 110px;
-    height: 105px;
-    top: 55%;
-  }
-
-  .heart::before,
-  .heart::after {
-    width: 110px;
-    height: 105px;
-  }
-
-  .heart::before {
-    top: -52px;
-  }
-
-  .heart::after {
-    left: 52px;
-  }
-
-  .flower {
-    width: 62px;
-    height: 155px;
-  }
-
-  .flower .stem {
-    height: 120px;
-  }
-
-  .flower .head {
-    bottom: 104px;
-    transform:
-      translateX(-50%)
-      scale(0.82);
-  }
-
-  .flower .leaf.left {
-    bottom: 40px;
-    transform: scale(0.8) rotate(25deg);
-  }
-
-  .flower .leaf.right {
-    bottom: 65px;
-    transform:
-      scaleX(-0.8)
-      scaleY(0.8)
-      rotate(25deg);
-  }
-
-  .letter-button {
-    right: 15px;
-    bottom: 48px;
-    width: 52px;
-    height: 52px;
-  }
-
-  .letter-card {
-    width: 92vw;
-    max-height: 80vh;
-    padding:
-      30px
-      21px
-      24px;
-  }
-
-  .letter-card h3 {
-    font-size: 1.75rem;
-  }
-
-  .letter-text {
-    font-size: 0.88rem;
-  }
-
-  .replay {
-    bottom: 18px;
-  }
-}
-
-/* =========================
-   REDUCIR MOVIMIENTO
-========================= */
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-    }
 /* =========================================================
-   🌻 AJUSTE FINAL - ESTILO TIPO REFERENCIA
+   BOTÓN DE INICIO
 ========================================================= */
 
-
-/* =========================
-   BOTÓN DE INICIO
-========================= */
-
 .open-btn {
+
   position: relative;
+
   z-index: 200;
 
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
+
   gap: 12px;
 
   min-width: 235px;
 
   padding: 15px 24px;
 
-  border: 1px solid rgba(255, 225, 75, 0.55);
+  border:
+    1px solid
+    rgba(255,225,75,.55);
 
-  border-radius: 999px;
+  border-radius:
+    999px;
 
-  color: #fff4a6;
+  color:
+    #fff4a6;
 
   background:
+
     radial-gradient(
       circle at 50% 30%,
-      rgba(255, 220, 60, 0.2),
+      rgba(255,220,60,.2),
       transparent 65%
     ),
-    rgba(20, 16, 2, 0.55);
+
+    rgba(20,16,2,.55);
 
   box-shadow:
-    0 0 20px rgba(255, 211, 47, 0.25),
-    inset 0 0 20px rgba(255, 211, 47, 0.05);
+
+    0 0 20px
+    rgba(255,211,47,.25),
+
+    inset 0 0 20px
+    rgba(255,211,47,.05);
 
   font-weight: 700;
 
@@ -1674,9 +569,12 @@ button {
     scale(1.03);
 
   box-shadow:
-    0 0 35px rgba(255, 213, 47, .4),
-    inset 0 0 25px rgba(255, 213, 47, .08);
 
+    0 0 35px
+    rgba(255,213,47,.4),
+
+    inset 0 0 25px
+    rgba(255,213,47,.08);
 }
 
 
@@ -1684,7 +582,6 @@ button {
 
   transform:
     scale(.96);
-
 }
 
 
@@ -1697,7 +594,7 @@ button {
   filter:
     drop-shadow(
       0 0 8px
-      rgba(255, 211, 47, .75)
+      rgba(255,211,47,.75)
     );
 
   animation:
@@ -1705,7 +602,6 @@ button {
     2.5s
     ease-in-out
     infinite;
-
 }
 
 
@@ -1713,73 +609,62 @@ button {
 
   0%,
   100% {
-    transform: rotate(-5deg) scale(1);
+    transform:
+      rotate(-5deg)
+      scale(1);
   }
 
   50% {
-    transform: rotate(5deg) scale(1.08);
+    transform:
+      rotate(5deg)
+      scale(1.08);
   }
 
 }
 
 
-/* =========================
-   INTRO MÁS PARECIDA
-========================= */
+.hint {
 
-.intro {
-
-  background:
-    radial-gradient(
-      circle at 50% 52%,
-      rgba(255, 196, 25, .12),
-      transparent 28%
-    );
-
-}
-
-
-.intro h1 {
-
-  color: #ffd83d;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  text-shadow:
-    0 0 10px rgba(255, 211, 47, .7),
-    0 0 30px rgba(255, 211, 47, .35);
-
-}
-
-
-.intro-small {
+  margin-top: 20px;
 
   color:
-    rgba(255, 221, 88, .8);
+    rgba(255,235,150,.45);
+
+  font-size:
+    .72rem;
 
 }
 
 
-/* =========================
-   JARDÍN
-========================= */
+/* =========================================================
+   JARDÍN / GALAXIA
+========================================================= */
 
 .garden {
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 10;
+
+  overflow: hidden;
+
+  opacity: 0;
+
+  visibility: hidden;
 
   background:
 
     radial-gradient(
       ellipse at 50% 45%,
-      rgba(150, 105, 8, .24),
+      rgba(150,105,8,.24),
       transparent 35%
     ),
 
     radial-gradient(
       ellipse at 50% 80%,
-      rgba(44, 75, 18, .32),
+      rgba(44,75,18,.32),
       transparent 42%
     ),
 
@@ -1791,14 +676,67 @@ button {
       #020301 100%
     );
 
+  transition:
+    opacity 1s ease,
+    visibility 1s ease;
 }
 
 
-/* =========================
+.garden.active {
+
+  opacity: 1;
+
+  visibility: visible;
+}
+
+
+/* =========================================================
+   LUNA
+========================================================= */
+
+.moon {
+
+  position: absolute;
+
+  width: 95px;
+  height: 95px;
+
+  right: 9%;
+  top: 9%;
+
+  border-radius: 50%;
+
+  background:
+
+    radial-gradient(
+      circle at 35% 30%,
+      #fffde3,
+      #fff6a5 45%,
+      #d6b949 100%
+    );
+
+  box-shadow:
+
+    0 0 25px
+    rgba(255,239,140,.4),
+
+    0 0 70px
+    rgba(255,219,75,.15);
+
+  opacity: .75;
+}
+
+
+/* =========================================================
    RESPLANDOR CENTRAL
-========================= */
+========================================================= */
 
 .sun-glow {
+
+  position: absolute;
+
+  left: 50%;
+  top: 54%;
 
   width: 95vw;
   height: 95vw;
@@ -1806,49 +744,925 @@ button {
   max-width: 700px;
   max-height: 700px;
 
-  top: 54%;
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  pointer-events: none;
 
   background:
 
     radial-gradient(
       circle,
-      rgba(255, 220, 75, .42) 0%,
-      rgba(255, 192, 25, .2) 28%,
-      rgba(255, 173, 0, .08) 48%,
+      rgba(255,220,75,.42) 0%,
+      rgba(255,192,25,.2) 28%,
+      rgba(255,173,0,.08) 48%,
       transparent 72%
     );
 
-  filter: blur(30px);
+  filter:
+    blur(30px);
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   GALAXIA - ESTRELLAS
+========================================================= */
+
+.galaxy-stars {
+
+  position: absolute;
+
+  inset: -20%;
+
+  z-index: 3;
+
+  pointer-events: none;
+
+  opacity: .8;
+
+  background:
+
+    radial-gradient(
+      2px 2px at 10% 20%,
+      #fff,
+      transparent
+    ),
+
+    radial-gradient(
+      1px 1px at 17% 65%,
+      #fff4a8,
+      transparent
+    ),
+
+    radial-gradient(
+      2px 2px at 30% 15%,
+      #fff,
+      transparent
+    ),
+
+    radial-gradient(
+      1px 1px at 45% 75%,
+      #ffe86a,
+      transparent
+    ),
+
+    radial-gradient(
+      2px 2px at 65% 20%,
+      #fff,
+      transparent
+    ),
+
+    radial-gradient(
+      1px 1px at 82% 42%,
+      #ffe777,
+      transparent
+    ),
+
+    radial-gradient(
+      2px 2px at 91% 75%,
+      #fff,
+      transparent
+    ),
+
+    radial-gradient(
+      1px 1px at 53% 45%,
+      #fff3a2,
+      transparent
+    );
+
+  animation:
+    galaxyStarsMove
+    18s
+    linear
+    infinite;
+}
+
+
+@keyframes galaxyStarsMove {
+
+  from {
+    transform:
+      rotate(0deg)
+      scale(1);
+  }
+
+  to {
+    transform:
+      rotate(360deg)
+      scale(1.05);
+  }
 
 }
 
 
-/* =========================
-   TÍTULO
-========================= */
+/* =========================================================
+   NEBULOSA
+========================================================= */
+
+.galaxy-nebula {
+
+  position: absolute;
+
+  left: 50%;
+  top: 54%;
+
+  width: 125vw;
+  height: 85vw;
+
+  max-width: 1100px;
+  max-height: 750px;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-12deg);
+
+  border-radius: 50%;
+
+  z-index: 4;
+
+  pointer-events: none;
+
+  background:
+
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(255,210,45,.13),
+      transparent 42%
+    ),
+
+    radial-gradient(
+      ellipse at 25% 55%,
+      rgba(205,150,20,.10),
+      transparent 45%
+    ),
+
+    radial-gradient(
+      ellipse at 75% 45%,
+      rgba(255,226,80,.08),
+      transparent 45%
+    );
+
+  filter:
+    blur(15px);
+
+  animation:
+    nebulaPulse
+    7s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+
+@keyframes nebulaPulse {
+
+  from {
+    transform:
+      translate(-50%, -50%)
+      rotate(-12deg)
+      scale(.95);
+  }
+
+  to {
+    transform:
+      translate(-50%, -50%)
+      rotate(-7deg)
+      scale(1.06);
+  }
+
+}
+
+
+/* =========================================================
+   ESCENA GIRATORIA
+========================================================= */
+
+.galaxy-scene {
+
+  position: absolute;
+
+  left: 50%;
+  top: 54%;
+
+  width: min(92vw, 780px);
+  height: min(92vw, 780px);
+
+  transform:
+    translate(-50%, -50%);
+
+  z-index: 10;
+
+  cursor: grab;
+
+  touch-action: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+}
+
+
+.galaxy-scene.dragging {
+
+  cursor: grabbing;
+}
+
+
+/* =========================================================
+   ÓRBITAS
+========================================================= */
+
+.orbit {
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  pointer-events: none;
+}
+
+
+.orbit::before {
+
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 100%;
+  height: 100%;
+
+  transform:
+    translate(-50%, -50%)
+    scale(.88);
+
+  border:
+    1px solid
+    rgba(255,215,70,.12);
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 20px
+    rgba(255,205,35,.04);
+
+}
+
+
+.orbit-1 {
+  transform:
+    translate(-50%, -50%)
+    rotate(0deg);
+}
+
+.orbit-2 {
+  transform:
+    translate(-50%, -50%)
+    rotate(45deg)
+    scale(.78);
+}
+
+.orbit-3 {
+  transform:
+    translate(-50%, -50%)
+    rotate(120deg)
+    scale(.61);
+}
+
+.orbit-4 {
+  transform:
+    translate(-50%, -50%)
+    rotate(210deg)
+    scale(.44);
+}
+
+
+/* =========================================================
+   GIRASOLES DE LA GALAXIA
+========================================================= */
+
+.orbit .sunflower {
+
+  position: absolute;
+
+  left: 50%;
+  top: 0;
+
+  width: 58px;
+  height: 58px;
+
+  transform:
+    translate(-50%, -50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size:
+    clamp(
+      2rem,
+      5vw,
+      3.2rem
+    );
+
+  filter:
+
+    drop-shadow(
+      0 0 7px
+      rgba(255,210,45,.7)
+    ),
+
+    drop-shadow(
+      0 0 20px
+      rgba(255,194,20,.35)
+    );
+
+  pointer-events: none;
+
+  animation:
+    sunflowerGlow
+    2.8s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes sunflowerGlow {
+
+  0%,
+  100% {
+    filter:
+      drop-shadow(
+        0 0 6px
+        rgba(255,210,45,.55)
+      );
+  }
+
+  50% {
+    filter:
+      drop-shadow(
+        0 0 15px
+        rgba(255,220,65,.9)
+      );
+  }
+
+}
+
+
+/* =========================================================
+   TEXTOS DE LAS ÓRBITAS
+========================================================= */
+
+.galaxy-orbit-text {
+
+  position: absolute;
+
+  left: 50%;
+  top: 10%;
+
+  width: max-content;
+
+  max-width: 180px;
+
+  transform:
+    translate(-50%, -50%);
+
+  padding:
+    7px 12px;
+
+  border:
+    1px solid
+    rgba(255,215,65,.12);
+
+  border-radius:
+    999px;
+
+  color:
+    rgba(255,236,145,.82);
+
+  background:
+    rgba(20,14,2,.28);
+
+  backdrop-filter:
+    blur(3px);
+
+  box-shadow:
+    0 0 15px
+    rgba(255,204,40,.05);
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(
+      .58rem,
+      1.8vw,
+      .82rem
+    );
+
+  text-align: center;
+
+  white-space: normal;
+
+  pointer-events: none;
+
+  text-shadow:
+    0 0 8px
+    rgba(255,205,45,.45);
+}
+
+
+/* =========================================================
+   CENTRO DE LA GALAXIA
+========================================================= */
+
+.galaxy-core {
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 125px;
+  height: 125px;
+
+  transform:
+    translate(-50%, -50%);
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  z-index: 30;
+
+  background:
+
+    radial-gradient(
+      circle,
+      rgba(255,235,110,.28),
+      rgba(255,187,20,.12) 40%,
+      transparent 72%
+    );
+
+  box-shadow:
+
+    0 0 35px
+    rgba(255,213,47,.35),
+
+    0 0 90px
+    rgba(255,184,15,.15);
+
+  pointer-events: none;
+}
+
+
+.galaxy-core span {
+
+  position: relative;
+
+  z-index: 3;
+
+  font-size:
+    clamp(
+      4rem,
+      12vw,
+      6rem
+    );
+
+  filter:
+    drop-shadow(
+      0 0 10px
+      rgba(255,215,40,.85)
+    ),
+
+    drop-shadow(
+      0 0 30px
+      rgba(255,190,15,.55)
+    );
+
+  animation:
+    coreFlower
+    3s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes coreFlower {
+
+  0%,
+  100% {
+    transform:
+      scale(1)
+      rotate(-3deg);
+  }
+
+  50% {
+    transform:
+      scale(1.08)
+      rotate(3deg);
+  }
+
+}
+
+
+.core-glow {
+
+  position: absolute;
+
+  inset: -20px;
+
+  border-radius: 50%;
+
+  background:
+
+    radial-gradient(
+      circle,
+      rgba(255,230,85,.25),
+      transparent 65%
+    );
+
+  filter:
+    blur(12px);
+
+  animation:
+    coreGlow
+    3s
+    ease-in-out
+    infinite
+    alternate;
+}
+
+
+@keyframes coreGlow {
+
+  from {
+    transform: scale(.9);
+    opacity: .5;
+  }
+
+  to {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+
+}
+
+
+/* =========================================================
+   ESTRELLAS FLOTANTES
+========================================================= */
+
+.floating-star {
+
+  position: absolute;
+
+  z-index: 40;
+
+  color:
+    #fff1a0;
+
+  font-size:
+    clamp(
+      1rem,
+      3vw,
+      1.8rem
+    );
+
+  text-shadow:
+
+    0 0 8px
+    #ffd52f,
+
+    0 0 18px
+    rgba(255,210,45,.8);
+
+  pointer-events: none;
+
+  animation:
+    starFloat
+    2.8s
+    ease-in-out
+    infinite;
+}
+
+
+.star-1 {
+  left: 14%;
+  top: 27%;
+}
+
+.star-2 {
+  left: 78%;
+  top: 22%;
+  animation-delay: -.8s;
+}
+
+.star-3 {
+  left: 87%;
+  top: 58%;
+  animation-delay: -1.4s;
+}
+
+.star-4 {
+  left: 13%;
+  top: 65%;
+  animation-delay: -2s;
+}
+
+.star-5 {
+  left: 34%;
+  top: 18%;
+  animation-delay: -1s;
+}
+
+.star-6 {
+  left: 68%;
+  top: 76%;
+  animation-delay: -2.3s;
+}
+
+
+@keyframes starFloat {
+
+  0%,
+  100% {
+    transform:
+      scale(.7)
+      rotate(0deg);
+
+    opacity: .35;
+  }
+
+  50% {
+    transform:
+      scale(1.35)
+      rotate(90deg);
+
+    opacity: 1;
+  }
+
+}
+
+
+/* =========================================================
+   MENSAJE "GIRA LA GALAXIA"
+========================================================= */
+
+.galaxy-message {
+
+  position: absolute;
+
+  z-index: 45;
+
+  left: 50%;
+
+  bottom: 17%;
+
+  transform:
+    translateX(-50%);
+
+  color:
+    rgba(255,233,140,.65);
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size:
+    .78rem;
+
+  letter-spacing:
+    .12em;
+
+  text-shadow:
+    0 0 10px
+    rgba(255,205,40,.45);
+
+  pointer-events: none;
+
+  animation:
+    messagePulse
+    2.5s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes messagePulse {
+
+  0%,
+  100% {
+    opacity: .45;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+}
+
+
+/* =========================================================
+   TEXTOS FLOTANTES
+========================================================= */
+
+.floating-text {
+
+  position: absolute;
+
+  z-index: 20;
+
+  color:
+    rgba(255,225,105,.72);
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size:
+    .72rem;
+
+  text-shadow:
+    0 0 8px
+    rgba(255,203,40,.5);
+
+  letter-spacing:
+    .02em;
+
+  pointer-events: none;
+
+  animation:
+    floatingText
+    5s
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes floatingText {
+
+  0%,
+  100% {
+    transform:
+      translateY(0);
+    opacity: .45;
+  }
+
+  50% {
+    transform:
+      translateY(-9px);
+    opacity: .9;
+  }
+
+}
+
+
+.text-1 {
+  left: 7%;
+  top: 31%;
+}
+
+.text-2 {
+  right: 6%;
+  top: 35%;
+}
+
+.text-3 {
+  left: 5%;
+  top: 52%;
+}
+
+.text-4 {
+  right: 5%;
+  top: 64%;
+}
+
+.text-5 {
+  left: 12%;
+  top: 82%;
+}
+
+.text-6 {
+  right: 13%;
+  top: 80%;
+}
+
+.text-7 {
+  left: 39%;
+  top: 25%;
+}
+
+.text-8 {
+  right: 35%;
+  top: 84%;
+}
+
+.text-9 {
+  left: 5%;
+  top: 40%;
+  animation-delay: -.7s;
+}
+
+.text-10 {
+  right: 8%;
+  top: 52%;
+  animation-delay: -1.8s;
+}
+
+.text-11 {
+  left: 12%;
+  top: 70%;
+  animation-delay: -2.2s;
+}
+
+.text-12 {
+  right: 15%;
+  top: 73%;
+  animation-delay: -3s;
+}
+
+/* =========================================================
+   MENSAJE PRINCIPAL
+========================================================= */
 
 .hero-message {
+
+  position: absolute;
+
+  z-index: 35;
+
+  left: 50%;
 
   top: 10%;
 
   width:
     min(92vw, 700px);
 
+  transform:
+    translateX(-50%);
+
+  text-align: center;
+
+  pointer-events: none;
 }
 
 
 .hero-kicker {
 
   color:
-    rgba(255, 224, 88, .7);
+    rgba(255,224,88,.7);
 
+  font-size:
+    .7rem;
+
+  letter-spacing:
+    .22em;
+}
+
+
+.spark-line {
+
+  color:
+    rgba(255,220,70,.65);
+
+  font-size:
+    .8rem;
 }
 
 
 .hero-message h2 {
 
+  margin:
+    8px 0 12px;
+
   color:
     #ffd83d;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
 
   font-size:
     clamp(
@@ -1857,14 +1671,16 @@ button {
       4.7rem
     );
 
+  line-height:
+    1.02;
+
   text-shadow:
 
     0 0 10px
-    rgba(255, 211, 47, .8),
+    rgba(255,211,47,.8),
 
     0 0 35px
-    rgba(255, 211, 47, .4);
-
+    rgba(255,211,47,.4);
 }
 
 
@@ -1872,103 +1688,29 @@ button {
 
   color:
     #ffd83d;
-
 }
 
 
 .hero-message p {
 
   color:
-    rgba(255, 235, 143, .75);
+    rgba(255,235,143,.75);
 
+  line-height:
+    1.6;
 }
 
 
-/* =========================
-   TEXTOS FLOTANTES
-========================= */
-
-.floating-text {
-
-  color:
-    rgba(255, 225, 105, .72);
-
-  font-family:
-    Georgia,
-    serif;
-
-  text-shadow:
-    0 0 8px
-    rgba(255, 203, 40, .5);
-
-  letter-spacing:
-    .02em;
-
-}
-
-
-.text-9 {
-
-  position: absolute;
-
-  left: 5%;
-  top: 40%;
-
-  animation-delay:
-    -.7s;
-
-}
-
-
-.text-10 {
-
-  position: absolute;
-
-  right: 8%;
-  top: 52%;
-
-  animation-delay:
-    -1.8s;
-
-}
-
-
-.text-11 {
-
-  position: absolute;
-
-  left: 12%;
-  top: 70%;
-
-  animation-delay:
-    -2.2s;
-
-}
-
-
-.text-12 {
-
-  position: absolute;
-
-  right: 15%;
-  top: 73%;
-
-  animation-delay:
-    -3s;
-
-}
-
-
-/* =========================
+/* =========================================================
    CORAZÓN DE PARTÍCULAS
-========================= */
+========================================================= */
 
 .heart,
 .heart::before,
 .heart::after {
 
-  display: none !important;
-
+  display:
+    none !important;
 }
 
 
@@ -1989,7 +1731,7 @@ button {
   filter:
     drop-shadow(
       0 0 8px
-      rgba(255, 211, 47, .8)
+      rgba(255,211,47,.8)
     );
 
   animation:
@@ -1997,7 +1739,6 @@ button {
     3s
     ease-in-out
     infinite;
-
 }
 
 
@@ -2026,7 +1767,7 @@ button {
     #ffd52f,
 
     0 0 10px
-    rgba(255, 213, 47, .8);
+    rgba(255,213,47,.8);
 
   transform:
 
@@ -2045,7 +1786,6 @@ button {
 
   animation-delay:
     var(--delay);
-
 }
 
 
@@ -2061,7 +1801,6 @@ button {
         calc(var(--y) * 4px)
       )
       scale(.65);
-
   }
 
   to {
@@ -2074,9 +1813,7 @@ button {
         calc(var(--y) * 4px)
       )
       scale(1.35);
-
   }
-
 }
 
 
@@ -2088,7 +1825,6 @@ button {
     transform:
       translate(-50%, -50%)
       scale(.96);
-
   }
 
   50% {
@@ -2096,25 +1832,68 @@ button {
     transform:
       translate(-50%, -50%)
       scale(1.05);
-
   }
-
 }
 
 
-/* =========================
-   GIRASOLES
-========================= */
+/* =========================================================
+   SUELO
+========================================================= */
+
+.ground {
+
+  position: absolute;
+
+  z-index: 11;
+
+  left: 0;
+  right: 0;
+  bottom: -8%;
+
+  height: 38%;
+
+  background:
+
+    radial-gradient(
+      ellipse at 50% 10%,
+      #3d7429 0%,
+      #214719 28%,
+      #10250d 58%,
+      #030501 100%
+    );
+
+  box-shadow:
+
+    0 -20px 45px
+    rgba(80,120,35,.12);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   FLORES DEL JARDÍN
+========================================================= */
+
+.flowers {
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 15;
+
+  pointer-events: none;
+}
+
 
 .flower {
 
   filter:
-
     drop-shadow(
       0 0 7px
-      rgba(255, 205, 35, .18)
+      rgba(255,205,35,.18)
     );
-
 }
 
 
@@ -2122,7 +1901,6 @@ button {
 
   width: 82px;
   height: 82px;
-
 }
 
 
@@ -2142,12 +1920,9 @@ button {
 
   box-shadow:
     0 0 5px
-    rgba(255, 210, 40, .3);
-
+    rgba(255,210,40,.3);
 }
 
-
-/* 12 pétalos */
 
 .flower .petal:nth-child(1) {
   transform:
@@ -2247,26 +2022,19 @@ button {
       #633b05 45%,
       #241402 100%
     );
-
-  box-shadow:
+box-shadow:
 
     0 0 7px
-    rgba(255, 213, 47, .45),
+    rgba(255,213,47,.45),
 
     inset 0 0 8px
-    rgba(0, 0, 0, .6);
-
+    rgba(0,0,0,.6);
 }
 
-
-/* =========================
-   GIRASOLES GRANDES
-========================= */
 
 .flower-big {
 
   z-index: 14;
-
 }
 
 
@@ -2274,7 +2042,6 @@ button {
 
   width: 105px;
   height: 105px;
-
 }
 
 
@@ -2282,7 +2049,6 @@ button {
 
   width: 40px;
   height: 65px;
-
 }
 
 
@@ -2290,81 +2056,188 @@ button {
 
   width: 35px;
   height: 35px;
-
 }
 
 
-/* =========================
-   SUELO
-========================= */
+/* =========================================================
+   PÉTALOS
+========================================================= */
 
-.ground {
+.petals {
 
-  height: 38%;
+  position: absolute;
 
-  bottom: -8%;
+  inset: 0;
+
+  z-index: 22;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   LUCIÉRNAGAS
+========================================================= */
+
+.fireflies {
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 23;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CARTA
+========================================================= */
+
+.letter-button {
+
+  position: absolute;
+
+  z-index: 60;
+
+  right: 18px;
+  bottom: 55px;
+
+  width: 62px;
+  height: 62px;
+
+  border: 1px solid
+    rgba(255,213,47,.4);
+
+  border-radius: 50%;
+
+  color: white;
 
   background:
+    rgba(25,18,2,.7);
 
-    radial-gradient(
-      ellipse at 50% 10%,
-      #3d7429 0%,
-      #214719 28%,
-      #10250d 58%,
-      #030501 100%
-    );
+  font-size:
+    1.5rem;
+
+  cursor: pointer;
 
   box-shadow:
 
-    0 -20px 45px
-    rgba(80, 120, 35, .12);
+    0 0 25px
+    rgba(255,213,47,.45),
 
+    0 0 60px
+    rgba(255,213,47,.15);
+
+  transition:
+    transform .25s ease;
 }
 
 
-/* =========================
-   CARTA
-========================= */
+.letter-button:hover {
+
+  transform:
+    scale(1.08)
+    rotate(-5deg);
+}
+
 
 .letter-overlay {
 
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 100;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
   background:
-    rgba(0, 0, 0, .76);
+    rgba(0,0,0,.76);
 
   backdrop-filter:
     blur(12px);
 
+  transition:
+    opacity .35s ease,
+    visibility .35s ease;
+}
+
+
+.letter-overlay.open {
+
+  opacity: 1;
+
+  visibility: visible;
+
+  pointer-events: auto;
 }
 
 
 .letter-card {
 
+  position: relative;
+
   width:
     min(90vw, 500px);
+
+  max-height:
+    85vh;
+
+  overflow-y: auto;
+
+  padding:
+    35px 28px;
 
   border-radius:
     25px;
 
   border:
     1px solid
-    rgba(255, 213, 47, .45);
+    rgba(255,213,47,.45);
 
   background:
 
     linear-gradient(
       180deg,
-      rgba(35, 27, 5, .97),
-      rgba(9, 10, 5, .98)
+      rgba(35,27,5,.97),
+      rgba(9,10,5,.98)
     );
 
   box-shadow:
 
     0 25px 80px
-    rgba(0, 0, 0, .8),
+    rgba(0,0,0,.8),
 
     0 0 50px
-    rgba(255, 213, 47, .15);
+    rgba(255,213,47,.15);
 
+  transform:
+    translateY(20px)
+    scale(.96);
+
+  transition:
+    transform .4s ease;
+}
+
+
+.letter-overlay.open .letter-card {
+
+  transform:
+    translateY(0)
+    scale(1);
 }
 
 
@@ -2386,7 +2259,7 @@ button {
     #fff0a0;
 
   background:
-    rgba(255, 213, 47, .08);
+    rgba(255,213,47,.08);
 
   font-size:
     1.7rem;
@@ -2395,59 +2268,91 @@ button {
     1;
 
   cursor: pointer;
+}
 
+
+.letter-flower {
+
+  text-align: center;
+
+  font-size:
+    3rem;
+
+  filter:
+    drop-shadow(
+      0 0 10px
+      rgba(255,213,47,.65)
+    );
+}
+
+
+.letter-kicker {
+
+  text-align: center;
+
+  color:
+    rgba(255,220,90,.65);
+
+  font-size:
+    .7rem;
+
+  letter-spacing:
+    .18em;
 }
 
 
 .letter-card h3 {
+
+  text-align: center;
 
   color:
     #ffd83d;
 
   text-shadow:
     0 0 12px
-    rgba(255, 211, 47, .3);
+    rgba(255,211,47,.3);
+}
 
+
+.letter-line {
+
+  width: 70px;
+  height: 1px;
+
+  margin:
+    18px auto;
+
+  background:
+    rgba(255,213,47,.5);
 }
 
 
 .letter-text {
 
   color:
-    rgba(255, 250, 220, .82);
+    rgba(255,250,220,.82);
 
+  line-height:
+    1.75;
 }
 
 
-/* =========================
-   BOTÓN CARTA
-========================= */
+.letter-sign {
 
-.letter-button {
+  margin-top:
+    25px;
 
-  right: 18px;
-  bottom: 55px;
+  text-align:
+    right;
 
-  width: 62px;
-  height: 62px;
-
-  font-size:
-    1.5rem;
-
-  box-shadow:
-
-    0 0 25px
-    rgba(255, 213, 47, .45),
-
-    0 0 60px
-    rgba(255, 213, 47, .15);
-
+  color:
+    #ffe77a;
 }
 
 
-/* =========================
+/* =========================================================
    REPETIR
-========================= */
+========================================================= */
 
 .replay-btn {
 
@@ -2464,7 +2369,7 @@ button {
 
   border:
     1px solid
-    rgba(255, 213, 47, .3);
+    rgba(255,213,47,.3);
 
   border-radius:
     999px;
@@ -2473,10 +2378,10 @@ button {
     8px 15px;
 
   color:
-    rgba(255, 241, 154, .7);
+    rgba(255,241,154,.7);
 
   background:
-    rgba(0, 0, 0, .25);
+    rgba(0,0,0,.25);
 
   font-size:
     .75rem;
@@ -2484,12 +2389,82 @@ button {
   cursor:
     pointer;
 
+  transition:
+    background .2s ease,
+    transform .2s ease;
 }
 
 
-/* =========================
-   MÓVIL
-========================= */
+.replay-btn:hover {
+
+  background:
+    rgba(255,213,47,.08);
+
+  transform:
+    translateX(-50%)
+    translateY(-2px);
+}
+
+
+/* =========================================================
+   PIE
+========================================================= */
+
+.footer-note {
+
+  position: absolute;
+
+  z-index: 25;
+
+  left: 50%;
+  bottom: 3%;
+
+  transform:
+    translateX(-50%);
+
+  color:
+    rgba(255,238,150,.38);
+
+  font-size:
+    .65rem;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   NOSCRIPT
+========================================================= */
+
+noscript {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 999;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  background:
+    #010200;
+
+  color:
+    #ffe879;
+
+  text-align:
+    center;
+}
+
+
+/* =========================================================
+   📱 MÓVIL
+========================================================= */
 
 @media (max-width: 600px) {
 
@@ -2497,7 +2472,16 @@ button {
 
     padding:
       20px;
+  }
 
+
+  .intro-flower {
+
+    transform:
+      scale(.82);
+
+    margin-bottom:
+      5px;
   }
 
 
@@ -2509,7 +2493,6 @@ button {
         10.5vw,
         3.5rem
       );
-
   }
 
 
@@ -2517,7 +2500,6 @@ button {
 
     font-size:
       .58rem;
-
   }
 
 
@@ -2528,7 +2510,6 @@ button {
 
     padding:
       13px 20px;
-
   }
 
 
@@ -2537,6 +2518,8 @@ button {
     top:
       8%;
 
+    width:
+      94vw;
   }
 
 
@@ -2548,7 +2531,13 @@ button {
         9.5vw,
         3.3rem
       );
+  }
 
+
+  .hero-message p {
+
+    font-size:
+      .8rem;
   }
 
 
@@ -2556,9 +2545,48 @@ button {
 
     font-size:
       .58rem;
-
   }
 
+
+  .text-1 {
+    left: 3%;
+    top: 31%;
+  }
+
+  .text-2 {
+    right: 3%;
+    top: 35%;
+  }
+
+  .text-3 {
+    left: 3%;
+    top: 51%;
+  }
+
+  .text-4 {
+    right: 3%;
+    top: 62%;
+  }
+
+  .text-5 {
+    left: 5%;
+    top: 82%;
+  }
+
+  .text-6 {
+    right: 5%;
+    top: 80%;
+  }
+
+  .text-7 {
+    left: 36%;
+    top: 25%;
+  }
+
+  .text-8 {
+    right: 32%;
+    top: 84%;
+  }
 
   .text-9 {
     left: 3%;
@@ -2581,11 +2609,129 @@ button {
   }
 
 
+  /* GALAXIA */
+
+  .galaxy-scene {
+
+    width:
+      94vw;
+
+    height:
+      94vw;
+
+    top:
+      53%;
+  }
+
+
+  .galaxy-core {
+
+    width:
+      95px;
+
+    height:
+      95px;
+  }
+
+
+  .galaxy-core span {
+
+    font-size:
+      4rem;
+  }
+
+
+  .orbit .sunflower {
+
+    font-size:
+      2rem;
+  }
+
+
+  .galaxy-orbit-text {
+
+    max-width:
+      120px;
+
+    padding:
+      5px 8px;
+
+    font-size:
+      .52rem;
+  }
+
+
+  .orbit-2 {
+    transform:
+      translate(-50%, -50%)
+      rotate(45deg)
+      scale(.75);
+  }
+
+
+  .orbit-3 {
+    transform:
+      translate(-50%, -50%)
+      rotate(120deg)
+      scale(.58);
+  }
+
+
+  .orbit-4 {
+    transform:
+      translate(-50%, -50%)
+      rotate(210deg)
+      scale(.42);
+  }
+
+
+  .galaxy-message {
+
+    bottom:
+      17%;
+
+    font-size:
+      .62rem;
+  }
+
+
+  .floating-star {
+
+    font-size:
+      1rem;
+  }
+
+
+  .moon {
+
+    width:
+      58px;
+
+    height:
+      58px;
+
+    right:
+      7%;
+
+    top:
+      8%;
+  }
+
+
+  .sun-glow {
+
+    width:
+      120vw;
+
+    height:
+      120vw;
+  }
+
+
   .particle-heart {
 
     top:
       54%;
-
   }
 
 
@@ -2597,7 +2743,6 @@ button {
         calc(var(--x) * 3px),
         calc(var(--y) * 3px)
       );
-
   }
 
 
@@ -2608,7 +2753,6 @@ button {
 
     height:
       165px;
-
   }
 
 
@@ -2619,7 +2763,6 @@ button {
 
     height:
       76px;
-
   }
 
 
@@ -2630,7 +2773,6 @@ button {
 
     height:
       92px;
-
   }
 
 
@@ -2647,7 +2789,6 @@ button {
 
     bottom:
       48px;
-
   }
 
 
@@ -2661,7 +2802,6 @@ button {
 
     padding:
       30px 21px 24px;
-
   }
 
 
@@ -2669,7 +2809,6 @@ button {
 
     font-size:
       1.7rem;
-
   }
 
 
@@ -2680,7 +2819,105 @@ button {
 
     line-height:
       1.75;
-
   }
 
-    }
+
+  .footer-note {
+
+    display:
+      none;
+  }
+
+}
+
+
+/* =========================================================
+   📱 PANTALLAS MUY PEQUEÑAS
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .hero-message {
+
+    top:
+      7%;
+  }
+
+
+  .hero-message h2 {
+
+    font-size:
+      1.75rem;
+  }
+
+
+  .galaxy-scene {
+
+    width:
+      100vw;
+
+    height:
+      100vw;
+  }
+
+
+  .galaxy-core {
+
+    width:
+      82px;
+
+    height:
+      82px;
+  }
+
+
+  .galaxy-core span {
+
+    font-size:
+      3.4rem;
+  }
+
+
+  .galaxy-orbit-text {
+
+    max-width:
+      105px;
+
+    font-size:
+      .46rem;
+  }
+
+
+  .galaxy-message {
+
+    bottom:
+      18%;
+
+    font-size:
+      .55rem;
+  }
+
+}
+
+
+/* =========================================================
+   ♿ REDUCIR MOVIMIENTO
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    animation-duration:
+      .01ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    scroll-behavior:
+      auto !important;
+  }
+
+      }
