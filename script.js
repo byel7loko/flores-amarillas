@@ -1,3 +1,14 @@
+/* =========================================================
+   🌻 FELIZ DÍA DE LAS FLORES AMARILLAS
+   JAVASCRIPT COMPLETO
+   GALAXIA INTERACTIVA + JARDÍN + CARTA
+========================================================= */
+
+
+/* =========================================================
+   CONFIGURACIÓN
+========================================================= */
+
 const CONFIG = {
 
   pageTitle:
@@ -9,16 +20,11 @@ const CONFIG = {
   introText:
     "Preparé algo especial para ti",
 
-  messageTitle:
-    "Feliz Día de las Flores Amarillas",
-
   messageBody:
     "Que este pequeño detalle te recuerde lo especial que eres.",
 
   footer:
     "Hecho especialmente para ti ✨",
-
-  /* Cantidades */
 
   flowerCount: 22,
 
@@ -28,13 +34,48 @@ const CONFIG = {
 
   dustCount: 90,
 
-  heartParticleCount: 130
+  heartParticleCount: 130,
+
+  /* =========================
+     GALAXIA
+  ========================== */
+
+  galaxyRotationSpeed:
+    0.018,
+
+  galaxyAutoRotate:
+    true,
+
+  galaxyMessages: [
+
+    "Para ti 💛",
+
+    "Eres mi pequeño universo ✨",
+
+    "Contigo todo brilla 💛",
+
+    "Siempre florecerá algo bonito 🌼",
+
+    "Tú haces bonito mi mundo 🌻",
+
+    "Un detalle hecho con cariño ✨",
+
+    "Que nunca te falten sonrisas 💛",
+
+    "Porque te lo mereces 🌼",
+
+    "Gracias por existir ✨",
+
+    "Mi pequeño universo 🌻"
+
+  ]
+
 };
 
 
-/* =========================
+/* =========================================================
    UTILIDADES
-========================= */
+========================================================= */
 
 const $ = (id) =>
   document.getElementById(id);
@@ -49,9 +90,63 @@ function rand(min, max) {
 }
 
 
-/* =========================
-   TEXTO
-========================= */
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const intro =
+  $("intro");
+
+const garden =
+  $("garden");
+
+const flowers =
+  $("flowers");
+
+const petals =
+  $("petals");
+
+const fireflies =
+  $("fireflies");
+
+const goldDust =
+  $("goldDust");
+
+const particleHeart =
+  $("particleHeart");
+
+const galaxyScene =
+  $("galaxyScene");
+
+const letterOverlay =
+  $("letterOverlay");
+
+
+/* =========================================================
+   ESTADO DE LA GALAXIA
+========================================================= */
+
+let galaxyRotation = 0;
+
+let galaxyVelocity = 0;
+
+let galaxyDragging = false;
+
+let galaxyPointerId = null;
+
+let galaxyLastX = 0;
+
+let galaxyLastY = 0;
+
+let galaxyAnimationFrame = null;
+
+let lastGalaxyTime =
+  performance.now();
+
+
+/* =========================================================
+   TEXTO GENERAL
+========================================================= */
 
 document.title =
   CONFIG.pageTitle;
@@ -73,15 +168,6 @@ if ($("introText")) {
 }
 
 
-if ($("messageTitle")) {
-
-  $("messageTitle").innerHTML =
-    `Feliz Día de las<br>
-     <strong>Flores Amarillas</strong> 🌻`;
-
-}
-
-
 if ($("messageBody")) {
 
   $("messageBody").textContent =
@@ -98,31 +184,15 @@ if ($("footerNote")) {
 }
 
 
-/* =========================
-   CONTENEDORES
-========================= */
-
-const flowers =
-  $("flowers");
-
-const petals =
-  $("petals");
-
-const fireflies =
-  $("fireflies");
-
-const goldDust =
-  $("goldDust");
-
-const particleHeart =
-  $("particleHeart");
-
-
-/* =========================
+/* =========================================================
    CREAR GIRASOL
-========================= */
+========================================================= */
 
 function createFlower(index) {
+
+  if (!flowers)
+    return;
+
 
   const el =
     document.createElement("div");
@@ -140,7 +210,7 @@ function createFlower(index) {
 
   el.style.setProperty(
     "--scale",
-    rand(0.45, 1.18).toFixed(2)
+    rand(.45, 1.18).toFixed(2)
   );
 
 
@@ -153,20 +223,17 @@ function createFlower(index) {
   el.style.setProperty(
     "--delay",
     `${(
-      index * 0.08 +
-      rand(0, 0.7)
+      index * .08 +
+      rand(0, .7)
     ).toFixed(2)}s`
   );
 
 
-  /*
-    Algunos girasoles serán más grandes
-    para que se parezca más a la referencia.
-  */
-
   if (index === 0) {
 
-    el.classList.add("flower-big");
+    el.classList.add(
+      "flower-big"
+    );
 
     el.style.setProperty(
       "--left",
@@ -183,7 +250,9 @@ function createFlower(index) {
 
   if (index === 1) {
 
-    el.classList.add("flower-big");
+    el.classList.add(
+      "flower-big"
+    );
 
     el.style.setProperty(
       "--left",
@@ -225,11 +294,15 @@ function createFlower(index) {
 }
 
 
-/* =========================
+/* =========================================================
    PÉTALOS
-========================= */
+========================================================= */
 
 function createPetals() {
+
+  if (!petals)
+    return;
+
 
   for (
     let i = 0;
@@ -282,11 +355,15 @@ function createPetals() {
 }
 
 
-/* =========================
+/* =========================================================
    LUCIÉRNAGAS
-========================= */
+========================================================= */
 
 function createFireflies() {
+
+  if (!fireflies)
+    return;
+
 
   for (
     let i = 0;
@@ -333,16 +410,18 @@ function createFireflies() {
 }
 
 
-/* =========================
+/* =========================================================
    POLVO DORADO
-========================= */
+========================================================= */
 
 function createGoldDust() {
 
-  if (!goldDust) return;
+  if (!goldDust)
+    return;
 
 
-  goldDust.innerHTML = "";
+  goldDust.innerHTML =
+    "";
 
 
   for (
@@ -355,6 +434,10 @@ function createGoldDust() {
       document.createElement("i");
 
 
+    const size =
+      rand(1, 3.5);
+
+
     particle.style.position =
       "absolute";
 
@@ -365,10 +448,6 @@ function createGoldDust() {
 
     particle.style.top =
       `${rand(0, 100)}%`;
-
-
-    const size =
-      rand(1, 3.5);
 
 
     particle.style.width =
@@ -392,7 +471,7 @@ function createGoldDust() {
 
 
     particle.style.opacity =
-      rand(0.15, 0.8).toFixed(2);
+      rand(.15, .8).toFixed(2);
 
 
     particle.style.animation =
@@ -401,7 +480,8 @@ function createGoldDust() {
       ${rand(3, 7).toFixed(2)}s
       ease-in-out
       ${rand(0, 5).toFixed(2)}s
-      infinite alternate
+      infinite
+      alternate
       `;
 
 
@@ -414,16 +494,18 @@ function createGoldDust() {
 }
 
 
-/* =========================
+/* =========================================================
    CORAZÓN DE PARTÍCULAS
-========================= */
+========================================================= */
 
 function createParticleHeart() {
 
-  if (!particleHeart) return;
+  if (!particleHeart)
+    return;
 
 
-  particleHeart.innerHTML = "";
+  particleHeart.innerHTML =
+    "";
 
 
   const total =
@@ -440,11 +522,6 @@ function createParticleHeart() {
       (Math.PI * 2 * i) /
       total;
 
-
-    /*
-      Fórmula matemática para
-      dibujar un corazón.
-    */
 
     const x =
       16 *
@@ -473,13 +550,13 @@ function createParticleHeart() {
 
     particle.style.setProperty(
       "--x",
-      `${x}px`
+      x.toFixed(2)
     );
 
 
     particle.style.setProperty(
       "--y",
-      `${y}px`
+      y.toFixed(2)
     );
 
 
@@ -504,9 +581,684 @@ function createParticleHeart() {
 }
 
 
-/* =========================
-   CONSTRUIR ESCENA
-========================= */
+/* =========================================================
+   ESTRELLAS EXTRA DE LA GALAXIA
+========================================================= */
+
+function createGalaxyStars() {
+
+  if (!galaxyScene)
+    return;
+
+
+  galaxyScene
+    .querySelectorAll(
+      ".generated-galaxy-star"
+    )
+    .forEach(
+      star => star.remove()
+    );
+
+
+  const total =
+    window.innerWidth < 600
+      ? 22
+      : 38;
+
+
+  for (
+    let i = 0;
+    i < total;
+    i++
+  ) {
+
+    const star =
+      document.createElement("div");
+
+
+    star.className =
+      "floating-star generated-galaxy-star";
+
+
+    star.textContent =
+      Math.random() > .5
+        ? "✦"
+        : "·";
+
+
+    star.style.left =
+      `${rand(4, 96)}%`;
+
+
+    star.style.top =
+      `${rand(4, 96)}%`;
+
+
+    star.style.animationDelay =
+      `${rand(-4, 0).toFixed(2)}s`;
+
+
+    star.style.fontSize =
+      `${rand(.45, 1.35).toFixed(2)}rem`;
+
+
+    galaxyScene.appendChild(
+      star
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR MENSAJES
+========================================================= */
+
+function updateGalaxyMessages() {
+
+  if (!galaxyScene)
+    return;
+
+
+  const texts =
+    galaxyScene.querySelectorAll(
+      ".galaxy-orbit-text"
+    );
+
+
+  texts.forEach(
+    (text, index) => {
+
+      if (
+        CONFIG.galaxyMessages[index]
+      ) {
+
+        text.textContent =
+          CONFIG.galaxyMessages[index];
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   CREAR ELEMENTOS EXTRA
+   AL INTERACTUAR CON LA GALAXIA
+========================================================= */
+
+function createInteractionSpark(x, y) {
+
+  if (!galaxyScene)
+    return;
+
+
+  const spark =
+    document.createElement("span");
+
+
+  spark.className =
+    "floating-star interaction-spark";
+
+
+  spark.textContent =
+    Math.random() > .5
+      ? "✦"
+      : "✧";
+
+
+  spark.style.position =
+    "fixed";
+
+
+  spark.style.left =
+    `${x}px`;
+
+
+  spark.style.top =
+    `${y}px`;
+
+
+  spark.style.zIndex =
+    "50";
+
+
+  spark.style.pointerEvents =
+    "none";
+
+
+  document.body.appendChild(
+    spark
+  );
+
+
+  spark.animate(
+    [
+      {
+        transform:
+          "translate(-50%, -50%) scale(.5)",
+        opacity: 0
+      },
+
+      {
+        transform:
+          "translate(-50%, -50%) scale(1.4)",
+        opacity: 1
+      },
+
+      {
+        transform:
+          `
+          translate(
+            ${rand(-40, 40)}px,
+            ${rand(-60, 20)}px
+          )
+          scale(.2)
+          `,
+        opacity: 0
+      }
+    ],
+    {
+      duration: 900,
+      easing: "ease-out"
+    }
+  ).finished
+    .then(() => {
+      spark.remove();
+    })
+    .catch(() => {
+      spark.remove();
+    });
+
+}
+
+
+/* =========================================================
+   ROTACIÓN
+========================================================= */
+
+function applyGalaxyRotation() {
+
+  if (!galaxyScene)
+    return;
+
+
+  galaxyScene.style.setProperty(
+    "--galaxy-rotation",
+    `${galaxyRotation}deg`
+  );
+
+
+  const orbit1 =
+    galaxyScene.querySelector(
+      ".orbit-1"
+    );
+
+  const orbit2 =
+    galaxyScene.querySelector(
+      ".orbit-2"
+    );
+
+  const orbit3 =
+    galaxyScene.querySelector(
+      ".orbit-3"
+    );
+
+  const orbit4 =
+    galaxyScene.querySelector(
+      ".orbit-4"
+    );
+
+
+  if (orbit1) {
+
+    orbit1.style.transform =
+      `
+      translate(-50%, -50%)
+      rotate(${galaxyRotation}deg)
+      `;
+
+  }
+
+
+  if (orbit2) {
+
+    orbit2.style.transform =
+      `
+      translate(-50%, -50%)
+      rotate(${45 + galaxyRotation * .72}deg)
+      scale(.78)
+      `;
+
+  }
+
+
+  if (orbit3) {
+
+    orbit3.style.transform =
+      `
+      translate(-50%, -50%)
+      rotate(${120 - galaxyRotation * .55}deg)
+      scale(.61)
+      `;
+
+  }
+
+
+  if (orbit4) {
+
+    orbit4.style.transform =
+      `
+      translate(-50%, -50%)
+      rotate(${210 + galaxyRotation * .38}deg)
+      scale(.44)
+      `;
+
+  }
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN DE LA GALAXIA
+========================================================= */
+
+function animateGalaxy(time) {
+
+  const delta =
+    Math.min(
+      time - lastGalaxyTime,
+      40
+    );
+
+
+  lastGalaxyTime =
+    time;
+
+
+  if (!galaxyDragging) {
+
+    if (CONFIG.galaxyAutoRotate) {
+
+      galaxyRotation +=
+        CONFIG.galaxyRotationSpeed *
+        delta;
+
+    }
+
+
+    galaxyRotation +=
+      galaxyVelocity;
+
+
+    galaxyVelocity *= .94;
+
+
+    if (
+      Math.abs(galaxyVelocity) < .002
+    ) {
+
+      galaxyVelocity =
+        0;
+
+    }
+
+  }
+
+
+  applyGalaxyRotation();
+
+
+  galaxyAnimationFrame =
+    requestAnimationFrame(
+      animateGalaxy
+    );
+
+}
+
+
+/* =========================================================
+   INICIAR GALAXIA
+========================================================= */
+
+function startGalaxy() {
+
+  if (!galaxyScene)
+    return;
+
+
+  createGalaxyStars();
+
+  updateGalaxyMessages();
+
+
+  galaxyRotation =
+    0;
+
+
+  galaxyVelocity =
+    0;
+
+
+  lastGalaxyTime =
+    performance.now();
+
+
+  applyGalaxyRotation();
+
+
+  if (
+    !galaxyAnimationFrame
+  ) {
+
+    galaxyAnimationFrame =
+      requestAnimationFrame(
+        animateGalaxy
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   DETENER GALAXIA
+========================================================= */
+
+function stopGalaxy() {
+
+  if (
+    galaxyAnimationFrame
+  ) {
+
+    cancelAnimationFrame(
+      galaxyAnimationFrame
+    );
+
+    galaxyAnimationFrame =
+      null;
+
+  }
+
+}
+
+
+/* =========================================================
+   INICIO DEL ARRASTRE
+========================================================= */
+
+function startGalaxyDrag(event) {
+
+  if (!galaxyScene)
+    return;
+
+
+  galaxyDragging =
+    true;
+
+
+  galaxyPointerId =
+    event.pointerId;
+
+
+  galaxyLastX =
+    event.clientX;
+
+
+  galaxyLastY =
+    event.clientY;
+
+
+  galaxyVelocity =
+    0;
+
+
+  galaxyScene.classList.add(
+    "dragging"
+  );
+
+
+  try {
+
+    galaxyScene.setPointerCapture(
+      event.pointerId
+    );
+
+  } catch (error) {
+    // Compatibilidad móvil.
+  }
+
+
+  createInteractionSpark(
+    event.clientX,
+    event.clientY
+  );
+
+
+  event.preventDefault();
+
+}
+
+
+/* =========================================================
+   MOVIMIENTO
+========================================================= */
+
+function moveGalaxyDrag(event) {
+
+  if (!galaxyDragging)
+    return;
+
+
+  if (
+    galaxyPointerId !==
+    event.pointerId
+  ) return;
+
+
+  const deltaX =
+    event.clientX -
+    galaxyLastX;
+
+
+  const deltaY =
+    event.clientY -
+    galaxyLastY;
+
+
+  galaxyLastX =
+    event.clientX;
+
+
+  galaxyLastY =
+    event.clientY;
+
+
+  /*
+    Horizontal:
+    giro principal.
+
+    Vertical:
+    pequeña influencia
+    para que se sienta más natural.
+  */
+
+  const movement =
+    deltaX +
+    deltaY * .22;
+
+
+  galaxyRotation +=
+    movement * .48;
+
+
+  galaxyVelocity =
+    movement * .20;
+
+
+  applyGalaxyRotation();
+
+
+  /*
+    Pequeños destellos
+    durante el movimiento.
+  */
+
+  if (
+    Math.abs(movement) > 2 &&
+    Math.random() > .82
+  ) {
+
+    createInteractionSpark(
+      event.clientX,
+      event.clientY
+    );
+
+  }
+
+
+  event.preventDefault();
+
+}
+
+
+/* =========================================================
+   TERMINAR ARRASTRE
+========================================================= */
+
+function endGalaxyDrag(event) {
+
+  if (!galaxyDragging)
+    return;
+
+
+  if (
+    event &&
+    galaxyPointerId !==
+    event.pointerId
+  ) return;
+
+
+  galaxyDragging =
+    false;
+
+
+  galaxyPointerId =
+    null;
+
+
+  galaxyScene.classList.remove(
+    "dragging"
+  );
+
+
+  /*
+    Limitamos la velocidad
+    para evitar que salga disparada.
+  */
+
+  galaxyVelocity =
+    Math.max(
+      -1.8,
+      Math.min(
+        1.8,
+        galaxyVelocity
+      )
+    );
+
+
+  try {
+
+    if (event) {
+
+      galaxyScene.releasePointerCapture(
+        event.pointerId
+      );
+
+    }
+
+  } catch (error) {
+    // Nada que hacer.
+  }
+
+}
+
+
+/* =========================================================
+   EVENTOS DE GALAXIA
+========================================================= */
+
+function setupGalaxyControls() {
+
+  if (!galaxyScene)
+    return;
+
+
+  galaxyScene.addEventListener(
+    "pointerdown",
+    startGalaxyDrag
+  );
+
+
+  galaxyScene.addEventListener(
+    "pointermove",
+    moveGalaxyDrag,
+    {
+      passive: false
+    }
+  );
+
+
+  galaxyScene.addEventListener(
+    "pointerup",
+    endGalaxyDrag
+  );
+
+
+  galaxyScene.addEventListener(
+    "pointercancel",
+    endGalaxyDrag
+  );
+
+
+  galaxyScene.addEventListener(
+    "pointerleave",
+    (event) => {
+
+      if (
+        galaxyDragging &&
+        event.pointerType === "mouse"
+      ) {
+
+        endGalaxyDrag(event);
+
+      }
+
+    }
+  );
+
+
+  /*
+    Evita que el navegador
+    intente seleccionar texto
+    o desplazar la página
+    mientras se arrastra.
+  */
+
+  galaxyScene.addEventListener(
+    "dragstart",
+    event => event.preventDefault()
+  );
+
+}
+
+
+/* =========================================================
+   ESCENA COMPLETA
+========================================================= */
 
 function buildScene() {
 
@@ -541,21 +1293,18 @@ function buildScene() {
 
   createParticleHeart();
 
+  createGalaxyStars();
+
+  updateGalaxyMessages();
+
 }
 
 
-/* =========================
-   ABRIR
-========================= */
+/* =========================================================
+   ABRIR SORPRESA
+========================================================= */
 
 function openSurprise() {
-
-  const intro =
-    $("intro");
-
-  const garden =
-    $("garden");
-
 
   if (!intro || !garden)
     return;
@@ -579,29 +1328,27 @@ function openSurprise() {
 
   buildScene();
 
+  startGalaxy();
+
 }
 
 
-/* =========================
+/* =========================================================
    CARTA
-========================= */
+========================================================= */
 
 function openLetter() {
 
-  const overlay =
-    $("letterOverlay");
-
-
-  if (!overlay)
+  if (!letterOverlay)
     return;
 
 
-  overlay.classList.add(
+  letterOverlay.classList.add(
     "open"
   );
 
 
-  overlay.setAttribute(
+  letterOverlay.setAttribute(
     "aria-hidden",
     "false"
   );
@@ -611,20 +1358,16 @@ function openLetter() {
 
 function closeLetter() {
 
-  const overlay =
-    $("letterOverlay");
-
-
-  if (!overlay)
+  if (!letterOverlay)
     return;
 
 
-  overlay.classList.remove(
+  letterOverlay.classList.remove(
     "open"
   );
 
 
-  overlay.setAttribute(
+  letterOverlay.setAttribute(
     "aria-hidden",
     "true"
   );
@@ -632,20 +1375,15 @@ function closeLetter() {
 }
 
 
-/* =========================
+/* =========================================================
    REPETIR
-========================= */
+========================================================= */
 
 function replay() {
 
   closeLetter();
 
-
-  const intro =
-    $("intro");
-
-  const garden =
-    $("garden");
+  stopGalaxy();
 
 
   if (!intro || !garden)
@@ -668,6 +1406,14 @@ function replay() {
   );
 
 
+  galaxyRotation =
+    0;
+
+
+  galaxyVelocity =
+    0;
+
+
   window.setTimeout(
     buildScene,
     500
@@ -676,13 +1422,29 @@ function replay() {
 }
 
 
-/* =========================
-   EVENTOS
-========================= */
+/* =========================================================
+   BOTONES
+========================================================= */
 
-if ($("openBtn")) {
+const openButton =
+  $("openBtn");
 
-  $("openBtn").addEventListener(
+
+const replayButton =
+  $("replayBtn");
+
+
+const letterButton =
+  $("letterBtn");
+
+
+const closeLetterButton =
+  $("closeLetter");
+
+
+if (openButton) {
+
+  openButton.addEventListener(
     "click",
     openSurprise
   );
@@ -690,9 +1452,9 @@ if ($("openBtn")) {
 }
 
 
-if ($("replayBtn")) {
+if (replayButton) {
 
-  $("replayBtn").addEventListener(
+  replayButton.addEventListener(
     "click",
     replay
   );
@@ -700,9 +1462,9 @@ if ($("replayBtn")) {
 }
 
 
-if ($("letterBtn")) {
+if (letterButton) {
 
-  $("letterBtn").addEventListener(
+  letterButton.addEventListener(
     "click",
     openLetter
   );
@@ -710,9 +1472,9 @@ if ($("letterBtn")) {
 }
 
 
-if ($("closeLetter")) {
+if (closeLetterButton) {
 
-  $("closeLetter").addEventListener(
+  closeLetterButton.addEventListener(
     "click",
     closeLetter
   );
@@ -720,15 +1482,19 @@ if ($("closeLetter")) {
 }
 
 
-if ($("letterOverlay")) {
+/* =========================================================
+   CERRAR CARTA AL TOCAR FUERA
+========================================================= */
 
-  $("letterOverlay").addEventListener(
+if (letterOverlay) {
+
+  letterOverlay.addEventListener(
     "click",
-    (event) => {
+    event => {
 
       if (
         event.target ===
-        $("letterOverlay")
+        letterOverlay
       ) {
 
         closeLetter();
@@ -741,16 +1507,17 @@ if ($("letterOverlay")) {
 }
 
 
-/* =========================
-   ESC
-========================= */
+/* =========================================================
+   ESCAPE
+========================================================= */
 
 document.addEventListener(
   "keydown",
-  (event) => {
+  event => {
 
     if (
-      event.key === "Escape"
+      event.key ===
+      "Escape"
     ) {
 
       closeLetter();
@@ -761,8 +1528,31 @@ document.addEventListener(
 );
 
 
-/* =========================
-   INICIO
-========================= */
+/* =========================================================
+   CAMBIO DE TAMAÑO
+========================================================= */
+
+window.addEventListener(
+  "resize",
+  () => {
+
+    if (
+      garden &&
+      garden.classList.contains("show")
+    ) {
+
+      createGalaxyStars();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   INICIALIZACIÓN
+========================================================= */
+
+setupGalaxyControls();
 
 buildScene();
