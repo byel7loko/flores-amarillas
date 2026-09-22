@@ -1597,63 +1597,183 @@ button {
   pointer-events: none;
 }
 
+/* =========================================================
+   🌼 PÉTALOS VOLANDO — NATURALES
+========================================================= */
+
+.petals {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  overflow: hidden;
+}
 
 .petal-float {
   position: absolute;
 
   left: var(--left);
-  bottom: -20px;
+  top: var(--top);
 
   width: var(--size);
-  height: calc(var(--size) * 1.6);
+  height: calc(var(--size) * 1.55);
 
-  border-radius:
-    80% 20% 80% 20%;
+  border-radius: 80% 20% 80% 20%;
 
   background:
     linear-gradient(
       135deg,
-      #ffe94e,
-      #f1a700
+      #fff06a,
+      #f4b000
     );
 
-  opacity: .75;
+  opacity: 0;
+
+  filter:
+    drop-shadow(
+      0 0 5px
+      rgba(255,210,50,.35)
+    );
+
+  transform-origin: center;
 
   animation:
-    petalFly
+    petalFall
     var(--duration)
-    linear
+    ease-in-out
     var(--delay)
     infinite;
 }
 
 
-@keyframes petalFly {
+/* =========================================================
+   🌬️ PÉTALOS QUE CAEN DESDE ARRIBA
+========================================================= */
+
+@keyframes petalFall {
 
   0% {
     transform:
-      translate3d(0, 0, 0)
-      rotate(0deg);
+      translate3d(
+        0,
+        -15vh,
+        0
+      )
+      rotate(0deg)
+      scale(.75);
 
     opacity: 0;
   }
 
-  10% {
-    opacity: .8;
+  8% {
+    opacity: .85;
+  }
+
+  25% {
+    transform:
+      translate3d(
+        calc(var(--drift) * .25),
+        25vh,
+        0
+      )
+      rotate(100deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(
+        calc(var(--drift) * -.35),
+        55vh,
+        0
+      )
+      rotate(210deg)
+      scale(.95);
+  }
+
+  75% {
+    transform:
+      translate3d(
+        calc(var(--drift) * .55),
+        82vh,
+        0
+      )
+      rotate(300deg)
+      scale(.9);
   }
 
   100% {
     transform:
       translate3d(
         var(--drift),
-        -110vh,
+        115vh,
         0
       )
-      rotate(720deg);
+      rotate(430deg)
+      scale(.75);
+
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   🌻 PÉTALOS QUE NACEN CERCA DE LAS FLORES
+========================================================= */
+
+.petal-float.from-flower {
+  animation-name: petalFromFlower;
+}
+
+@keyframes petalFromFlower {
+
+  0% {
+    transform:
+      translate3d(0, 0, 0)
+      rotate(0deg)
+      scale(.35);
 
     opacity: 0;
   }
 
+  12% {
+    opacity: .9;
+  }
+
+  35% {
+    transform:
+      translate3d(
+        calc(var(--drift) * .35),
+        -12vh,
+        0
+      )
+      rotate(120deg)
+      scale(1);
+  }
+
+  65% {
+    transform:
+      translate3d(
+        calc(var(--drift) * -.25),
+        8vh,
+        0
+      )
+      rotate(240deg)
+      scale(.9);
+  }
+
+  100% {
+    transform:
+      translate3d(
+        var(--drift),
+        28vh,
+        0
+      )
+      rotate(400deg)
+      scale(.65);
+
+    opacity: 0;
+  }
 }
 
 
