@@ -1616,3 +1616,1071 @@ button {
     scroll-behavior: auto !important;
   }
     }
+/* =========================================================
+   🌻 AJUSTE FINAL - ESTILO TIPO REFERENCIA
+========================================================= */
+
+
+/* =========================
+   BOTÓN DE INICIO
+========================= */
+
+.open-btn {
+  position: relative;
+  z-index: 200;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  min-width: 235px;
+
+  padding: 15px 24px;
+
+  border: 1px solid rgba(255, 225, 75, 0.55);
+
+  border-radius: 999px;
+
+  color: #fff4a6;
+
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(255, 220, 60, 0.2),
+      transparent 65%
+    ),
+    rgba(20, 16, 2, 0.55);
+
+  box-shadow:
+    0 0 20px rgba(255, 211, 47, 0.25),
+    inset 0 0 20px rgba(255, 211, 47, 0.05);
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background .25s ease;
+}
+
+
+.open-btn:hover {
+
+  transform:
+    translateY(-3px)
+    scale(1.03);
+
+  box-shadow:
+    0 0 35px rgba(255, 213, 47, .4),
+    inset 0 0 25px rgba(255, 213, 47, .08);
+
+}
+
+
+.open-btn:active {
+
+  transform:
+    scale(.96);
+
+}
+
+
+.open-sunflower {
+
+  display: inline-block;
+
+  font-size: 2rem;
+
+  filter:
+    drop-shadow(
+      0 0 8px
+      rgba(255, 211, 47, .75)
+    );
+
+  animation:
+    buttonSunflower
+    2.5s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes buttonSunflower {
+
+  0%,
+  100% {
+    transform: rotate(-5deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(5deg) scale(1.08);
+  }
+
+}
+
+
+/* =========================
+   INTRO MÁS PARECIDA
+========================= */
+
+.intro {
+
+  background:
+    radial-gradient(
+      circle at 50% 52%,
+      rgba(255, 196, 25, .12),
+      transparent 28%
+    );
+
+}
+
+
+.intro h1 {
+
+  color: #ffd83d;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  text-shadow:
+    0 0 10px rgba(255, 211, 47, .7),
+    0 0 30px rgba(255, 211, 47, .35);
+
+}
+
+
+.intro-small {
+
+  color:
+    rgba(255, 221, 88, .8);
+
+}
+
+
+/* =========================
+   JARDÍN
+========================= */
+
+.garden {
+
+  background:
+
+    radial-gradient(
+      ellipse at 50% 45%,
+      rgba(150, 105, 8, .24),
+      transparent 35%
+    ),
+
+    radial-gradient(
+      ellipse at 50% 80%,
+      rgba(44, 75, 18, .32),
+      transparent 42%
+    ),
+
+    linear-gradient(
+      180deg,
+      #010200 0%,
+      #050700 35%,
+      #0a1006 70%,
+      #020301 100%
+    );
+
+}
+
+
+/* =========================
+   RESPLANDOR CENTRAL
+========================= */
+
+.sun-glow {
+
+  width: 95vw;
+  height: 95vw;
+
+  max-width: 700px;
+  max-height: 700px;
+
+  top: 54%;
+
+  background:
+
+    radial-gradient(
+      circle,
+      rgba(255, 220, 75, .42) 0%,
+      rgba(255, 192, 25, .2) 28%,
+      rgba(255, 173, 0, .08) 48%,
+      transparent 72%
+    );
+
+  filter: blur(30px);
+
+}
+
+
+/* =========================
+   TÍTULO
+========================= */
+
+.hero-message {
+
+  top: 10%;
+
+  width:
+    min(92vw, 700px);
+
+}
+
+
+.hero-kicker {
+
+  color:
+    rgba(255, 224, 88, .7);
+
+}
+
+
+.hero-message h2 {
+
+  color:
+    #ffd83d;
+
+  font-size:
+    clamp(
+      2.1rem,
+      9vw,
+      4.7rem
+    );
+
+  text-shadow:
+
+    0 0 10px
+    rgba(255, 211, 47, .8),
+
+    0 0 35px
+    rgba(255, 211, 47, .4);
+
+}
+
+
+.hero-message h2 strong {
+
+  color:
+    #ffd83d;
+
+}
+
+
+.hero-message p {
+
+  color:
+    rgba(255, 235, 143, .75);
+
+}
+
+
+/* =========================
+   TEXTOS FLOTANTES
+========================= */
+
+.floating-text {
+
+  color:
+    rgba(255, 225, 105, .72);
+
+  font-family:
+    Georgia,
+    serif;
+
+  text-shadow:
+    0 0 8px
+    rgba(255, 203, 40, .5);
+
+  letter-spacing:
+    .02em;
+
+}
+
+
+.text-9 {
+
+  position: absolute;
+
+  left: 5%;
+  top: 40%;
+
+  animation-delay:
+    -.7s;
+
+}
+
+
+.text-10 {
+
+  position: absolute;
+
+  right: 8%;
+  top: 52%;
+
+  animation-delay:
+    -1.8s;
+
+}
+
+
+.text-11 {
+
+  position: absolute;
+
+  left: 12%;
+  top: 70%;
+
+  animation-delay:
+    -2.2s;
+
+}
+
+
+.text-12 {
+
+  position: absolute;
+
+  right: 15%;
+  top: 73%;
+
+  animation-delay:
+    -3s;
+
+}
+
+
+/* =========================
+   CORAZÓN DE PARTÍCULAS
+========================= */
+
+.heart,
+.heart::before,
+.heart::after {
+
+  display: none !important;
+
+}
+
+
+.particle-heart {
+
+  position: absolute;
+
+  z-index: 12;
+
+  left: 50%;
+  top: 53%;
+
+  width: 1px;
+  height: 1px;
+
+  pointer-events: none;
+
+  filter:
+    drop-shadow(
+      0 0 8px
+      rgba(255, 211, 47, .8)
+    );
+
+  animation:
+    heartFloat
+    3s
+    ease-in-out
+    infinite;
+
+}
+
+
+.heart-dot {
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width:
+    var(--size);
+
+  height:
+    var(--size);
+
+  border-radius:
+    50%;
+
+  background:
+    #ffe76a;
+
+  box-shadow:
+
+    0 0 4px
+    #ffd52f,
+
+    0 0 10px
+    rgba(255, 213, 47, .8);
+
+  transform:
+
+    translate(
+      calc(var(--x) * 4px),
+      calc(var(--y) * 4px)
+    );
+
+  animation:
+
+    heartDot
+    1.8s
+    ease-in-out
+    infinite
+    alternate;
+
+  animation-delay:
+    var(--delay);
+
+}
+
+
+@keyframes heartDot {
+
+  from {
+
+    opacity: .35;
+
+    transform:
+      translate(
+        calc(var(--x) * 4px),
+        calc(var(--y) * 4px)
+      )
+      scale(.65);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translate(
+        calc(var(--x) * 4px),
+        calc(var(--y) * 4px)
+      )
+      scale(1.35);
+
+  }
+
+}
+
+
+@keyframes heartFloat {
+
+  0%,
+  100% {
+
+    transform:
+      translate(-50%, -50%)
+      scale(.96);
+
+  }
+
+  50% {
+
+    transform:
+      translate(-50%, -50%)
+      scale(1.05);
+
+  }
+
+}
+
+
+/* =========================
+   GIRASOLES
+========================= */
+
+.flower {
+
+  filter:
+
+    drop-shadow(
+      0 0 7px
+      rgba(255, 205, 35, .18)
+    );
+
+}
+
+
+.flower .head {
+
+  width: 82px;
+  height: 82px;
+
+}
+
+
+.flower .petal {
+
+  width: 31px;
+  height: 52px;
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #fff49b 0%,
+      #ffd52f 48%,
+      #e5a600 100%
+    );
+
+  box-shadow:
+    0 0 5px
+    rgba(255, 210, 40, .3);
+
+}
+
+
+/* 12 pétalos */
+
+.flower .petal:nth-child(1) {
+  transform:
+    translate(-50%, -90%)
+    rotate(0deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(2) {
+  transform:
+    translate(-50%, -90%)
+    rotate(30deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(3) {
+  transform:
+    translate(-50%, -90%)
+    rotate(60deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(4) {
+  transform:
+    translate(-50%, -90%)
+    rotate(90deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(5) {
+  transform:
+    translate(-50%, -90%)
+    rotate(120deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(6) {
+  transform:
+    translate(-50%, -90%)
+    rotate(150deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(7) {
+  transform:
+    translate(-50%, -90%)
+    rotate(180deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(8) {
+  transform:
+    translate(-50%, -90%)
+    rotate(210deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(9) {
+  transform:
+    translate(-50%, -90%)
+    rotate(240deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(10) {
+  transform:
+    translate(-50%, -90%)
+    rotate(270deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(11) {
+  transform:
+    translate(-50%, -90%)
+    rotate(300deg)
+    translateY(-8px);
+}
+
+.flower .petal:nth-child(12) {
+  transform:
+    translate(-50%, -90%)
+    rotate(330deg)
+    translateY(-8px);
+}
+
+
+.flower .center {
+
+  width: 28px;
+  height: 28px;
+
+  background:
+
+    radial-gradient(
+      circle at 35% 30%,
+      #b97b16 0%,
+      #633b05 45%,
+      #241402 100%
+    );
+
+  box-shadow:
+
+    0 0 7px
+    rgba(255, 213, 47, .45),
+
+    inset 0 0 8px
+    rgba(0, 0, 0, .6);
+
+}
+
+
+/* =========================
+   GIRASOLES GRANDES
+========================= */
+
+.flower-big {
+
+  z-index: 14;
+
+}
+
+
+.flower-big .head {
+
+  width: 105px;
+  height: 105px;
+
+}
+
+
+.flower-big .petal {
+
+  width: 40px;
+  height: 65px;
+
+}
+
+
+.flower-big .center {
+
+  width: 35px;
+  height: 35px;
+
+}
+
+
+/* =========================
+   SUELO
+========================= */
+
+.ground {
+
+  height: 38%;
+
+  bottom: -8%;
+
+  background:
+
+    radial-gradient(
+      ellipse at 50% 10%,
+      #3d7429 0%,
+      #214719 28%,
+      #10250d 58%,
+      #030501 100%
+    );
+
+  box-shadow:
+
+    0 -20px 45px
+    rgba(80, 120, 35, .12);
+
+}
+
+
+/* =========================
+   CARTA
+========================= */
+
+.letter-overlay {
+
+  background:
+    rgba(0, 0, 0, .76);
+
+  backdrop-filter:
+    blur(12px);
+
+}
+
+
+.letter-card {
+
+  width:
+    min(90vw, 500px);
+
+  border-radius:
+    25px;
+
+  border:
+    1px solid
+    rgba(255, 213, 47, .45);
+
+  background:
+
+    linear-gradient(
+      180deg,
+      rgba(35, 27, 5, .97),
+      rgba(9, 10, 5, .98)
+    );
+
+  box-shadow:
+
+    0 25px 80px
+    rgba(0, 0, 0, .8),
+
+    0 0 50px
+    rgba(255, 213, 47, .15);
+
+}
+
+
+.close-letter {
+
+  position: absolute;
+
+  top: 12px;
+  right: 14px;
+
+  width: 36px;
+  height: 36px;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  color:
+    #fff0a0;
+
+  background:
+    rgba(255, 213, 47, .08);
+
+  font-size:
+    1.7rem;
+
+  line-height:
+    1;
+
+  cursor: pointer;
+
+}
+
+
+.letter-card h3 {
+
+  color:
+    #ffd83d;
+
+  text-shadow:
+    0 0 12px
+    rgba(255, 211, 47, .3);
+
+}
+
+
+.letter-text {
+
+  color:
+    rgba(255, 250, 220, .82);
+
+}
+
+
+/* =========================
+   BOTÓN CARTA
+========================= */
+
+.letter-button {
+
+  right: 18px;
+  bottom: 55px;
+
+  width: 62px;
+  height: 62px;
+
+  font-size:
+    1.5rem;
+
+  box-shadow:
+
+    0 0 25px
+    rgba(255, 213, 47, .45),
+
+    0 0 60px
+    rgba(255, 213, 47, .15);
+
+}
+
+
+/* =========================
+   REPETIR
+========================= */
+
+.replay-btn {
+
+  position: absolute;
+
+  z-index: 50;
+
+  left: 50%;
+
+  bottom: 18px;
+
+  transform:
+    translateX(-50%);
+
+  border:
+    1px solid
+    rgba(255, 213, 47, .3);
+
+  border-radius:
+    999px;
+
+  padding:
+    8px 15px;
+
+  color:
+    rgba(255, 241, 154, .7);
+
+  background:
+    rgba(0, 0, 0, .25);
+
+  font-size:
+    .75rem;
+
+  cursor:
+    pointer;
+
+}
+
+
+/* =========================
+   MÓVIL
+========================= */
+
+@media (max-width: 600px) {
+
+  .intro {
+
+    padding:
+      20px;
+
+  }
+
+
+  .intro h1 {
+
+    font-size:
+      clamp(
+        2rem,
+        10.5vw,
+        3.5rem
+      );
+
+  }
+
+
+  .intro-small {
+
+    font-size:
+      .58rem;
+
+  }
+
+
+  .open-btn {
+
+    min-width:
+      210px;
+
+    padding:
+      13px 20px;
+
+  }
+
+
+  .hero-message {
+
+    top:
+      8%;
+
+  }
+
+
+  .hero-message h2 {
+
+    font-size:
+      clamp(
+        1.9rem,
+        9.5vw,
+        3.3rem
+      );
+
+  }
+
+
+  .floating-text {
+
+    font-size:
+      .58rem;
+
+  }
+
+
+  .text-9 {
+    left: 3%;
+    top: 38%;
+  }
+
+  .text-10 {
+    right: 3%;
+    top: 50%;
+  }
+
+  .text-11 {
+    left: 5%;
+    top: 70%;
+  }
+
+  .text-12 {
+    right: 5%;
+    top: 73%;
+  }
+
+
+  .particle-heart {
+
+    top:
+      54%;
+
+  }
+
+
+  .heart-dot {
+
+    transform:
+
+      translate(
+        calc(var(--x) * 3px),
+        calc(var(--y) * 3px)
+      );
+
+  }
+
+
+  .flower {
+
+    width:
+      70px;
+
+    height:
+      165px;
+
+  }
+
+
+  .flower .head {
+
+    width:
+      76px;
+
+    height:
+      76px;
+
+  }
+
+
+  .flower-big .head {
+
+    width:
+      92px;
+
+    height:
+      92px;
+
+  }
+
+
+  .letter-button {
+
+    width:
+      56px;
+
+    height:
+      56px;
+
+    right:
+      14px;
+
+    bottom:
+      48px;
+
+  }
+
+
+  .letter-card {
+
+    width:
+      91vw;
+
+    max-height:
+      78vh;
+
+    padding:
+      30px 21px 24px;
+
+  }
+
+
+  .letter-card h3 {
+
+    font-size:
+      1.7rem;
+
+  }
+
+
+  .letter-text {
+
+    font-size:
+      .88rem;
+
+    line-height:
+      1.75;
+
+  }
+
+    }
