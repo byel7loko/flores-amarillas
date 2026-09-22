@@ -1,151 +1,413 @@
 /* =========================================================
    🌻 FELIZ DÍA DE LAS FLORES AMARILLAS
+   SCRIPT COMPLETO
    GALAXIA INTERACTIVA + JARDÍN + CARTA
 ========================================================= */
 
 
 /* =========================================================
-   RESET / BASE
+   CONFIGURACIÓN
 ========================================================= */
 
-* {
-  box-sizing: border-box;
-}
+const CONFIG = {
 
-html,
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+  pageTitle:
+    "Feliz Día de las Flores Amarillas 🌻",
 
-body {
-  overflow: hidden;
+  introTitle:
+    "Feliz Día de las Flores Amarillas",
 
-  background: #010200;
+  introText:
+    "Preparé algo especial para ti",
 
-  color: #fff7bd;
+  messageTitle:
+    "Feliz Día de las Flores Amarillas",
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-}
+  messageBody:
+    "Que este pequeño detalle te recuerde lo especial que eres.",
 
-button {
-  font: inherit;
-}
+  footer:
+    "Hecho especialmente para ti ✨",
 
-button:focus-visible {
-  outline:
-    2px solid
-    rgba(255, 221, 70, .9);
+  flowerCount: 22,
 
-  outline-offset: 4px;
+  petalCount: 38,
+
+  fireflyCount: 55,
+
+  dustCount: 90,
+
+  heartParticleCount: 130,
+
+  /* =========================
+     GALAXIA
+  ========================== */
+
+  galaxyRotationSpeed:
+    0.025,
+
+  galaxyAutoRotate:
+    true,
+
+  galaxyMessages: [
+
+    "Para ti 💛",
+
+    "Eres mi pequeño universo ✨",
+
+    "Contigo todo brilla 💛",
+
+    "Siempre florecerá algo bonito 🌼",
+
+    "Tú haces bonito mi mundo 🌻",
+
+    "Un detalle hecho con cariño ✨",
+
+    "Que nunca te falten sonrisas 💛",
+
+    "Porque te lo mereces 🌼",
+
+    "Gracias por existir ✨",
+
+    "Mi pequeño universo 🌻"
+
+  ]
+
+};
+
+
+/* =========================================================
+   UTILIDADES
+========================================================= */
+
+const $ = (id) =>
+  document.getElementById(id);
+
+
+function rand(min, max) {
+
+  return Math.random() *
+    (max - min) +
+    min;
+
 }
 
 
 /* =========================================================
-   ESCENA PRINCIPAL
+   TEXTO
 ========================================================= */
 
-.scene {
+document.title =
+  CONFIG.pageTitle;
 
-  position: relative;
 
-  width: 100%;
-  height: 100vh;
+if ($("introTitle")) {
 
-  height: 100dvh;
+  $("introTitle").textContent =
+    CONFIG.introTitle;
 
-  overflow: hidden;
+}
 
-  background: #010200;
+
+if ($("introText")) {
+
+  $("introText").textContent =
+    CONFIG.introText;
+
+}
+
+
+if ($("messageTitle")) {
+
+  $("messageTitle").innerHTML =
+    `Feliz Día de las<br>
+     <strong>Flores Amarillas</strong> 🌻`;
+
+}
+
+
+if ($("messageBody")) {
+
+  $("messageBody").textContent =
+    CONFIG.messageBody;
+
+}
+
+
+if ($("footerNote")) {
+
+  $("footerNote").textContent =
+    CONFIG.footer;
+
 }
 
 
 /* =========================================================
-   FONDO GENERAL
+   CONTENEDORES
 ========================================================= */
 
-.stars {
+const flowers =
+  $("flowers");
 
-  position: absolute;
+const petals =
+  $("petals");
 
-  inset: 0;
+const fireflies =
+  $("fireflies");
 
-  z-index: 0;
+const goldDust =
+  $("goldDust");
 
-  pointer-events: none;
+const particleHeart =
+  $("particleHeart");
 
-  background:
+const galaxyScene =
+  $("galaxyScene");
 
-    radial-gradient(
-      1px 1px at 8% 15%,
-      rgba(255,255,255,.9),
-      transparent 2px
-    ),
 
-    radial-gradient(
-      1px 1px at 18% 72%,
-      rgba(255,240,150,.8),
-      transparent 2px
-    ),
+/* =========================================================
+   ESTADO DE LA GALAXIA
+========================================================= */
 
-    radial-gradient(
-      1px 1px at 31% 28%,
-      rgba(255,255,255,.8),
-      transparent 2px
-    ),
+let galaxyRotation = 0;
 
-    radial-gradient(
-      1px 1px at 48% 12%,
-      rgba(255,238,150,.8),
-      transparent 2px
-    ),
+let galaxyVelocity =
+  CONFIG.galaxyRotationSpeed;
 
-    radial-gradient(
-      1px 1px at 66% 24%,
-      rgba(255,255,255,.8),
-      transparent 2px
-    ),
+let galaxyDragging =
+  false;
 
-    radial-gradient(
-      1px 1px at 81% 17%,
-      rgba(255,231,130,.8),
-      transparent 2px
-    ),
+let galaxyLastX = 0;
 
-    radial-gradient(
-      1px 1px at 92% 68%,
-      rgba(255,255,255,.7),
-      transparent 2px
-    ),
+let galaxyLastY = 0;
 
-    radial-gradient(
-      1px 1px at 74% 86%,
-      rgba(255,235,130,.7),
-      transparent 2px
+let galaxyPointerId = null;
+
+let galaxyAnimationFrame =
+  null;
+
+let lastGalaxyTime =
+  performance.now();
+
+
+/* =========================================================
+   CREAR GIRASOL
+========================================================= */
+
+function createFlower(index) {
+
+  if (!flowers) return;
+
+
+  const el =
+    document.createElement("div");
+
+
+  el.className =
+    "flower";
+
+
+  el.style.setProperty(
+    "--left",
+    `${rand(-5, 96)}%`
+  );
+
+
+  el.style.setProperty(
+    "--scale",
+    rand(0.45, 1.18).toFixed(2)
+  );
+
+
+  el.style.setProperty(
+    "--rot",
+    `${rand(-8, 8).toFixed(1)}deg`
+  );
+
+
+  el.style.setProperty(
+    "--delay",
+    `${(
+      index * 0.08 +
+      rand(0, 0.7)
+    ).toFixed(2)}s`
+  );
+
+
+  if (index === 0) {
+
+    el.classList.add(
+      "flower-big"
     );
 
-  animation:
-    starsTwinkle
-    5s
-    ease-in-out
-    infinite
-    alternate;
+    el.style.setProperty(
+      "--left",
+      "13%"
+    );
+
+    el.style.setProperty(
+      "--scale",
+      "1.35"
+    );
+
+  }
+
+
+  if (index === 1) {
+
+    el.classList.add(
+      "flower-big"
+    );
+
+    el.style.setProperty(
+      "--left",
+      "78%"
+    );
+
+    el.style.setProperty(
+      "--scale",
+      "1.20"
+    );
+
+  }
+
+
+  el.innerHTML = `
+
+    <div class="stem"></div>
+
+    <div class="leaf left"></div>
+
+    <div class="leaf right"></div>
+
+    <div class="head">
+
+      ${Array.from(
+        { length: 12 },
+        () => `<i class="petal"></i>`
+      ).join("")}
+
+      <b class="center"></b>
+
+    </div>
+
+  `;
+
+
+  flowers.appendChild(el);
+
 }
 
 
-@keyframes starsTwinkle {
+/* =========================================================
+   PÉTALOS
+========================================================= */
 
-  from {
-    opacity: .55;
+function createPetals() {
+
+  if (!petals) return;
+
+
+  for (
+    let i = 0;
+    i < CONFIG.petalCount;
+    i++
+  ) {
+
+    const el =
+      document.createElement("i");
+
+
+    el.className =
+      "petal-float";
+
+
+    el.style.setProperty(
+      "--left",
+      `${rand(0, 100)}%`
+    );
+
+
+    el.style.setProperty(
+      "--duration",
+      `${rand(8, 16).toFixed(1)}s`
+    );
+
+
+    el.style.setProperty(
+      "--delay",
+      `${rand(-15, 0).toFixed(1)}s`
+    );
+
+
+    el.style.setProperty(
+      "--drift",
+      `${rand(-160, 160).toFixed(0)}px`
+    );
+
+
+    el.style.setProperty(
+      "--size",
+      `${rand(8, 16).toFixed(0)}px`
+    );
+
+
+    petals.appendChild(el);
+
   }
 
-  to {
-    opacity: 1;
+}
+
+
+/* =========================================================
+   LUCIÉRNAGAS
+========================================================= */
+
+function createFireflies() {
+
+  if (!fireflies) return;
+
+
+  for (
+    let i = 0;
+    i < CONFIG.fireflyCount;
+    i++
+  ) {
+
+    const el =
+      document.createElement("i");
+
+
+    el.className =
+      "firefly";
+
+
+    el.style.setProperty(
+      "--left",
+      `${rand(2, 98)}%`
+    );
+
+
+    el.style.setProperty(
+      "--top",
+      `${rand(18, 94)}%`
+    );
+
+
+    el.style.setProperty(
+      "--duration",
+      `${rand(1.4, 3.8).toFixed(2)}s`
+    );
+
+
+    el.style.setProperty(
+      "--delay",
+      `${rand(0, 3).toFixed(2)}s`
+    );
+
+
+    fireflies.appendChild(el);
+
   }
 
 }
@@ -155,1549 +417,81 @@ button:focus-visible {
    POLVO DORADO
 ========================================================= */
 
-.gold-dust {
+function createGoldDust() {
 
-  position: absolute;
+  if (!goldDust) return;
 
-  inset: 0;
 
-  z-index: 1;
+  goldDust.innerHTML =
+    "";
 
-  pointer-events: none;
 
-  opacity: .65;
+  for (
+    let i = 0;
+    i < CONFIG.dustCount;
+    i++
+  ) {
 
-  background:
+    const particle =
+      document.createElement("i");
 
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(255,213,47,.18),
-      transparent 2px
-    ),
 
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(255,213,47,.16),
-      transparent 2px
-    ),
+    particle.style.position =
+      "absolute";
 
-    radial-gradient(
-      circle at 60% 70%,
-      rgba(255,213,47,.14),
-      transparent 2px
+
+    particle.style.left =
+      `${rand(0, 100)}%`;
+
+
+    particle.style.top =
+      `${rand(0, 100)}%`;
+
+
+    const size =
+      rand(1, 3.5);
+
+
+    particle.style.width =
+      `${size}px`;
+
+
+    particle.style.height =
+      `${size}px`;
+
+
+    particle.style.borderRadius =
+      "50%";
+
+
+    particle.style.background =
+      "#ffe36a";
+
+
+    particle.style.boxShadow =
+      "0 0 8px rgba(255,210,35,.8)";
+
+
+    particle.style.opacity =
+      rand(.15, .8).toFixed(2);
+
+
+    particle.style.animation =
+
+      `dustParticle
+       ${rand(3, 7).toFixed(2)}s
+       ease-in-out
+       ${rand(0, 5).toFixed(2)}s
+       infinite
+       alternate`;
+
+
+    goldDust.appendChild(
+      particle
     );
 
-  animation:
-    dustMove
-    9s
-    ease-in-out
-    infinite
-    alternate;
-}
-
-
-@keyframes dustMove {
-
-  from {
-    transform: translateY(0);
-    opacity: .4;
   }
 
-  to {
-    transform: translateY(-18px);
-    opacity: .8;
-  }
-
-}
-
-
-/* =========================================================
-   RESPLANDORES
-========================================================= */
-
-.glow {
-
-  position: absolute;
-
-  border-radius: 50%;
-
-  pointer-events: none;
-
-  filter: blur(60px);
-
-  z-index: 1;
-}
-
-
-.glow-1 {
-
-  width: 300px;
-  height: 300px;
-
-  left: -120px;
-  top: 20%;
-
-  background:
-    rgba(255,190,20,.08);
-}
-
-
-.glow-2 {
-
-  width: 350px;
-  height: 350px;
-
-  right: -150px;
-  top: 45%;
-
-  background:
-    rgba(255,215,50,.07);
-}
-
-
-.glow-3 {
-
-  width: 250px;
-  height: 250px;
-
-  left: 40%;
-  bottom: -130px;
-
-  background:
-    rgba(255,190,30,.08);
-}
-
-
-/* =========================================================
-   INTRO
-========================================================= */
-
-.intro {
-
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 100;
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  text-align: center;
-
-  padding: 30px;
-
-  background:
-
-    radial-gradient(
-      circle at 50% 52%,
-      rgba(255,196,25,.12),
-      transparent 28%
-    );
-
-  transition:
-    opacity .9s ease,
-    visibility .9s ease;
-}
-
-
-.intro.hide {
-
-  opacity: 0;
-
-  visibility: hidden;
-
-  pointer-events: none;
-}
-
-
-.intro-small {
-
-  margin:
-    0 0 15px;
-
-  color:
-    rgba(255,221,88,.8);
-
-  font-size:
-    .72rem;
-
-  letter-spacing:
-    .25em;
-
-}
-
-
-.intro h1 {
-
-  margin:
-    0;
-
-  color:
-    #ffd83d;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size:
-    clamp(
-      2.3rem,
-      8vw,
-      5rem
-    );
-
-  line-height:
-    1.05;
-
-  text-shadow:
-
-    0 0 10px
-    rgba(255,211,47,.7),
-
-    0 0 30px
-    rgba(255,211,47,.35);
-}
-
-
-.intro > p:not(.intro-small):not(.hint) {
-
-  color:
-    rgba(255,242,185,.75);
-
-  margin:
-    20px 0 28px;
-
-}
-
-
-/* =========================================================
-   FLOR DE INTRO
-========================================================= */
-
-.intro-flower {
-
-  position: relative;
-
-  width: 110px;
-  height: 110px;
-
-  margin-bottom: 20px;
-
-  animation:
-    introFlowerFloat
-    4s
-    ease-in-out
-    infinite;
-}
-
-
-.intro-flower span {
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 38px;
-  height: 58px;
-
-  border-radius:
-    50% 50% 45% 45%;
-
-  transform:
-    translate(-50%, -50%)
-    rotate(var(--r))
-    translateY(-25px);
-
-  background:
-    linear-gradient(
-      180deg,
-      #fff59c,
-      #ffd42f,
-      #e49b00
-    );
-
-  box-shadow:
-    0 0 10px
-    rgba(255,211,47,.35);
-}
-
-
-.intro-flower span:nth-child(1) {
-  --r: 0deg;
-}
-
-.intro-flower span:nth-child(2) {
-  --r: 60deg;
-}
-
-.intro-flower span:nth-child(3) {
-  --r: 120deg;
-}
-
-.intro-flower span:nth-child(4) {
-  --r: 180deg;
-}
-
-.intro-flower span:nth-child(5) {
-  --r: 240deg;
-}
-
-.intro-flower span:nth-child(6) {
-  --r: 300deg;
-}
-
-
-.intro-flower b {
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 35px;
-  height: 35px;
-
-  transform:
-    translate(-50%, -50%);
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #c4891a,
-      #583303 55%,
-      #170d01
-    );
-
-  box-shadow:
-    0 0 12px
-    rgba(255,213,47,.45);
-}
-
-
-@keyframes introFlowerFloat {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-2deg);
-  }
-
-  50% {
-    transform:
-      translateY(-9px)
-      rotate(2deg);
-  }
-
-}
-
-
-/* =========================================================
-   BOTÓN DE INICIO
-========================================================= */
-
-.open-btn {
-
-  position: relative;
-
-  z-index: 200;
-
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 12px;
-
-  min-width: 235px;
-
-  padding: 15px 24px;
-
-  border:
-    1px solid
-    rgba(255,225,75,.55);
-
-  border-radius:
-    999px;
-
-  color:
-    #fff4a6;
-
-  background:
-
-    radial-gradient(
-      circle at 50% 30%,
-      rgba(255,220,60,.2),
-      transparent 65%
-    ),
-
-    rgba(20,16,2,.55);
-
-  box-shadow:
-
-    0 0 20px
-    rgba(255,211,47,.25),
-
-    inset 0 0 20px
-    rgba(255,211,47,.05);
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition:
-    transform .25s ease,
-    box-shadow .25s ease,
-    background .25s ease;
-}
-
-
-.open-btn:hover {
-
-  transform:
-    translateY(-3px)
-    scale(1.03);
-
-  box-shadow:
-
-    0 0 35px
-    rgba(255,213,47,.4),
-
-    inset 0 0 25px
-    rgba(255,213,47,.08);
-}
-
-
-.open-btn:active {
-
-  transform:
-    scale(.96);
-}
-
-
-.open-sunflower {
-
-  display: inline-block;
-
-  font-size: 2rem;
-
-  filter:
-    drop-shadow(
-      0 0 8px
-      rgba(255,211,47,.75)
-    );
-
-  animation:
-    buttonSunflower
-    2.5s
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes buttonSunflower {
-
-  0%,
-  100% {
-    transform:
-      rotate(-5deg)
-      scale(1);
-  }
-
-  50% {
-    transform:
-      rotate(5deg)
-      scale(1.08);
-  }
-
-}
-
-
-.hint {
-
-  margin-top: 20px;
-
-  color:
-    rgba(255,235,150,.45);
-
-  font-size:
-    .72rem;
-
-}
-
-
-/* =========================================================
-   JARDÍN / GALAXIA
-========================================================= */
-
-.garden {
-
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 10;
-
-  overflow: hidden;
-
-  opacity: 0;
-
-  visibility: hidden;
-
-  background:
-
-    radial-gradient(
-      ellipse at 50% 45%,
-      rgba(150,105,8,.24),
-      transparent 35%
-    ),
-
-    radial-gradient(
-      ellipse at 50% 80%,
-      rgba(44,75,18,.32),
-      transparent 42%
-    ),
-
-    linear-gradient(
-      180deg,
-      #010200 0%,
-      #050700 35%,
-      #0a1006 70%,
-      #020301 100%
-    );
-
-  transition:
-    opacity 1s ease,
-    visibility 1s ease;
-}
-
-
-.garden.active {
-
-  opacity: 1;
-
-  visibility: visible;
-}
-
-
-/* =========================================================
-   LUNA
-========================================================= */
-
-.moon {
-
-  position: absolute;
-
-  width: 95px;
-  height: 95px;
-
-  right: 9%;
-  top: 9%;
-
-  border-radius: 50%;
-
-  background:
-
-    radial-gradient(
-      circle at 35% 30%,
-      #fffde3,
-      #fff6a5 45%,
-      #d6b949 100%
-    );
-
-  box-shadow:
-
-    0 0 25px
-    rgba(255,239,140,.4),
-
-    0 0 70px
-    rgba(255,219,75,.15);
-
-  opacity: .75;
-}
-
-
-/* =========================================================
-   RESPLANDOR CENTRAL
-========================================================= */
-
-.sun-glow {
-
-  position: absolute;
-
-  left: 50%;
-  top: 54%;
-
-  width: 95vw;
-  height: 95vw;
-
-  max-width: 700px;
-  max-height: 700px;
-
-  transform:
-    translate(-50%, -50%);
-
-  border-radius: 50%;
-
-  pointer-events: none;
-
-  background:
-
-    radial-gradient(
-      circle,
-      rgba(255,220,75,.42) 0%,
-      rgba(255,192,25,.2) 28%,
-      rgba(255,173,0,.08) 48%,
-      transparent 72%
-    );
-
-  filter:
-    blur(30px);
-
-  z-index: 2;
-}
-
-
-/* =========================================================
-   GALAXIA - ESTRELLAS
-========================================================= */
-
-.galaxy-stars {
-
-  position: absolute;
-
-  inset: -20%;
-
-  z-index: 3;
-
-  pointer-events: none;
-
-  opacity: .8;
-
-  background:
-
-    radial-gradient(
-      2px 2px at 10% 20%,
-      #fff,
-      transparent
-    ),
-
-    radial-gradient(
-      1px 1px at 17% 65%,
-      #fff4a8,
-      transparent
-    ),
-
-    radial-gradient(
-      2px 2px at 30% 15%,
-      #fff,
-      transparent
-    ),
-
-    radial-gradient(
-      1px 1px at 45% 75%,
-      #ffe86a,
-      transparent
-    ),
-
-    radial-gradient(
-      2px 2px at 65% 20%,
-      #fff,
-      transparent
-    ),
-
-    radial-gradient(
-      1px 1px at 82% 42%,
-      #ffe777,
-      transparent
-    ),
-
-    radial-gradient(
-      2px 2px at 91% 75%,
-      #fff,
-      transparent
-    ),
-
-    radial-gradient(
-      1px 1px at 53% 45%,
-      #fff3a2,
-      transparent
-    );
-
-  animation:
-    galaxyStarsMove
-    18s
-    linear
-    infinite;
-}
-
-
-@keyframes galaxyStarsMove {
-
-  from {
-    transform:
-      rotate(0deg)
-      scale(1);
-  }
-
-  to {
-    transform:
-      rotate(360deg)
-      scale(1.05);
-  }
-
-}
-
-
-/* =========================================================
-   NEBULOSA
-========================================================= */
-
-.galaxy-nebula {
-
-  position: absolute;
-
-  left: 50%;
-  top: 54%;
-
-  width: 125vw;
-  height: 85vw;
-
-  max-width: 1100px;
-  max-height: 750px;
-
-  transform:
-    translate(-50%, -50%)
-    rotate(-12deg);
-
-  border-radius: 50%;
-
-  z-index: 4;
-
-  pointer-events: none;
-
-  background:
-
-    radial-gradient(
-      ellipse at 50% 50%,
-      rgba(255,210,45,.13),
-      transparent 42%
-    ),
-
-    radial-gradient(
-      ellipse at 25% 55%,
-      rgba(205,150,20,.10),
-      transparent 45%
-    ),
-
-    radial-gradient(
-      ellipse at 75% 45%,
-      rgba(255,226,80,.08),
-      transparent 45%
-    );
-
-  filter:
-    blur(15px);
-
-  animation:
-    nebulaPulse
-    7s
-    ease-in-out
-    infinite
-    alternate;
-}
-
-
-@keyframes nebulaPulse {
-
-  from {
-    transform:
-      translate(-50%, -50%)
-      rotate(-12deg)
-      scale(.95);
-  }
-
-  to {
-    transform:
-      translate(-50%, -50%)
-      rotate(-7deg)
-      scale(1.06);
-  }
-
-}
-
-
-/* =========================================================
-   ESCENA GIRATORIA
-========================================================= */
-
-.galaxy-scene {
-
-  position: absolute;
-
-  left: 50%;
-  top: 54%;
-
-  width: min(92vw, 780px);
-  height: min(92vw, 780px);
-
-  transform:
-    translate(-50%, -50%);
-
-  z-index: 10;
-
-  cursor: grab;
-
-  touch-action: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-}
-
-
-.galaxy-scene.dragging {
-
-  cursor: grabbing;
-}
-
-
-/* =========================================================
-   ÓRBITAS
-========================================================= */
-
-.orbit {
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 100%;
-  height: 100%;
-
-  border-radius: 50%;
-
-  transform:
-    translate(-50%, -50%);
-
-  pointer-events: none;
-}
-
-
-.orbit::before {
-
-  content: "";
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 100%;
-  height: 100%;
-
-  transform:
-    translate(-50%, -50%)
-    scale(.88);
-
-  border:
-    1px solid
-    rgba(255,215,70,.12);
-
-  border-radius: 50%;
-
-  box-shadow:
-    0 0 20px
-    rgba(255,205,35,.04);
-
-}
-
-
-.orbit-1 {
-  transform:
-    translate(-50%, -50%)
-    rotate(0deg);
-}
-
-.orbit-2 {
-  transform:
-    translate(-50%, -50%)
-    rotate(45deg)
-    scale(.78);
-}
-
-.orbit-3 {
-  transform:
-    translate(-50%, -50%)
-    rotate(120deg)
-    scale(.61);
-}
-
-.orbit-4 {
-  transform:
-    translate(-50%, -50%)
-    rotate(210deg)
-    scale(.44);
-}
-
-
-/* =========================================================
-   GIRASOLES DE LA GALAXIA
-========================================================= */
-
-.orbit .sunflower {
-
-  position: absolute;
-
-  left: 50%;
-  top: 0;
-
-  width: 58px;
-  height: 58px;
-
-  transform:
-    translate(-50%, -50%);
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  font-size:
-    clamp(
-      2rem,
-      5vw,
-      3.2rem
-    );
-
-  filter:
-
-    drop-shadow(
-      0 0 7px
-      rgba(255,210,45,.7)
-    ),
-
-    drop-shadow(
-      0 0 20px
-      rgba(255,194,20,.35)
-    );
-
-  pointer-events: none;
-
-  animation:
-    sunflowerGlow
-    2.8s
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes sunflowerGlow {
-
-  0%,
-  100% {
-    filter:
-      drop-shadow(
-        0 0 6px
-        rgba(255,210,45,.55)
-      );
-  }
-
-  50% {
-    filter:
-      drop-shadow(
-        0 0 15px
-        rgba(255,220,65,.9)
-      );
-  }
-
-}
-
-
-/* =========================================================
-   TEXTOS DE LAS ÓRBITAS
-========================================================= */
-
-.galaxy-orbit-text {
-
-  position: absolute;
-
-  left: 50%;
-  top: 10%;
-
-  width: max-content;
-
-  max-width: 180px;
-
-  transform:
-    translate(-50%, -50%);
-
-  padding:
-    7px 12px;
-
-  border:
-    1px solid
-    rgba(255,215,65,.12);
-
-  border-radius:
-    999px;
-
-  color:
-    rgba(255,236,145,.82);
-
-  background:
-    rgba(20,14,2,.28);
-
-  backdrop-filter:
-    blur(3px);
-
-  box-shadow:
-    0 0 15px
-    rgba(255,204,40,.05);
-
-  font-family:
-    Georgia,
-    serif;
-
-  font-size:
-    clamp(
-      .58rem,
-      1.8vw,
-      .82rem
-    );
-
-  text-align: center;
-
-  white-space: normal;
-
-  pointer-events: none;
-
-  text-shadow:
-    0 0 8px
-    rgba(255,205,45,.45);
-}
-
-
-/* =========================================================
-   CENTRO DE LA GALAXIA
-========================================================= */
-
-.galaxy-core {
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 125px;
-  height: 125px;
-
-  transform:
-    translate(-50%, -50%);
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 50%;
-
-  z-index: 30;
-
-  background:
-
-    radial-gradient(
-      circle,
-      rgba(255,235,110,.28),
-      rgba(255,187,20,.12) 40%,
-      transparent 72%
-    );
-
-  box-shadow:
-
-    0 0 35px
-    rgba(255,213,47,.35),
-
-    0 0 90px
-    rgba(255,184,15,.15);
-
-  pointer-events: none;
-}
-
-
-.galaxy-core span {
-
-  position: relative;
-
-  z-index: 3;
-
-  font-size:
-    clamp(
-      4rem,
-      12vw,
-      6rem
-    );
-
-  filter:
-    drop-shadow(
-      0 0 10px
-      rgba(255,215,40,.85)
-    ),
-
-    drop-shadow(
-      0 0 30px
-      rgba(255,190,15,.55)
-    );
-
-  animation:
-    coreFlower
-    3s
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes coreFlower {
-
-  0%,
-  100% {
-    transform:
-      scale(1)
-      rotate(-3deg);
-  }
-
-  50% {
-    transform:
-      scale(1.08)
-      rotate(3deg);
-  }
-
-}
-
-
-.core-glow {
-
-  position: absolute;
-
-  inset: -20px;
-
-  border-radius: 50%;
-
-  background:
-
-    radial-gradient(
-      circle,
-      rgba(255,230,85,.25),
-      transparent 65%
-    );
-
-  filter:
-    blur(12px);
-
-  animation:
-    coreGlow
-    3s
-    ease-in-out
-    infinite
-    alternate;
-}
-
-
-@keyframes coreGlow {
-
-  from {
-    transform: scale(.9);
-    opacity: .5;
-  }
-
-  to {
-    transform: scale(1.15);
-    opacity: 1;
-  }
-
-}
-
-
-/* =========================================================
-   ESTRELLAS FLOTANTES
-========================================================= */
-
-.floating-star {
-
-  position: absolute;
-
-  z-index: 40;
-
-  color:
-    #fff1a0;
-
-  font-size:
-    clamp(
-      1rem,
-      3vw,
-      1.8rem
-    );
-
-  text-shadow:
-
-    0 0 8px
-    #ffd52f,
-
-    0 0 18px
-    rgba(255,210,45,.8);
-
-  pointer-events: none;
-
-  animation:
-    starFloat
-    2.8s
-    ease-in-out
-    infinite;
-}
-
-
-.star-1 {
-  left: 14%;
-  top: 27%;
-}
-
-.star-2 {
-  left: 78%;
-  top: 22%;
-  animation-delay: -.8s;
-}
-
-.star-3 {
-  left: 87%;
-  top: 58%;
-  animation-delay: -1.4s;
-}
-
-.star-4 {
-  left: 13%;
-  top: 65%;
-  animation-delay: -2s;
-}
-
-.star-5 {
-  left: 34%;
-  top: 18%;
-  animation-delay: -1s;
-}
-
-.star-6 {
-  left: 68%;
-  top: 76%;
-  animation-delay: -2.3s;
-}
-
-
-@keyframes starFloat {
-
-  0%,
-  100% {
-    transform:
-      scale(.7)
-      rotate(0deg);
-
-    opacity: .35;
-  }
-
-  50% {
-    transform:
-      scale(1.35)
-      rotate(90deg);
-
-    opacity: 1;
-  }
-
-}
-
-
-/* =========================================================
-   MENSAJE "GIRA LA GALAXIA"
-========================================================= */
-
-.galaxy-message {
-
-  position: absolute;
-
-  z-index: 45;
-
-  left: 50%;
-
-  bottom: 17%;
-
-  transform:
-    translateX(-50%);
-
-  color:
-    rgba(255,233,140,.65);
-
-  font-family:
-    Georgia,
-    serif;
-
-  font-size:
-    .78rem;
-
-  letter-spacing:
-    .12em;
-
-  text-shadow:
-    0 0 10px
-    rgba(255,205,40,.45);
-
-  pointer-events: none;
-
-  animation:
-    messagePulse
-    2.5s
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes messagePulse {
-
-  0%,
-  100% {
-    opacity: .45;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-}
-
-
-/* =========================================================
-   TEXTOS FLOTANTES
-========================================================= */
-
-.floating-text {
-
-  position: absolute;
-
-  z-index: 20;
-
-  color:
-    rgba(255,225,105,.72);
-
-  font-family:
-    Georgia,
-    serif;
-
-  font-size:
-    .72rem;
-
-  text-shadow:
-    0 0 8px
-    rgba(255,203,40,.5);
-
-  letter-spacing:
-    .02em;
-
-  pointer-events: none;
-
-  animation:
-    floatingText
-    5s
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes floatingText {
-
-  0%,
-  100% {
-    transform:
-      translateY(0);
-    opacity: .45;
-  }
-
-  50% {
-    transform:
-      translateY(-9px);
-    opacity: .9;
-  }
-
-}
-
-
-.text-1 {
-  left: 7%;
-  top: 31%;
-}
-
-.text-2 {
-  right: 6%;
-  top: 35%;
-}
-
-.text-3 {
-  left: 5%;
-  top: 52%;
-}
-
-.text-4 {
-  right: 5%;
-  top: 64%;
-}
-
-.text-5 {
-  left: 12%;
-  top: 82%;
-}
-
-.text-6 {
-  right: 13%;
-  top: 80%;
-}
-
-.text-7 {
-  left: 39%;
-  top: 25%;
-}
-
-.text-8 {
-  right: 35%;
-  top: 84%;
-}
-
-.text-9 {
-  left: 5%;
-  top: 40%;
-  animation-delay: -.7s;
-}
-
-.text-10 {
-  right: 8%;
-  top: 52%;
-  animation-delay: -1.8s;
-}
-
-.text-11 {
-  left: 12%;
-  top: 70%;
-  animation-delay: -2.2s;
-}
-
-.text-12 {
-  right: 15%;
-  top: 73%;
-  animation-delay: -3s;
-}
-
-/* =========================================================
-   MENSAJE PRINCIPAL
-========================================================= */
-
-.hero-message {
-
-  position: absolute;
-
-  z-index: 35;
-
-  left: 50%;
-
-  top: 10%;
-
-  width:
-    min(92vw, 700px);
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  pointer-events: none;
-}
-
-
-.hero-kicker {
-
-  color:
-    rgba(255,224,88,.7);
-
-  font-size:
-    .7rem;
-
-  letter-spacing:
-    .22em;
-}
-
-
-.spark-line {
-
-  color:
-    rgba(255,220,70,.65);
-
-  font-size:
-    .8rem;
-}
-
-
-.hero-message h2 {
-
-  margin:
-    8px 0 12px;
-
-  color:
-    #ffd83d;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size:
-    clamp(
-      2.1rem,
-      9vw,
-      4.7rem
-    );
-
-  line-height:
-    1.02;
-
-  text-shadow:
-
-    0 0 10px
-    rgba(255,211,47,.8),
-
-    0 0 35px
-    rgba(255,211,47,.4);
-}
-
-
-.hero-message h2 strong {
-
-  color:
-    #ffd83d;
-}
-
-
-.hero-message p {
-
-  color:
-    rgba(255,235,143,.75);
-
-  line-height:
-    1.6;
 }
 
 
@@ -1705,1219 +499,538 @@ button:focus-visible {
    CORAZÓN DE PARTÍCULAS
 ========================================================= */
 
-.heart,
-.heart::before,
-.heart::after {
+function createParticleHeart() {
 
-  display:
-    none !important;
-}
+  if (!particleHeart)
+    return;
 
 
-.particle-heart {
+  particleHeart.innerHTML =
+    "";
 
-  position: absolute;
 
-  z-index: 12;
+  const total =
+    CONFIG.heartParticleCount;
 
-  left: 50%;
-  top: 53%;
 
-  width: 1px;
-  height: 1px;
+  for (
+    let i = 0;
+    i < total;
+    i++
+  ) {
 
-  pointer-events: none;
+    const t =
+      (Math.PI * 2 * i) /
+      total;
 
-  filter:
-    drop-shadow(
-      0 0 8px
-      rgba(255,211,47,.8)
-    );
 
-  animation:
-    heartFloat
-    3s
-    ease-in-out
-    infinite;
-}
-
-
-.heart-dot {
-
-  position: absolute;
-
-  left: 0;
-  top: 0;
-
-  width:
-    var(--size);
-
-  height:
-    var(--size);
-
-  border-radius:
-    50%;
-
-  background:
-    #ffe76a;
-
-  box-shadow:
-
-    0 0 4px
-    #ffd52f,
-
-    0 0 10px
-    rgba(255,213,47,.8);
-
-  transform:
-
-    translate(
-      calc(var(--x) * 4px),
-      calc(var(--y) * 4px)
-    );
-
-  animation:
-
-    heartDot
-    1.8s
-    ease-in-out
-    infinite
-    alternate;
-
-  animation-delay:
-    var(--delay);
-}
-
-
-@keyframes heartDot {
-
-  from {
-
-    opacity: .35;
-
-    transform:
-      translate(
-        calc(var(--x) * 4px),
-        calc(var(--y) * 4px)
-      )
-      scale(.65);
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform:
-      translate(
-        calc(var(--x) * 4px),
-        calc(var(--y) * 4px)
-      )
-      scale(1.35);
-  }
-}
-
-
-@keyframes heartFloat {
-
-  0%,
-  100% {
-
-    transform:
-      translate(-50%, -50%)
-      scale(.96);
-  }
-
-  50% {
-
-    transform:
-      translate(-50%, -50%)
-      scale(1.05);
-  }
-}
-
-
-/* =========================================================
-   SUELO
-========================================================= */
-
-.ground {
-
-  position: absolute;
-
-  z-index: 11;
-
-  left: 0;
-  right: 0;
-  bottom: -8%;
-
-  height: 38%;
-
-  background:
-
-    radial-gradient(
-      ellipse at 50% 10%,
-      #3d7429 0%,
-      #214719 28%,
-      #10250d 58%,
-      #030501 100%
-    );
-
-  box-shadow:
-
-    0 -20px 45px
-    rgba(80,120,35,.12);
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   FLORES DEL JARDÍN
-========================================================= */
-
-.flowers {
-
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 15;
-
-  pointer-events: none;
-}
-
-
-.flower {
-
-  filter:
-    drop-shadow(
-      0 0 7px
-      rgba(255,205,35,.18)
-    );
-}
-
-
-.flower .head {
-
-  width: 82px;
-  height: 82px;
-}
-
-
-.flower .petal {
-
-  width: 31px;
-  height: 52px;
-
-  background:
-
-    linear-gradient(
-      180deg,
-      #fff49b 0%,
-      #ffd52f 48%,
-      #e5a600 100%
-    );
-
-  box-shadow:
-    0 0 5px
-    rgba(255,210,40,.3);
-}
-
-
-.flower .petal:nth-child(1) {
-  transform:
-    translate(-50%, -90%)
-    rotate(0deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(2) {
-  transform:
-    translate(-50%, -90%)
-    rotate(30deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(3) {
-  transform:
-    translate(-50%, -90%)
-    rotate(60deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(4) {
-  transform:
-    translate(-50%, -90%)
-    rotate(90deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(5) {
-  transform:
-    translate(-50%, -90%)
-    rotate(120deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(6) {
-  transform:
-    translate(-50%, -90%)
-    rotate(150deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(7) {
-  transform:
-    translate(-50%, -90%)
-    rotate(180deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(8) {
-  transform:
-    translate(-50%, -90%)
-    rotate(210deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(9) {
-  transform:
-    translate(-50%, -90%)
-    rotate(240deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(10) {
-  transform:
-    translate(-50%, -90%)
-    rotate(270deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(11) {
-  transform:
-    translate(-50%, -90%)
-    rotate(300deg)
-    translateY(-8px);
-}
-
-.flower .petal:nth-child(12) {
-  transform:
-    translate(-50%, -90%)
-    rotate(330deg)
-    translateY(-8px);
-}
-
-
-.flower .center {
-
-  width: 28px;
-  height: 28px;
-
-  background:
-
-    radial-gradient(
-      circle at 35% 30%,
-      #b97b16 0%,
-      #633b05 45%,
-      #241402 100%
-    );
-box-shadow:
-
-    0 0 7px
-    rgba(255,213,47,.45),
-
-    inset 0 0 8px
-    rgba(0,0,0,.6);
-}
-
-
-.flower-big {
-
-  z-index: 14;
-}
-
-
-.flower-big .head {
-
-  width: 105px;
-  height: 105px;
-}
-
-
-.flower-big .petal {
-
-  width: 40px;
-  height: 65px;
-}
-
-
-.flower-big .center {
-
-  width: 35px;
-  height: 35px;
-}
-
-
-/* =========================================================
-   PÉTALOS
-========================================================= */
-
-.petals {
-
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 22;
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   LUCIÉRNAGAS
-========================================================= */
-
-.fireflies {
-
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 23;
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   CARTA
-========================================================= */
-
-.letter-button {
-
-  position: absolute;
-
-  z-index: 60;
-
-  right: 18px;
-  bottom: 55px;
-
-  width: 62px;
-  height: 62px;
-
-  border: 1px solid
-    rgba(255,213,47,.4);
-
-  border-radius: 50%;
-
-  color: white;
-
-  background:
-    rgba(25,18,2,.7);
-
-  font-size:
-    1.5rem;
-
-  cursor: pointer;
-
-  box-shadow:
-
-    0 0 25px
-    rgba(255,213,47,.45),
-
-    0 0 60px
-    rgba(255,213,47,.15);
-
-  transition:
-    transform .25s ease;
-}
-
-
-.letter-button:hover {
-
-  transform:
-    scale(1.08)
-    rotate(-5deg);
-}
-
-
-.letter-overlay {
-
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 100;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  padding: 20px;
-
-  opacity: 0;
-
-  visibility: hidden;
-
-  pointer-events: none;
-
-  background:
-    rgba(0,0,0,.76);
-
-  backdrop-filter:
-    blur(12px);
-
-  transition:
-    opacity .35s ease,
-    visibility .35s ease;
-}
-
-
-.letter-overlay.open {
-
-  opacity: 1;
-
-  visibility: visible;
-
-  pointer-events: auto;
-}
-
-
-.letter-card {
-
-  position: relative;
-
-  width:
-    min(90vw, 500px);
-
-  max-height:
-    85vh;
-
-  overflow-y: auto;
-
-  padding:
-    35px 28px;
-
-  border-radius:
-    25px;
-
-  border:
-    1px solid
-    rgba(255,213,47,.45);
-
-  background:
-
-    linear-gradient(
-      180deg,
-      rgba(35,27,5,.97),
-      rgba(9,10,5,.98)
-    );
-
-  box-shadow:
-
-    0 25px 80px
-    rgba(0,0,0,.8),
-
-    0 0 50px
-    rgba(255,213,47,.15);
-
-  transform:
-    translateY(20px)
-    scale(.96);
-
-  transition:
-    transform .4s ease;
-}
-
-
-.letter-overlay.open .letter-card {
-
-  transform:
-    translateY(0)
-    scale(1);
-}
-
-
-.close-letter {
-
-  position: absolute;
-
-  top: 12px;
-  right: 14px;
-
-  width: 36px;
-  height: 36px;
-
-  border: 0;
-
-  border-radius: 50%;
-
-  color:
-    #fff0a0;
-
-  background:
-    rgba(255,213,47,.08);
-
-  font-size:
-    1.7rem;
-
-  line-height:
-    1;
-
-  cursor: pointer;
-}
-
-
-.letter-flower {
-
-  text-align: center;
-
-  font-size:
-    3rem;
-
-  filter:
-    drop-shadow(
-      0 0 10px
-      rgba(255,213,47,.65)
-    );
-}
-
-
-.letter-kicker {
-
-  text-align: center;
-
-  color:
-    rgba(255,220,90,.65);
-
-  font-size:
-    .7rem;
-
-  letter-spacing:
-    .18em;
-}
-
-
-.letter-card h3 {
-
-  text-align: center;
-
-  color:
-    #ffd83d;
-
-  text-shadow:
-    0 0 12px
-    rgba(255,211,47,.3);
-}
-
-
-.letter-line {
-
-  width: 70px;
-  height: 1px;
-
-  margin:
-    18px auto;
-
-  background:
-    rgba(255,213,47,.5);
-}
-
-
-.letter-text {
-
-  color:
-    rgba(255,250,220,.82);
-
-  line-height:
-    1.75;
-}
-
-
-.letter-sign {
-
-  margin-top:
-    25px;
-
-  text-align:
-    right;
-
-  color:
-    #ffe77a;
-}
-
-
-/* =========================================================
-   REPETIR
-========================================================= */
-
-.replay-btn {
-
-  position: absolute;
-
-  z-index: 50;
-
-  left: 50%;
-
-  bottom: 18px;
-
-  transform:
-    translateX(-50%);
-
-  border:
-    1px solid
-    rgba(255,213,47,.3);
-
-  border-radius:
-    999px;
-
-  padding:
-    8px 15px;
-
-  color:
-    rgba(255,241,154,.7);
-
-  background:
-    rgba(0,0,0,.25);
-
-  font-size:
-    .75rem;
-
-  cursor:
-    pointer;
-
-  transition:
-    background .2s ease,
-    transform .2s ease;
-}
-
-
-.replay-btn:hover {
-
-  background:
-    rgba(255,213,47,.08);
-
-  transform:
-    translateX(-50%)
-    translateY(-2px);
-}
-
-
-/* =========================================================
-   PIE
-========================================================= */
-
-.footer-note {
-
-  position: absolute;
-
-  z-index: 25;
-
-  left: 50%;
-  bottom: 3%;
-
-  transform:
-    translateX(-50%);
-
-  color:
-    rgba(255,238,150,.38);
-
-  font-size:
-    .65rem;
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   NOSCRIPT
-========================================================= */
-
-noscript {
-
-  position: fixed;
-
-  inset: 0;
-
-  z-index: 999;
-
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  padding: 30px;
-
-  background:
-    #010200;
-
-  color:
-    #ffe879;
-
-  text-align:
-    center;
-}
-
-
-/* =========================================================
-   📱 MÓVIL
-========================================================= */
-
-@media (max-width: 600px) {
-
-  .intro {
-
-    padding:
-      20px;
-  }
-
-
-  .intro-flower {
-
-    transform:
-      scale(.82);
-
-    margin-bottom:
-      5px;
-  }
-
-
-  .intro h1 {
-
-    font-size:
-      clamp(
-        2rem,
-        10.5vw,
-        3.5rem
+    const x =
+      16 *
+      Math.pow(
+        Math.sin(t),
+        3
       );
-  }
 
 
-  .intro-small {
-
-    font-size:
-      .58rem;
-  }
-
-
-  .open-btn {
-
-    min-width:
-      210px;
-
-    padding:
-      13px 20px;
-  }
-
-
-  .hero-message {
-
-    top:
-      8%;
-
-    width:
-      94vw;
-  }
-
-
-  .hero-message h2 {
-
-    font-size:
-      clamp(
-        1.9rem,
-        9.5vw,
-        3.3rem
+    const y =
+      -(
+        13 * Math.cos(t)
+        - 5 * Math.cos(2 * t)
+        - 2 * Math.cos(3 * t)
+        - Math.cos(4 * t)
       );
-  }
 
 
-  .hero-message p {
+    const particle =
+      document.createElement("i");
 
-    font-size:
-      .8rem;
-  }
 
+    particle.className =
+      "heart-dot";
 
-  .floating-text {
 
-    font-size:
-      .58rem;
-  }
+    particle.style.setProperty(
+      "--x",
+      `${x}px`
+    );
 
 
-  .text-1 {
-    left: 3%;
-    top: 31%;
-  }
+    particle.style.setProperty(
+      "--y",
+      `${y}px`
+    );
 
-  .text-2 {
-    right: 3%;
-    top: 35%;
-  }
 
-  .text-3 {
-    left: 3%;
-    top: 51%;
-  }
+    particle.style.setProperty(
+      "--delay",
+      `${rand(0, 2).toFixed(2)}s`
+    );
 
-  .text-4 {
-    right: 3%;
-    top: 62%;
-  }
 
-  .text-5 {
-    left: 5%;
-    top: 82%;
-  }
+    particle.style.setProperty(
+      "--size",
+      `${rand(2, 4.5).toFixed(1)}px`
+    );
 
-  .text-6 {
-    right: 5%;
-    top: 80%;
-  }
 
-  .text-7 {
-    left: 36%;
-    top: 25%;
-  }
+    particleHeart.appendChild(
+      particle
+    );
 
-  .text-8 {
-    right: 32%;
-    top: 84%;
-  }
-
-  .text-9 {
-    left: 3%;
-    top: 38%;
-  }
-
-  .text-10 {
-    right: 3%;
-    top: 50%;
-  }
-
-  .text-11 {
-    left: 5%;
-    top: 70%;
-  }
-
-  .text-12 {
-    right: 5%;
-    top: 73%;
-  }
-
-
-  /* GALAXIA */
-
-  .galaxy-scene {
-
-    width:
-      94vw;
-
-    height:
-      94vw;
-
-    top:
-      53%;
-  }
-
-
-  .galaxy-core {
-
-    width:
-      95px;
-
-    height:
-      95px;
-  }
-
-
-  .galaxy-core span {
-
-    font-size:
-      4rem;
-  }
-
-
-  .orbit .sunflower {
-
-    font-size:
-      2rem;
-  }
-
-
-  .galaxy-orbit-text {
-
-    max-width:
-      120px;
-
-    padding:
-      5px 8px;
-
-    font-size:
-      .52rem;
-  }
-
-
-  .orbit-2 {
-    transform:
-      translate(-50%, -50%)
-      rotate(45deg)
-      scale(.75);
-  }
-
-
-  .orbit-3 {
-    transform:
-      translate(-50%, -50%)
-      rotate(120deg)
-      scale(.58);
-  }
-
-
-  .orbit-4 {
-    transform:
-      translate(-50%, -50%)
-      rotate(210deg)
-      scale(.42);
-  }
-
-
-  .galaxy-message {
-
-    bottom:
-      17%;
-
-    font-size:
-      .62rem;
-  }
-
-
-  .floating-star {
-
-    font-size:
-      1rem;
-  }
-
-
-  .moon {
-
-    width:
-      58px;
-
-    height:
-      58px;
-
-    right:
-      7%;
-
-    top:
-      8%;
-  }
-
-
-  .sun-glow {
-
-    width:
-      120vw;
-
-    height:
-      120vw;
-  }
-
-
-  .particle-heart {
-
-    top:
-      54%;
-  }
-
-
-  .heart-dot {
-
-    transform:
-
-      translate(
-        calc(var(--x) * 3px),
-        calc(var(--y) * 3px)
-      );
-  }
-
-
-  .flower {
-
-    width:
-      70px;
-
-    height:
-      165px;
-  }
-
-
-  .flower .head {
-
-    width:
-      76px;
-
-    height:
-      76px;
-  }
-
-
-  .flower-big .head {
-
-    width:
-      92px;
-
-    height:
-      92px;
-  }
-
-
-  .letter-button {
-
-    width:
-      56px;
-
-    height:
-      56px;
-
-    right:
-      14px;
-
-    bottom:
-      48px;
-  }
-
-
-  .letter-card {
-
-    width:
-      91vw;
-
-    max-height:
-      78vh;
-
-    padding:
-      30px 21px 24px;
-  }
-
-
-  .letter-card h3 {
-
-    font-size:
-      1.7rem;
-  }
-
-
-  .letter-text {
-
-    font-size:
-      .88rem;
-
-    line-height:
-      1.75;
-  }
-
-
-  .footer-note {
-
-    display:
-      none;
   }
 
 }
 
 
 /* =========================================================
-   📱 PANTALLAS MUY PEQUEÑAS
+   ESTRELLAS EXTRA DE LA GALAXIA
 ========================================================= */
 
-@media (max-width: 380px) {
+function createGalaxyStars() {
 
-  .hero-message {
-
-    top:
-      7%;
-  }
+  if (!galaxyScene)
+    return;
 
 
-  .hero-message h2 {
-
-    font-size:
-      1.75rem;
-  }
-
-
-  .galaxy-scene {
-
-    width:
-      100vw;
-
-    height:
-      100vw;
-  }
+  galaxyScene
+    .querySelectorAll(
+      ".generated-galaxy-star"
+    )
+    .forEach(
+      star => star.remove()
+    );
 
 
-  .galaxy-core {
-
-    width:
-      82px;
-
-    height:
-      82px;
-  }
+  const total =
+    window.innerWidth < 600
+      ? 18
+      : 32;
 
 
-  .galaxy-core span {
+  for (
+    let i = 0;
+    i < total;
+    i++
+  ) {
 
-    font-size:
-      3.4rem;
-  }
-
-
-  .galaxy-orbit-text {
-
-    max-width:
-      105px;
-
-    font-size:
-      .46rem;
-  }
+    const star =
+      document.createElement("div");
 
 
-  .galaxy-message {
+    star.className =
+      "floating-star generated-galaxy-star";
 
-    bottom:
-      18%;
 
-    font-size:
-      .55rem;
+    star.textContent =
+      Math.random() > .5
+        ? "✦"
+        : "·";
+
+
+    star.style.left =
+      `${rand(5, 95)}%`;
+
+
+    star.style.top =
+      `${rand(5, 95)}%`;
+
+
+    star.style.animationDelay =
+      `${rand(-4, 0).toFixed(2)}s`;
+
+
+    star.style.fontSize =
+      `${rand(.5, 1.4).toFixed(2)}rem`;
+
+
+    galaxyScene.appendChild(
+      star
+    );
+
   }
 
 }
 
 
 /* =========================================================
-   ♿ REDUCIR MOVIMIENTO
+   ACTUALIZAR TEXTOS DE LA GALAXIA
 ========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
+function updateGalaxyMessages() {
 
-  *,
-  *::before,
-  *::after {
+  if (!galaxyScene)
+    return;
 
-    animation-duration:
-      .01ms !important;
 
-    animation-iteration-count:
-      1 !important;
+  const texts =
+    galaxyScene.querySelectorAll(
+      ".galaxy-orbit-text"
+    );
 
-    scroll-behavior:
-      auto !important;
-  }
+
+  texts.forEach(
+    (text, index) => {
+
+      if (
+        CONFIG.galaxyMessages[index]
+      ) {
+
+        text.textContent =
+          CONFIG.galaxyMessages[index];
 
       }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   TRANSFORMACIÓN DE LA GALAXIA
+========================================================= */
+
+function applyGalaxyRotation() {
+
+  if (!galaxyScene)
+    return;
+
+
+  galaxyScene.style.setProperty(
+    "--galaxy-rotation",
+    `${galaxyRotation}deg`
+  );
+
+
+  const orbit1 =
+    galaxyScene.querySelector(
+      ".orbit-1"
+    );
+
+  const orbit2 =
+    galaxyScene.querySelector(
+      ".orbit-2"
+    );
+
+  const orbit3 =
+    galaxyScene.querySelector(
+      ".orbit-3"
+    );
+
+  const orbit4 =
+    galaxyScene.querySelector(
+      ".orbit-4"
+    );
+
+
+  if (orbit1) {
+
+    orbit1.style.transform =
+      `
+      translate(-50%, -50%)
+      rotate(${galaxyRotation}deg)
+      `;
+  }
+
+
+  if (orbit2) {
+
+    orbit2.style.transform =
+      `
+      translate(-50%, -50%)
+      rotate(${45 + galaxyRotation * .72}deg)
+      scale(.78)
+      `;
+  }
+
+
+  if (orbit3) {
+
+    orbit3.style.transform =
+      `
+      translate(-50%, -50%)
+      rotate(${120 - galaxyRotation * .55}deg)
+      scale(.61)
+      `;
+  }
+
+
+  if (orbit4) {
+
+    orbit4.style.transform =
+      `
+      translate(-50%, -50%)
+      rotate(${210 + galaxyRotation * .38}deg)
+      scale(.44)
+      `;
+  }
+
+}
+
+
+/* =========================================================
+   ANIMACIÓN AUTOMÁTICA
+========================================================= */
+
+function animateGalaxy(time) {
+
+  const delta =
+    time - lastGalaxyTime;
+
+
+  lastGalaxyTime =
+    time;
+
+
+  if (
+    !galaxyDragging &&
+    CONFIG.galaxyAutoRotate
+  ) {
+
+    galaxyRotation +=
+      CONFIG.galaxyRotationSpeed *
+      delta;
+
+  }
+
+
+  /*
+    Suavizado de la velocidad
+    después de arrastrar.
+  */
+
+  if (!galaxyDragging) {
+
+    galaxyVelocity *= .985;
+
+
+    if (
+      Math.abs(galaxyVelocity) < .005
+    ) {
+
+      galaxyVelocity =
+        CONFIG.galaxyRotationSpeed;
+
+    }
+
+
+    galaxyRotation +=
+      galaxyVelocity;
+  }
+
+
+  applyGalaxyRotation();
+
+
+  galaxyAnimationFrame =
+    requestAnimationFrame(
+      animateGalaxy
+    );
+
+}
+
+
+/* =========================================================
+   INICIAR GALAXIA
+========================================================= */
+
+function startGalaxy() {
+
+  if (!galaxyScene)
+    return;
+
+
+  createGalaxyStars();
+
+  updateGalaxyMessages();
+
+  galaxyRotation =
+    0;
+
+  galaxyVelocity =
+    CONFIG.galaxyRotationSpeed;
+
+  lastGalaxyTime =
+    performance.now();
+
+
+  applyGalaxyRotation();
+
+
+  if (
+    !galaxyAnimationFrame
+  ) {
+
+    galaxyAnimationFrame =
+      requestAnimationFrame(
+        animateGalaxy
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   DETENER GALAXIA
+========================================================= */
+
+function stopGalaxy() {
+
+  if (
+    galaxyAnimationFrame
+  ) {
+
+    cancelAnimationFrame(
+      galaxyAnimationFrame
+    );
+
+    galaxyAnimationFrame =
+      null;
+
+  }
+
+}
+
+
+/* =========================================================
+   CONTROL CON MOUSE / DEDO
+========================================================= */
+
+function startGalaxyDrag(event) {
+
+  if (!galaxyScene)
+    return;
+
+
+  galaxyDragging =
+    true;
+
+
+  galaxyPointerId =
+    event.pointerId;
+
+
+  galaxyLastX =
+    event.clientX;
+
+
+  galaxyLastY =
+    event.clientY;
+
+
+  galaxyVelocity =
+    0;
+
+
+  galaxyScene.classList.add(
+    "dragging"
+  );
+
+
+  try {
+
+    galaxyScene.setPointerCapture(
+      event.pointerId
+    );
+
+  } catch (error) {
+
+    /* Algunos navegadores móviles
+       pueden no soportarlo. */
+
+  }
+
+}
+
+
+function moveGalaxyDrag(event) {
+
+  if (
+    !galaxyDragging
+  ) return;
+
+
+  if (
+    galaxyPointerId !==
+    event.pointerId
+  ) return;
+
+
+  const deltaX =
+    event.clientX -
+    galaxyLastX;
+
+
+  const deltaY =
+    event.clientY -
+    galaxyLastY;
+
+
+  galaxyLastX =
+    event.clientX;
+
+
+  galaxyLastY =
+    event.clientY;
+
+
+  /*
+    El movimiento horizontal
+    gira la galaxia.
+
+    El vertical también influye
+    ligeramente para que se sienta
+    más natural en teléfono.
+  */
+
+  const movement =
+    deltaX +
+    deltaY * .25;
+
+
+  galaxyRotation +=
+    movement * .45;
+
+
+  galaxyVelocity =
+    movement * .18;
+
+
+  applyGalaxyRotation();
+
+
+  event.preventDefault();
+
+}
+
+
+function endGalaxyDrag(event) {
+
+  if (
+    !galaxyDragging
+  ) return;
+
+
+  if (
+    event &&
+    galaxyPointerId !==
+    event.pointerId
+  ) return;
+
+
+  galaxyDragging =
+    false;
+
+
+  galaxyPointerId =
+    null;
+
+
+  galaxyScene.classList.remove(
+    "dragging"
+  );
+
+
+  /*
+    Limit
