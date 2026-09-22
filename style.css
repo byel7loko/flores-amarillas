@@ -1302,4 +1302,319 @@ button {
   }
 
   50% {
-    transform: translateY(-8px) rotate
+    transform: translateY(-8px) rotate(3deg);
+  }
+}
+
+@keyframes heroAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes starsMove {
+  to {
+    transform: translateY(35px);
+  }
+}
+
+@keyframes dustMove {
+  to {
+    background-position:
+      70px 80px,
+      -120px 140px;
+  }
+}
+
+@keyframes breathingGlow {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+@keyframes floatText {
+  from {
+    transform: translateY(0);
+    opacity: 0.42;
+  }
+
+  to {
+    transform: translateY(-9px);
+    opacity: 0.8;
+  }
+}
+
+@keyframes heartBeat {
+  0%,
+  100% {
+    transform:
+      translate(-50%, -50%)
+      rotate(-45deg)
+      scale(0.95);
+  }
+
+  50% {
+    transform:
+      translate(-50%, -50%)
+      rotate(-45deg)
+      scale(1.06);
+  }
+}
+
+@keyframes heartSpark {
+  from {
+    opacity: 0.35;
+    transform: rotate(45deg) scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(45deg) scale(1.25);
+  }
+}
+
+@keyframes grow {
+  from {
+    opacity: 0;
+    transform:
+      scale(0)
+      rotate(var(--rot));
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      scale(var(--scale))
+      rotate(var(--rot));
+  }
+}
+
+@keyframes fall {
+  to {
+    transform:
+      translate3d(var(--drift), 115vh, 0)
+      rotate(560deg);
+  }
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.15;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.6);
+  }
+}
+
+@keyframes dustParticle {
+  from {
+    transform:
+      translate3d(0, 0, 0)
+      scale(0.7);
+
+    opacity: 0.15;
+  }
+
+  to {
+    transform:
+      translate3d(0, -12px, 0)
+      scale(1.25);
+
+    opacity: 0.8;
+  }
+}
+
+@keyframes buttonFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* =========================
+   MÓVILES
+========================= */
+
+@media (max-width: 600px) {
+  .scene {
+    min-height: 100svh;
+  }
+
+  .intro {
+    padding: 22px;
+  }
+
+  .intro h1 {
+    font-size: clamp(2.2rem, 11vw, 3.8rem);
+  }
+
+  .intro-small {
+    font-size: 0.58rem;
+  }
+
+  .hero-message {
+    top: 12%;
+    width: 92vw;
+  }
+
+  .hero-message h2 {
+    font-size: clamp(1.9rem, 10vw, 3.4rem);
+  }
+
+  .floating-text {
+    font-size: 0.62rem;
+  }
+
+  .text-1 {
+    left: 4%;
+    top: 31%;
+  }
+
+  .text-2 {
+    right: 4%;
+    top: 29%;
+  }
+
+  .text-3 {
+    left: 4%;
+    top: 48%;
+  }
+
+  .text-4 {
+    right: 4%;
+    top: 46%;
+  }
+
+  .text-5 {
+    left: 8%;
+    top: 63%;
+  }
+
+  .text-6 {
+    right: 5%;
+    top: 66%;
+  }
+
+  .text-7 {
+    left: 30%;
+    top: 77%;
+  }
+
+  .text-8 {
+    display: none;
+  }
+
+  .heart {
+    width: 110px;
+    height: 105px;
+    top: 55%;
+  }
+
+  .heart::before,
+  .heart::after {
+    width: 110px;
+    height: 105px;
+  }
+
+  .heart::before {
+    top: -52px;
+  }
+
+  .heart::after {
+    left: 52px;
+  }
+
+  .flower {
+    width: 62px;
+    height: 155px;
+  }
+
+  .flower .stem {
+    height: 120px;
+  }
+
+  .flower .head {
+    bottom: 104px;
+    transform:
+      translateX(-50%)
+      scale(0.82);
+  }
+
+  .flower .leaf.left {
+    bottom: 40px;
+    transform: scale(0.8) rotate(25deg);
+  }
+
+  .flower .leaf.right {
+    bottom: 65px;
+    transform:
+      scaleX(-0.8)
+      scaleY(0.8)
+      rotate(25deg);
+  }
+
+  .letter-button {
+    right: 15px;
+    bottom: 48px;
+
+    width: 52px;
+    height: 52px;
+  }
+
+  .letter-card {
+    width: 92vw;
+    max-height: 80vh;
+
+    padding:
+      30px
+      21px
+      24px;
+  }
+
+  .letter-card h3 {
+    font-size: 1.75rem;
+  }
+
+  .letter-text {
+    font-size: 0.88rem;
+  }
+
+  .replay {
+    bottom: 18px;
+  }
+}
+
+/* =========================
+   REDUCIR MOVIMIENTO
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+    }
