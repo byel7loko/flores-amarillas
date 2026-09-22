@@ -1,1571 +1,733 @@
 /* =========================================================
-   🌻 FELIZ DÍA DE LAS FLORES AMARILLAS
-   JAVASCRIPT COMPLETO
-   GALAXIA INTERACTIVA + JARDÍN + CARTA
+   🌻 FLORES AMARILLAS — JAVASCRIPT COMPLETO Y COMPATIBLE
 ========================================================= */
-
-
-/* =========================================================
-   CONFIGURACIÓN
-========================================================= */
-
-const CONFIG = {
-
-  pageTitle:
-    "Feliz Día de las Flores Amarillas 🌻",
-
-  introTitle:
-    "Feliz Día de las Flores Amarillas",
-
-  introText:
-    "Preparé algo especial para ti",
-
-  messageBody:
-    "Que este pequeño detalle te recuerde lo especial que eres.",
-
-  footer:
-    "Hecho especialmente para ti ✨",
-
-  flowerCount: 22,
-
-  petalCount: 45,
-
-  fireflyCount: 55,
-
-  dustCount: 90,
-
-  heartParticleCount: 130,
-
-  /* =========================
-     GALAXIA
-  ========================== */
-
-  galaxyRotationSpeed:
-    0.018,
-
-  galaxyAutoRotate:
-    true,
-
-  galaxyMessages: [
-
-    "Para ti 💛",
-
-    "Eres mi pequeño universo ✨",
-
-    "Contigo todo brilla 💛",
-
-    "Siempre florecerá algo bonito 🌼",
-
-    "Tú haces bonito mi mundo 🌻",
-
-    "Un detalle hecho con cariño ✨",
-
-    "Que nunca te falten sonrisas 💛",
-
-    "Porque te lo mereces 🌼",
-
-    "Gracias por existir ✨",
-
-    "Mi pequeño universo 🌻"
-
-  ]
-
-};
-
-
-/* =========================================================
-   UTILIDADES
-========================================================= */
-
-const $ = (id) =>
-  document.getElementById(id);
-
-
-function rand(min, max) {
-
-  return Math.random() *
-    (max - min) +
-    min;
-
-}
-
-
-/* =========================================================
-   ELEMENTOS
-========================================================= */
-
-const intro =
-  $("intro");
-
-const garden =
-  $("garden");
-
-const flowers =
-  $("flowers");
-
-const petals =
-  $("petals");
-
-const fireflies =
-  $("fireflies");
-
-const goldDust =
-  $("goldDust");
-
-const particleHeart =
-  $("particleHeart");
-
-const galaxyScene =
-  $("galaxyScene");
-
-const letterOverlay =
-  $("letterOverlay");
-
-
-/* =========================================================
-   ESTADO DE LA GALAXIA
-========================================================= */
-
-let galaxyRotation = 0;
-
-let galaxyVelocity = 0;
-
-let galaxyDragging = false;
-
-let galaxyPointerId = null;
-
-let galaxyLastX = 0;
-
-let galaxyLastY = 0;
-
-let galaxyAnimationFrame = null;
-
-let lastGalaxyTime =
-  performance.now();
-
-
-/* =========================================================
-   TEXTO GENERAL
-========================================================= */
-
-document.title =
-  CONFIG.pageTitle;
-
-
-if ($("introTitle")) {
-
-  $("introTitle").textContent =
-    CONFIG.introTitle;
-
-}
-
-
-if ($("introText")) {
-
-  $("introText").textContent =
-    CONFIG.introText;
-
-}
-
-
-if ($("messageBody")) {
-
-  $("messageBody").textContent =
-    CONFIG.messageBody;
-
-}
-
-
-if ($("footerNote")) {
-
-  $("footerNote").textContent =
-    CONFIG.footer;
-
-}
-
-
-/* =========================================================
-   CREAR GIRASOL
-========================================================= */
-
-function createFlower(index) {
-
-  if (!flowers)
-    return;
-
-
-  const el =
-    document.createElement("div");
-
-
-  el.className =
-    "flower";
-
-
-  el.style.setProperty(
-    "--left",
-    `${rand(-5, 96)}%`
-  );
-
-
-  el.style.setProperty(
-    "--scale",
-    rand(.45, 1.18).toFixed(2)
-  );
-
-
-  el.style.setProperty(
-    "--rot",
-    `${rand(-8, 8).toFixed(1)}deg`
-  );
-
-
-  el.style.setProperty(
-    "--delay",
-    `${(
-      index * .08 +
-      rand(0, .7)
-    ).toFixed(2)}s`
-  );
-
-
-  if (index === 0) {
-
-    el.classList.add(
-      "flower-big"
-    );
-
-    el.style.setProperty(
-      "--left",
-      "13%"
-    );
-
-    el.style.setProperty(
-      "--scale",
-      "1.35"
-    );
-
-  }
-
-
-  if (index === 1) {
-
-    el.classList.add(
-      "flower-big"
-    );
-
-    el.style.setProperty(
-      "--left",
-      "78%"
-    );
-
-    el.style.setProperty(
-      "--scale",
-      "1.20"
-    );
-
-  }
-
-
-  el.innerHTML = `
-
-    <div class="stem"></div>
-
-    <div class="leaf left"></div>
-
-    <div class="leaf right"></div>
-
-    <div class="head">
-
-      ${Array.from(
-        { length: 12 },
-        () => `<i class="petal"></i>`
-      ).join("")}
-
-      <b class="center"></b>
-
-    </div>
-
-  `;
-
-
-  flowers.appendChild(el);
-
-}
-
-
-/* =========================================================
-   🌼 PÉTALOS
-========================================================= */
-
-function createPetals() {
-
-  if (!petals)
-    return;
-
-  petals.innerHTML = "";
-
-  for (
-    let i = 0;
-    i < CONFIG.petalCount;
-    i++
-  ) {
-
-    const el =
-      document.createElement("i");
-
-    el.className =
-      "petal-float";
-
-    const fromFlower =
-      Math.random() < 0.25;
-
-    if (fromFlower) {
-
-      el.classList.add(
-        "from-flower"
-      );
-
-      el.style.setProperty(
-        "--top",
-        `${rand(58, 78)}%`
-      );
-
-    } else {
-
-      el.style.setProperty(
-        "--top",
-        `${rand(-15, 5)}vh`
-      );
-
+(() => {
+  "use strict";
+
+  const CONFIG = {
+    pageTitle: "Feliz Día de las Flores Amarillas 🌻",
+    introTitle: "Feliz Día de las<br>Flores Amarillas",
+    introText: "Preparé algo especial para ti",
+
+    messageTitle:
+      "Feliz Día de las<br><strong>Flores Amarillas</strong> 🌻",
+
+    messageBody:
+      "Que este pequeño detalle te recuerde lo especial que eres.",
+
+    footer: "Hecho especialmente para ti ✨",
+
+    flowerCount: 22,
+    petalCount: 45,
+    fireflyCount: 55,
+    dustCount: 65,
+    heartCount: 130,
+
+    galaxyMessages: [
+      "Para ti 💛",
+      "Eres mi pequeño universo ✨",
+      "Contigo todo brilla 💛",
+      "Siempre florecerá algo bonito 🌼",
+      "Que nunca falten sonrisas 🌻",
+      "Un detalle hecho con cariño ✨",
+      "Gracias por existir 💛",
+      "Qué bonito coincidir contigo 🌼",
+      "Siempre hay algo bonito 🌻",
+      "Para hacerte sonreír ✨"
+    ]
+  };
+
+  const $ = (selector, root = document) =>
+    root.querySelector(selector);
+
+  const $$ = (selector, root = document) =>
+    [...root.querySelectorAll(selector)];
+
+  const rand = (min, max) =>
+    Math.random() * (max - min) + min;
+
+  const els = {
+    scene: $("#scene"),
+    intro: $("#intro"),
+    garden: $("#garden"),
+    openBtn: $("#openBtn"),
+    replayBtn: $("#replayBtn"),
+
+    flowers: $("#flowers"),
+    petals: $("#petals"),
+    fireflies: $("#fireflies"),
+    goldDust: $("#goldDust"),
+    particleHeart: $("#particleHeart"),
+
+    galaxyScene: $("#galaxyScene"),
+    galaxyHint: $("#galaxyHint"),
+
+    letterBtn: $("#letterBtn"),
+    letterOverlay: $("#letterOverlay"),
+    closeLetter: $("#closeLetter"),
+
+    introTitle: $("#introTitle"),
+    introText: $("#introText"),
+    messageTitle: $("#messageTitle"),
+    messageBody: $("#messageBody"),
+    footerNote: $("#footerNote")
+  };
+
+  let started = false;
+
+  let galaxyAngle = 0;
+
+  let pointerId = null;
+  let pointerStartX = 0;
+  let angleStart = 0;
+
+  let hintTimer = null;
+
+  /* =========================================================
+     CONFIGURACIÓN DE TEXTOS
+  ========================================================= */
+
+  function applyConfig() {
+    document.title = CONFIG.pageTitle;
+
+    if (els.introTitle) {
+      els.introTitle.innerHTML = CONFIG.introTitle;
     }
 
-    el.style.setProperty(
-      "--left",
-      `${rand(0, 100)}%`
-    );
-
-    el.style.setProperty(
-      "--duration",
-      `${rand(10, 18).toFixed(1)}s`
-    );
-
-    el.style.setProperty(
-      "--delay",
-      `${rand(-18, 0).toFixed(1)}s`
-    );
-
-    el.style.setProperty(
-      "--drift",
-      `${rand(-180, 180).toFixed(0)}px`
-    );
-
-    el.style.setProperty(
-      "--size",
-      `${rand(9, 17).toFixed(0)}px`
-    );
-
-    petals.appendChild(el);
-  }
-       }
-/* =========================================================
-   LUCIÉRNAGAS
-========================================================= */
-
-function createFireflies() {
-
-  if (!fireflies)
-    return;
-
-
-  for (
-    let i = 0;
-    i < CONFIG.fireflyCount;
-    i++
-  ) {
-
-    const el =
-      document.createElement("i");
-
-
-    el.className =
-      "firefly";
-
-
-    el.style.setProperty(
-      "--left",
-      `${rand(2, 98)}%`
-    );
-
-
-    el.style.setProperty(
-      "--top",
-      `${rand(18, 94)}%`
-    );
-
-
-    el.style.setProperty(
-      "--duration",
-      `${rand(1.4, 3.8).toFixed(2)}s`
-    );
-
-
-    el.style.setProperty(
-      "--delay",
-      `${rand(0, 3).toFixed(2)}s`
-    );
-
-
-    fireflies.appendChild(el);
-
-  }
-
-}
-
-
-/* =========================================================
-   POLVO DORADO
-========================================================= */
-
-function createGoldDust() {
-
-  if (!goldDust)
-    return;
-
-
-  goldDust.innerHTML =
-    "";
-
-
-  for (
-    let i = 0;
-    i < CONFIG.dustCount;
-    i++
-  ) {
-
-    const particle =
-      document.createElement("i");
-
-
-    const size =
-      rand(1, 3.5);
-
-
-    particle.style.position =
-      "absolute";
-
-
-    particle.style.left =
-      `${rand(0, 100)}%`;
-
-
-    particle.style.top =
-      `${rand(0, 100)}%`;
-
-
-    particle.style.width =
-      `${size}px`;
-
-
-    particle.style.height =
-      `${size}px`;
-
-
-    particle.style.borderRadius =
-      "50%";
-
-
-    particle.style.background =
-      "#ffe36a";
-
-
-    particle.style.boxShadow =
-      "0 0 8px rgba(255,210,35,.8)";
-
-
-    particle.style.opacity =
-      rand(.15, .8).toFixed(2);
-
-
-    particle.style.animation =
-      `
-      dustParticle
-      ${rand(3, 7).toFixed(2)}s
-      ease-in-out
-      ${rand(0, 5).toFixed(2)}s
-      infinite
-      alternate
-      `;
-
-
-    goldDust.appendChild(
-      particle
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   CORAZÓN DE PARTÍCULAS
-========================================================= */
-
-function createParticleHeart() {
-
-  if (!particleHeart)
-    return;
-
-
-  particleHeart.innerHTML =
-    "";
-
-
-  const total =
-    CONFIG.heartParticleCount;
-
-
-  for (
-    let i = 0;
-    i < total;
-    i++
-  ) {
-
-    const t =
-      (Math.PI * 2 * i) /
-      total;
-
-
-    const x =
-      16 *
-      Math.pow(
-        Math.sin(t),
-        3
-      );
-
-
-    const y =
-      -(
-        13 * Math.cos(t)
-        - 5 * Math.cos(2 * t)
-        - 2 * Math.cos(3 * t)
-        - Math.cos(4 * t)
-      );
-
-
-    const particle =
-      document.createElement("i");
-
-
-    particle.className =
-      "heart-dot";
-
-
-    particle.style.setProperty(
-      "--x",
-      x.toFixed(2)
-    );
-
-
-    particle.style.setProperty(
-      "--y",
-      y.toFixed(2)
-    );
-
-
-    particle.style.setProperty(
-      "--delay",
-      `${rand(0, 2).toFixed(2)}s`
-    );
-
-
-    particle.style.setProperty(
-      "--size",
-      `${rand(2, 4.5).toFixed(1)}px`
-    );
-
-
-    particleHeart.appendChild(
-      particle
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   ESTRELLAS EXTRA DE LA GALAXIA
-========================================================= */
-
-function createGalaxyStars() {
-
-  if (!galaxyScene)
-    return;
-
-
-  galaxyScene
-    .querySelectorAll(
-      ".generated-galaxy-star"
-    )
-    .forEach(
-      star => star.remove()
-    );
-
-
-  const total =
-    window.innerWidth < 600
-      ? 22
-      : 38;
-
-
-  for (
-    let i = 0;
-    i < total;
-    i++
-  ) {
-
-    const star =
-      document.createElement("div");
-
-
-    star.className =
-      "floating-star generated-galaxy-star";
-
-
-    star.textContent =
-      Math.random() > .5
-        ? "✦"
-        : "·";
-
-
-    star.style.left =
-      `${rand(4, 96)}%`;
-
-
-    star.style.top =
-      `${rand(4, 96)}%`;
-
-
-    star.style.animationDelay =
-      `${rand(-4, 0).toFixed(2)}s`;
-
-
-    star.style.fontSize =
-      `${rand(.45, 1.35).toFixed(2)}rem`;
-
-
-    galaxyScene.appendChild(
-      star
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   ACTUALIZAR MENSAJES
-========================================================= */
-
-function updateGalaxyMessages() {
-
-  if (!galaxyScene)
-    return;
-
-
-  const texts =
-    galaxyScene.querySelectorAll(
-      ".galaxy-orbit-text"
-    );
-
-
-  texts.forEach(
-    (text, index) => {
-
-      if (
-        CONFIG.galaxyMessages[index]
-      ) {
-
-        text.textContent =
-          CONFIG.galaxyMessages[index];
-
-      }
-
+    if (els.introText) {
+      els.introText.textContent = CONFIG.introText;
     }
-  );
 
-}
-
-
-/* =========================================================
-   CREAR ELEMENTOS EXTRA
-   AL INTERACTUAR CON LA GALAXIA
-========================================================= */
-
-function createInteractionSpark(x, y) {
-
-  if (!galaxyScene)
-    return;
-
-
-  const spark =
-    document.createElement("span");
-
-
-  spark.className =
-    "floating-star interaction-spark";
-
-
-  spark.textContent =
-    Math.random() > .5
-      ? "✦"
-      : "✧";
-
-
-  spark.style.position =
-    "fixed";
-
-
-  spark.style.left =
-    `${x}px`;
-
-
-  spark.style.top =
-    `${y}px`;
-
-
-  spark.style.zIndex =
-    "50";
-
-
-  spark.style.pointerEvents =
-    "none";
-
-
-  document.body.appendChild(
-    spark
-  );
-
-
-  spark.animate(
-    [
-      {
-        transform:
-          "translate(-50%, -50%) scale(.5)",
-        opacity: 0
-      },
-
-      {
-        transform:
-          "translate(-50%, -50%) scale(1.4)",
-        opacity: 1
-      },
-
-      {
-        transform:
-          `
-          translate(
-            ${rand(-40, 40)}px,
-            ${rand(-60, 20)}px
-          )
-          scale(.2)
-          `,
-        opacity: 0
-      }
-    ],
-    {
-      duration: 900,
-      easing: "ease-out"
+    if (els.messageTitle) {
+      els.messageTitle.innerHTML = CONFIG.messageTitle;
     }
-  ).finished
-    .then(() => {
-      spark.remove();
-    })
-    .catch(() => {
-      spark.remove();
+
+    if (els.messageBody) {
+      els.messageBody.textContent = CONFIG.messageBody;
+    }
+
+    if (els.footerNote) {
+      els.footerNote.textContent = CONFIG.footer;
+    }
+
+    const texts = $$(".galaxy-orbit-text");
+
+    texts.forEach((node, index) => {
+      node.textContent =
+        CONFIG.galaxyMessages[
+          index % CONFIG.galaxyMessages.length
+        ];
     });
-
-}
-
-
-/* =========================================================
-   ROTACIÓN
-========================================================= */
-
-function applyGalaxyRotation() {
-
-  if (!galaxyScene)
-    return;
-
-
-  galaxyScene.style.setProperty(
-    "--galaxy-rotation",
-    `${galaxyRotation}deg`
-  );
-
-
-  const orbit1 =
-    galaxyScene.querySelector(
-      ".orbit-1"
-    );
-
-  const orbit2 =
-    galaxyScene.querySelector(
-      ".orbit-2"
-    );
-
-  const orbit3 =
-    galaxyScene.querySelector(
-      ".orbit-3"
-    );
-
-  const orbit4 =
-    galaxyScene.querySelector(
-      ".orbit-4"
-    );
-
-
-  if (orbit1) {
-
-    orbit1.style.transform =
-      `
-      translate(-50%, -50%)
-      rotate(${galaxyRotation}deg)
-      `;
-
   }
 
+  /* =========================================================
+     LIMPIAR ELEMENTOS GENERADOS
+  ========================================================= */
 
-  if (orbit2) {
-
-    orbit2.style.transform =
-      `
-      translate(-50%, -50%)
-      rotate(${45 + galaxyRotation * .72}deg)
-      scale(.78)
-      `;
-
+  function clearGenerated() {
+    [
+      els.flowers,
+      els.petals,
+      els.fireflies,
+      els.goldDust,
+      els.particleHeart
+    ].forEach(element => {
+      if (element) {
+        element.replaceChildren();
+      }
+    });
   }
 
+  /* =========================================================
+     FLORES
+  ========================================================= */
 
-  if (orbit3) {
+  function buildFlowers() {
+    if (!els.flowers) return;
 
-    orbit3.style.transform =
-      `
-      translate(-50%, -50%)
-      rotate(${120 - galaxyRotation * .55}deg)
-      scale(.61)
-      `;
+    const fragment =
+      document.createDocumentFragment();
 
-  }
+    for (let i = 0; i < CONFIG.flowerCount; i++) {
+      const flower =
+        document.createElement("div");
 
+      flower.className = "flower";
 
-  if (orbit4) {
-
-    orbit4.style.transform =
-      `
-      translate(-50%, -50%)
-      rotate(${210 + galaxyRotation * .38}deg)
-      scale(.44)
-      `;
-
-  }
-
-}
-
-
-/* =========================================================
-   ANIMACIÓN DE LA GALAXIA
-========================================================= */
-
-function animateGalaxy(time) {
-
-  const delta =
-    Math.min(
-      time - lastGalaxyTime,
-      40
-    );
-
-
-  lastGalaxyTime =
-    time;
-
-
-  if (!galaxyDragging) {
-
-    if (CONFIG.galaxyAutoRotate) {
-
-      galaxyRotation +=
-        CONFIG.galaxyRotationSpeed *
-        delta;
-
-    }
-
-
-    galaxyRotation +=
-      galaxyVelocity;
-
-
-    galaxyVelocity *= .94;
-
-
-    if (
-      Math.abs(galaxyVelocity) < .002
-    ) {
-
-      galaxyVelocity =
-        0;
-
-    }
-
-  }
-
-
-  applyGalaxyRotation();
-
-
-  galaxyAnimationFrame =
-    requestAnimationFrame(
-      animateGalaxy
-    );
-
-}
-
-
-/* =========================================================
-   INICIAR GALAXIA
-========================================================= */
-
-function startGalaxy() {
-
-  if (!galaxyScene)
-    return;
-
-
-  createGalaxyStars();
-
-  updateGalaxyMessages();
-
-
-  galaxyRotation =
-    0;
-
-
-  galaxyVelocity =
-    0;
-
-
-  lastGalaxyTime =
-    performance.now();
-
-
-  applyGalaxyRotation();
-
-
-  if (
-    !galaxyAnimationFrame
-  ) {
-
-    galaxyAnimationFrame =
-      requestAnimationFrame(
-        animateGalaxy
+      flower.style.setProperty(
+        "--left",
+        `${rand(2, 98)}%`
       );
 
+      flower.style.setProperty(
+        "--bottom",
+        `${rand(1, 16)}%`
+      );
+
+      flower.style.setProperty(
+        "--size",
+        `${rand(28, 58)}px`
+      );
+
+      flower.style.setProperty(
+        "--sway",
+        `${rand(2.8, 5.5)}s`
+      );
+
+      flower.style.setProperty(
+        "--delay",
+        `${rand(-5, 0)}s`
+      );
+
+      const stem =
+        document.createElement("div");
+
+      stem.className = "stem";
+
+      const leftLeaf =
+        document.createElement("div");
+
+      leftLeaf.className = "leaf left";
+
+      const rightLeaf =
+        document.createElement("div");
+
+      rightLeaf.className = "leaf right";
+
+      const head =
+        document.createElement("div");
+
+      head.className = "head";
+
+      for (let p = 0; p < 8; p++) {
+        const petal =
+          document.createElement("i");
+
+        petal.className = "petal";
+
+        head.appendChild(petal);
+      }
+
+      const center =
+        document.createElement("i");
+
+      center.className = "center";
+
+      head.appendChild(center);
+
+      flower.append(
+        stem,
+        leftLeaf,
+        rightLeaf,
+        head
+      );
+
+      fragment.appendChild(flower);
+    }
+
+    els.flowers.appendChild(fragment);
   }
 
-}
+  /* =========================================================
+     PÉTALOS VOLANDO
+  ========================================================= */
 
+  function buildPetals() {
+    if (!els.petals) return;
 
-/* =========================================================
-   DETENER GALAXIA
-========================================================= */
+    const fragment =
+      document.createDocumentFragment();
 
-function stopGalaxy() {
+    for (let i = 0; i < CONFIG.petalCount; i++) {
+      const petal =
+        document.createElement("i");
 
-  if (
-    galaxyAnimationFrame
-  ) {
+      petal.className = "petal-float";
 
-    cancelAnimationFrame(
-      galaxyAnimationFrame
-    );
+      petal.style.setProperty(
+        "--left",
+        `${rand(-5, 100)}%`
+      );
 
-    galaxyAnimationFrame =
-      null;
+      petal.style.setProperty(
+        "--top",
+        `${rand(-30, 40)}%`
+      );
 
+      petal.style.setProperty(
+        "--size",
+        `${rand(7, 16)}px`
+      );
+
+      petal.style.setProperty(
+        "--duration",
+        `${rand(9, 17)}s`
+      );
+
+      petal.style.setProperty(
+        "--delay",
+        `${rand(-18, 0)}s`
+      );
+
+      petal.style.setProperty(
+        "--drift",
+        `${rand(-120, 120)}px`
+      );
+
+      fragment.appendChild(petal);
+    }
+
+    els.petals.appendChild(fragment);
   }
 
-}
+  /* =========================================================
+     LUCIÉRNAGAS
+  ========================================================= */
 
+  function buildFireflies() {
+    if (!els.fireflies) return;
 
-/* =========================================================
-   INICIO DEL ARRASTRE
-========================================================= */
+    const fragment =
+      document.createDocumentFragment();
 
-function startGalaxyDrag(event) {
+    for (let i = 0; i < CONFIG.fireflyCount; i++) {
+      const fly =
+        document.createElement("i");
 
-  if (!galaxyScene)
-    return;
+      fly.className = "firefly";
 
+      fly.style.setProperty(
+        "--left",
+        `${rand(3, 97)}%`
+      );
 
-  galaxyDragging =
-    true;
+      fly.style.setProperty(
+        "--top",
+        `${rand(15, 88)}%`
+      );
 
+      fly.style.setProperty(
+        "--dx",
+        `${rand(-35, 35)}px`
+      );
 
-  galaxyPointerId =
-    event.pointerId;
+      fly.style.setProperty(
+        "--dy",
+        `${rand(-30, 30)}px`
+      );
 
+      fly.style.setProperty(
+        "--duration",
+        `${rand(2.5, 6)}s`
+      );
 
-  galaxyLastX =
-    event.clientX;
+      fly.style.setProperty(
+        "--delay",
+        `${rand(-6, 0)}s`
+      );
 
+      fragment.appendChild(fly);
+    }
 
-  galaxyLastY =
-    event.clientY;
-
-
-  galaxyVelocity =
-    0;
-
-
-  galaxyScene.classList.add(
-    "dragging"
-  );
-
-
-  try {
-
-    galaxyScene.setPointerCapture(
-      event.pointerId
-    );
-
-  } catch (error) {
-    // Compatibilidad móvil.
+    els.fireflies.appendChild(fragment);
   }
 
+  /* =========================================================
+     POLVO DORADO
+  ========================================================= */
 
-  createInteractionSpark(
-    event.clientX,
-    event.clientY
-  );
+  function buildDust() {
+    if (!els.goldDust) return;
 
+    const fragment =
+      document.createDocumentFragment();
 
-  event.preventDefault();
+    for (let i = 0; i < CONFIG.dustCount; i++) {
+      const dot =
+        document.createElement("i");
 
-}
+      dot.className = "dust";
 
+      dot.style.left =
+        `${rand(0, 100)}%`;
 
-/* =========================================================
-   MOVIMIENTO
-========================================================= */
+      dot.style.top =
+        `${rand(0, 100)}%`;
 
-function moveGalaxyDrag(event) {
+      dot.style.setProperty(
+        "--drift",
+        `${rand(-20, 20)}px`
+      );
 
-  if (!galaxyDragging)
-    return;
+      dot.style.setProperty(
+        "--duration",
+        `${rand(2, 6)}s`
+      );
 
+      dot.style.setProperty(
+        "--delay",
+        `${rand(-6, 0)}s`
+      );
 
-  if (
-    galaxyPointerId !==
-    event.pointerId
-  ) return;
+      fragment.appendChild(dot);
+    }
 
-
-  const deltaX =
-    event.clientX -
-    galaxyLastX;
-
-
-  const deltaY =
-    event.clientY -
-    galaxyLastY;
-
-
-  galaxyLastX =
-    event.clientX;
-
-
-  galaxyLastY =
-    event.clientY;
-
-
-  /*
-    Horizontal:
-    giro principal.
-
-    Vertical:
-    pequeña influencia
-    para que se sienta más natural.
-  */
-
-  const movement =
-    deltaX +
-    deltaY * .22;
-
-
-  galaxyRotation +=
-    movement * .48;
-
-
-  galaxyVelocity =
-    movement * .20;
-
-
-  applyGalaxyRotation();
-
-
-  /*
-    Pequeños destellos
-    durante el movimiento.
-  */
-
-  if (
-    Math.abs(movement) > 2 &&
-    Math.random() > .82
-  ) {
-
-    createInteractionSpark(
-      event.clientX,
-      event.clientY
-    );
-
+    els.goldDust.appendChild(fragment);
   }
 
+  /* =========================================================
+     CORAZÓN DE PARTÍCULAS
+  ========================================================= */
 
-  event.preventDefault();
+  function buildHeart() {
+    if (!els.particleHeart) return;
 
-}
+    const fragment =
+      document.createDocumentFragment();
 
+    for (let i = 0; i < CONFIG.heartCount; i++) {
+      const t =
+        rand(0, Math.PI * 2);
 
-/* =========================================================
-   TERMINAR ARRASTRE
-========================================================= */
+      const scale =
+        rand(0.35, 0.95);
 
-function endGalaxyDrag(event) {
+      const x =
+        16 *
+        Math.pow(Math.sin(t), 3) *
+        scale;
 
-  if (!galaxyDragging)
-    return;
+      const y =
+        -(
+          13 * Math.cos(t) -
+          5 * Math.cos(2 * t) -
+          2 * Math.cos(3 * t) -
+          Math.cos(4 * t)
+        ) *
+        scale;
 
+      const dot =
+        document.createElement("i");
 
-  if (
-    event &&
-    galaxyPointerId !==
-    event.pointerId
-  ) return;
+      dot.className = "heart-dot";
 
+      dot.style.left =
+        `${50 + x}%`;
 
-  galaxyDragging =
-    false;
+      dot.style.top =
+        `${50 + y}%`;
 
+      dot.style.setProperty(
+        "--delay",
+        `${rand(-2.5, 0)}s`
+      );
 
-  galaxyPointerId =
-    null;
+      fragment.appendChild(dot);
+    }
 
+    els.particleHeart.appendChild(fragment);
+  }
 
-  galaxyScene.classList.remove(
-    "dragging"
-  );
+  /* =========================================================
+     CONSTRUIR TODA LA ESCENA
+  ========================================================= */
 
+  function buildScene() {
+    clearGenerated();
 
-  /*
-    Limitamos la velocidad
-    para evitar que salga disparada.
-  */
+    buildFlowers();
+    buildPetals();
+    buildFireflies();
+    buildDust();
+    buildHeart();
+  }
 
-  galaxyVelocity =
-    Math.max(
-      -1.8,
-      Math.min(
-        1.8,
-        galaxyVelocity
-      )
+  /* =========================================================
+     GALAXIA
+  ========================================================= */
+
+  function setGalaxyAngle(angle) {
+    galaxyAngle = angle;
+
+    if (!els.galaxyScene) return;
+
+    els.galaxyScene.style.setProperty(
+      "--galaxy-rotation",
+      `${angle}deg`
+    );
+  }
+
+  function nextGalaxyMessage() {
+    const texts =
+      $$(".galaxy-orbit-text");
+
+    if (!texts.length) return;
+
+    const offset =
+      Math.floor(galaxyAngle / 25);
+
+    texts.forEach((node, index) => {
+      node.textContent =
+        CONFIG.galaxyMessages[
+          (
+            index +
+            offset +
+            CONFIG.galaxyMessages.length
+          ) %
+          CONFIG.galaxyMessages.length
+        ];
+    });
+  }
+
+  /* =========================================================
+     ARRASTRAR GALAXIA
+  ========================================================= */
+
+  function bindGalaxyDrag() {
+    if (!els.galaxyScene) return;
+
+    els.galaxyScene.addEventListener(
+      "pointerdown",
+      event => {
+        pointerId = event.pointerId;
+
+        pointerStartX =
+          event.clientX;
+
+        angleStart =
+          galaxyAngle;
+
+        els.galaxyScene.classList.add(
+          "dragging"
+        );
+
+        els.galaxyScene.setPointerCapture?.(
+          pointerId
+        );
+      }
     );
 
+    els.galaxyScene.addEventListener(
+      "pointermove",
+      event => {
+        if (
+          pointerId !==
+          event.pointerId
+        ) {
+          return;
+        }
 
-  try {
+        const delta =
+          event.clientX -
+          pointerStartX;
 
-    if (event) {
+        setGalaxyAngle(
+          angleStart +
+          delta * 0.45
+        );
 
-      galaxyScene.releasePointerCapture(
+        nextGalaxyMessage();
+      }
+    );
+
+    const endDrag = event => {
+      if (
+        pointerId !==
         event.pointerId
+      ) {
+        return;
+      }
+
+      pointerId = null;
+
+      els.galaxyScene.classList.remove(
+        "dragging"
       );
+    };
 
-    }
+    els.galaxyScene.addEventListener(
+      "pointerup",
+      endDrag
+    );
 
-  } catch (error) {
-    // Nada que hacer.
-  }
+    els.galaxyScene.addEventListener(
+      "pointercancel",
+      endDrag
+    );
 
-}
+    els.galaxyScene.addEventListener(
+      "lostpointercapture",
+      () => {
+        pointerId = null;
 
-
-/* =========================================================
-   EVENTOS DE GALAXIA
-========================================================= */
-
-function setupGalaxyControls() {
-
-  if (!galaxyScene)
-    return;
-
-
-  galaxyScene.addEventListener(
-    "pointerdown",
-    startGalaxyDrag
-  );
-
-
-  galaxyScene.addEventListener(
-    "pointermove",
-    moveGalaxyDrag,
-    {
-      passive: false
-    }
-  );
-
-
-  galaxyScene.addEventListener(
-    "pointerup",
-    endGalaxyDrag
-  );
-
-
-  galaxyScene.addEventListener(
-    "pointercancel",
-    endGalaxyDrag
-  );
-
-
-  galaxyScene.addEventListener(
-    "pointerleave",
-    (event) => {
-
-      if (
-        galaxyDragging &&
-        event.pointerType === "mouse"
-      ) {
-
-        endGalaxyDrag(event);
-
+        els.galaxyScene.classList.remove(
+          "dragging"
+        );
       }
-
-    }
-  );
-
-
-  /*
-    Evita que el navegador
-    intente seleccionar texto
-    o desplazar la página
-    mientras se arrastra.
-  */
-
-  galaxyScene.addEventListener(
-    "dragstart",
-    event => event.preventDefault()
-  );
-
-}
-
-
-/* =========================================================
-   ESCENA COMPLETA
-========================================================= */
-
-function buildScene() {
-
-  if (flowers)
-    flowers.innerHTML = "";
-
-
-  if (petals)
-    petals.innerHTML = "";
-
-
-  if (fireflies)
-    fireflies.innerHTML = "";
-
-
-  for (
-    let i = 0;
-    i < CONFIG.flowerCount;
-    i++
-  ) {
-
-    createFlower(i);
-
+    );
   }
 
+  /* =========================================================
+     MOSTRAR JARDÍN
+  ========================================================= */
 
-  createPetals();
+  function showGarden() {
+    if (started) return;
 
-  createFireflies();
+    started = true;
 
-  createGoldDust();
+    buildScene();
 
-  createParticleHeart();
+    els.intro.classList.add("hide");
 
-  createGalaxyStars();
+    els.garden.classList.add("show");
 
-  updateGalaxyMessages();
+    els.garden.setAttribute(
+      "aria-hidden",
+      "false"
+    );
 
-}
+    clearTimeout(hintTimer);
 
+    hintTimer =
+      window.setTimeout(() => {
+        if (els.galaxyHint) {
+          els.galaxyHint.style.opacity =
+            "0";
+        }
+      }, 5000);
+  }
 
-/* =========================================================
-   ABRIR SORPRESA
-========================================================= */
+  /* =========================================================
+     VER DE NUEVO
+  ========================================================= */
 
-function openSurprise() {
+  function replay() {
+    started = false;
 
-  if (!intro || !garden)
-    return;
+    closeLetter();
 
+    clearTimeout(hintTimer);
 
-  intro.classList.add(
-    "hide"
-  );
+    if (els.galaxyHint) {
+      els.galaxyHint.style.opacity = "";
+    }
 
+    els.garden.classList.remove("show");
 
-  garden.classList.add(
-    "show"
-  );
+    els.garden.setAttribute(
+      "aria-hidden",
+      "true"
+    );
 
+    els.intro.classList.remove("hide");
 
-  garden.setAttribute(
-    "aria-hidden",
-    "false"
-  );
+    setGalaxyAngle(0);
 
+    nextGalaxyMessage();
 
-  buildScene();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
 
-  startGalaxy();
+  /* =========================================================
+     CARTA
+  ========================================================= */
 
-}
+  function openLetter() {
+    if (!els.letterOverlay) return;
 
+    els.letterOverlay.classList.add(
+      "open"
+    );
 
-/* =========================================================
-   CARTA
-========================================================= */
+    els.letterOverlay.setAttribute(
+      "aria-hidden",
+      "false"
+    );
 
-function openLetter() {
+    document.body.style.overflow =
+      "hidden";
 
-  if (!letterOverlay)
-    return;
+    if (els.closeLetter) {
+      els.closeLetter.focus();
+    }
+  }
 
+  function closeLetter() {
+    if (!els.letterOverlay) return;
 
-  letterOverlay.classList.add(
-    "open"
-  );
+    els.letterOverlay.classList.remove(
+      "open"
+    );
 
+    els.letterOverlay.setAttribute(
+      "aria-hidden",
+      "true"
+    );
 
-  letterOverlay.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-}
-
-
-function closeLetter() {
-
-  if (!letterOverlay)
-    return;
-
-
-  letterOverlay.classList.remove(
-    "open"
-  );
-
-
-  letterOverlay.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-}
-
-
-/* =========================================================
-   REPETIR
-========================================================= */
-
-function replay() {
-
-  closeLetter();
-
-  stopGalaxy();
-
-
-  if (!intro || !garden)
-    return;
-
-
-  garden.classList.remove(
-    "show"
-  );
-
-
-  intro.classList.remove(
-    "hide"
-  );
-
-
-  garden.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  galaxyRotation =
-    0;
-
-
-  galaxyVelocity =
-    0;
-
-
-  window.setTimeout(
-    buildScene,
-    500
-  );
-
-}
-
-
-/* =========================================================
-   BOTONES
-========================================================= */
-
-const openButton =
-  $("openBtn");
-
-
-const replayButton =
-  $("replayBtn");
-
-
-const letterButton =
-  $("letterBtn");
-
-
-const closeLetterButton =
-  $("closeLetter");
-
-
-if (openButton) {
-
-  openButton.addEventListener(
-    "click",
-    openSurprise
-  );
-
-}
-
-
-if (replayButton) {
-
-  replayButton.addEventListener(
-    "click",
-    replay
-  );
-
-}
-
-
-if (letterButton) {
-
-  letterButton.addEventListener(
-    "click",
-    openLetter
-  );
-
-}
-
-
-if (closeLetterButton) {
-
-  closeLetterButton.addEventListener(
-    "click",
-    closeLetter
-  );
-
-}
-
-
-/* =========================================================
-   CERRAR CARTA AL TOCAR FUERA
-========================================================= */
-
-if (letterOverlay) {
-
-  letterOverlay.addEventListener(
-    "click",
-    event => {
-
-      if (
-        event.target ===
-        letterOverlay
-      ) {
-
-        closeLetter();
-
+    document.body.style.overflow = "";
+  }
+
+  /* =========================================================
+     EVENTOS
+  ========================================================= */
+
+  function bindEvents() {
+    els.openBtn?.addEventListener(
+      "click",
+      showGarden
+    );
+
+    els.replayBtn?.addEventListener(
+      "click",
+      replay
+    );
+
+    els.letterBtn?.addEventListener(
+      "click",
+      openLetter
+    );
+
+    els.closeLetter?.addEventListener(
+      "click",
+      closeLetter
+    );
+
+    els.letterOverlay?.addEventListener(
+      "click",
+      event => {
+        if (
+          event.target ===
+          els.letterOverlay
+        ) {
+          closeLetter();
+        }
       }
+    );
 
-    }
-  );
+    document.addEventListener(
+      "keydown",
+      event => {
+        if (
+          event.key ===
+          "Escape"
+        ) {
+          closeLetter();
+        }
+      }
+    );
 
-}
-
-
-/* =========================================================
-   ESCAPE
-========================================================= */
-
-document.addEventListener(
-  "keydown",
-  event => {
-
-    if (
-      event.key ===
-      "Escape"
-    ) {
-
-      closeLetter();
-
-    }
-
+    bindGalaxyDrag();
   }
-);
 
+  /* =========================================================
+     INICIAR
+  ========================================================= */
 
-/* =========================================================
-   CAMBIO DE TAMAÑO
-========================================================= */
+  applyConfig();
+  bindEvents();
 
-window.addEventListener(
-  "resize",
-  () => {
-
-    if (
-      garden &&
-      garden.classList.contains("show")
-    ) {
-
-      createGalaxyStars();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   INICIALIZACIÓN
-========================================================= */
-
-setupGalaxyControls();
-
-buildScene();
+})();
