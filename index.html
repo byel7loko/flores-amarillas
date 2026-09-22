@@ -3,48 +3,207 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#07130d">
+  <meta name="theme-color" content="#050300">
   <meta name="description" content="Una sorpresa especial con flores amarillas.">
-  <title>Una sorpresa para ti 🌼</title>
+  <title>Feliz Día de las Flores Amarillas 🌻</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <main class="scene" id="scene">
-    <div class="stars" aria-hidden="true"></div>
-    <div class="glow glow-1" aria-hidden="true"></div>
-    <div class="glow glow-2" aria-hidden="true"></div>
 
-    <section class="intro" id="intro" aria-label="Sorpresa">
-      <p class="eyebrow">TENGO ALGO PARA TI</p>
-      <h1 id="introTitle">Una pequeña sorpresa 🌼</h1>
-      <p id="introText">Entra y mira lo que preparé para ti.</p>
-      <button class="open-btn" id="openBtn">Abrir sorpresa</button>
-      <p class="hint">Toca el botón para comenzar</p>
-    </section>
+<main class="scene" id="scene">
 
-    <section class="garden" id="garden" aria-hidden="true">
-      <div class="moon"></div>
-      <div class="cloud cloud-a"></div>
-      <div class="cloud cloud-b"></div>
+  <!-- Fondo -->
+  <div class="stars" aria-hidden="true"></div>
+  <div class="gold-dust" id="goldDust" aria-hidden="true"></div>
 
-      <div class="message-card" id="messageCard">
-        <span class="mini-flower">🌼</span>
-        <p class="card-kicker">PARA TI</p>
-        <h2 id="messageTitle">Flores amarillas para alegrarte el día</h2>
-        <p id="messageBody">Que cada flor represente un momento bonito, una sonrisa y un recuerdo que quieras guardar.</p>
-        <button class="replay-btn" id="replayBtn">Ver de nuevo</button>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="glow glow-3"></div>
+
+  <!-- PANTALLA INICIAL -->
+  <section class="intro" id="intro">
+
+    <div class="intro-flower" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <b></b>
+    </div>
+
+    <p class="intro-small">🌻 UNA SORPRESA PARA la niña que mas amo🌻</p>
+
+    <h1 id="introTitle">
+      Feliz Día de las<br>
+      Flores Amarillas
+    </h1>
+
+    <p id="introText">
+      Preparé algo especial para ti
+    </p>
+
+    <button class="open-btn" id="openBtn">
+      <span>🌻</span>
+      Toca para iniciar
+    </button>
+
+    <p class="hint">
+      ✨ Toca la pantalla para descubrirlo ✨
+    </p>
+
+  </section>
+
+
+  <!-- JARDÍN -->
+  <section class="garden" id="garden" aria-hidden="true">
+
+    <div class="moon"></div>
+
+    <div class="sun-glow"></div>
+
+    <!-- Frases decorativas -->
+    <div class="floating-text text-1">Para ti 💛</div>
+    <div class="floating-text text-2">Con mucho cariño</div>
+    <div class="floating-text text-3">Flores amarillas 🌻</div>
+    <div class="floating-text text-4">Que nunca falten sonrisas</div>
+    <div class="floating-text text-5">Un pequeño detalle</div>
+    <div class="floating-text text-6">Porque te lo mereces ✨</div>
+    <div class="floating-text text-7">Feliz día 🌼</div>
+    <div class="floating-text text-8">Siempre hay algo bonito</div>
+
+    <!-- Título principal -->
+    <div class="hero-message">
+
+      <div class="spark-line">
+        ✦　✧　✦　✧　✦
       </div>
 
-      <div class="ground" aria-hidden="true"></div>
-      <div class="flowers" id="flowers" aria-hidden="true"></div>
-      <div class="petals" id="petals" aria-hidden="true"></div>
-      <div class="fireflies" id="fireflies" aria-hidden="true"></div>
+      <p class="hero-kicker">
+        PARA ALGUIEN ESPECIAL
+      </p>
 
-      <p class="footer-note" id="footerNote">Hecho especialmente para ti ✨</p>
-    </section>
-  </main>
+      <h2>
+        Feliz Día de las<br>
+        <strong>Flores Amarillas</strong> 🌻
+      </h2>
 
-  <noscript>Esta página necesita JavaScript para mostrar la animación.</noscript>
-  <script src="script.js"></script>
+      <p>
+        Que este pequeño detalle te recuerde
+        lo especial que eres.
+      </p>
+
+    </div>
+
+
+    <!-- Corazón formado por flores/partículas -->
+    <div class="heart" aria-hidden="true">
+
+      <span class="heart-particle p1">✦</span>
+      <span class="heart-particle p2">✦</span>
+      <span class="heart-particle p3">•</span>
+      <span class="heart-particle p4">✦</span>
+      <span class="heart-particle p5">•</span>
+      <span class="heart-particle p6">✦</span>
+      <span class="heart-particle p7">•</span>
+      <span class="heart-particle p8">✦</span>
+      <span class="heart-particle p9">•</span>
+      <span class="heart-particle p10">✦</span>
+      <span class="heart-particle p11">•</span>
+      <span class="heart-particle p12">✦</span>
+
+    </div>
+
+
+    <!-- Campo -->
+    <div class="ground"></div>
+
+    <!-- Flores generadas por JS -->
+    <div class="flowers" id="flowers"></div>
+
+    <!-- Pétalos -->
+    <div class="petals" id="petals"></div>
+
+    <!-- Luciérnagas -->
+    <div class="fireflies" id="fireflies"></div>
+
+
+    <!-- BOTÓN DE CARTA -->
+    <button
+      class="letter-button"
+      id="letterBtn"
+      aria-label="Abrir carta">
+      💌
+    </button>
+
+
+    <!-- CARTA -->
+    <div class="letter-overlay" id="letterOverlay">
+
+      <div class="letter-card">
+
+        <button
+          class="close-letter"
+          id="closeLetter"
+          aria-label="Cerrar">
+          ×
+        </button>
+
+        <div class="letter-flower">🌻</div>
+
+        <p class="letter-kicker">
+          UNA CARTITA PARA TI
+        </p>
+
+        <h3>Para ti mi niña 💛</h3>
+
+        <div class="letter-line"></div>
+
+        <p class="letter-text">
+          Hoy quería regalarte algo diferente.
+          Tal vez unas flores no puedan decir
+          todo lo que quisiera, pero sí pueden
+          recordarte que hay momentos bonitos
+          que merecen ser guardados.
+        </p>
+
+        <p class="letter-text">
+          Espero que cada vez que veas una flor
+          amarilla recuerdes que alguien quiso
+          hacerte sonreír y no olvides lo mucho 
+          que te amo y lo mucho que te aprecio 
+          Mi rosyta de ojos preciosos. 
+        </p>
+
+        <p class="letter-sign">
+          Con mucho cariño para ti✨
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- REINICIAR -->
+    <button class="replay-btn" id="replayBtn">
+      ↻ Ver de nuevo
+    </button>
+
+    <p class="footer-note" id="footerNote">
+      Hecho especialmente para ti ✨
+    </p>
+
+  </section>
+
+</main>
+
+<noscript>
+  Esta página necesita JavaScript para mostrar la animación.
+</noscript>
+
+<script src="script.js"></script>
+
 </body>
 </html>
