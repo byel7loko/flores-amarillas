@@ -317,15 +317,8 @@ function createPetals() {
     el.className =
       "petal-float";
 
-
-    /*
-      Algunos pétalos nacen cerca
-      de las flores para dar variedad.
-    */
-
     const fromFlower =
       Math.random() < 0.25;
-
 
     if (fromFlower) {
 
@@ -347,53 +340,34 @@ function createPetals() {
 
     }
 
-
-    /* Posición horizontal */
-
     el.style.setProperty(
       "--left",
       `${rand(0, 100)}%`
     );
-
-
-    /* Duración */
 
     el.style.setProperty(
       "--duration",
       `${rand(10, 18).toFixed(1)}s`
     );
 
-
-    /* Inicio aleatorio */
-
     el.style.setProperty(
       "--delay",
       `${rand(-18, 0).toFixed(1)}s`
     );
-
-
-    /* Movimiento lateral */
 
     el.style.setProperty(
       "--drift",
       `${rand(-180, 180).toFixed(0)}px`
     );
 
-
-    /* Tamaño */
-
     el.style.setProperty(
       "--size",
       `${rand(9, 17).toFixed(0)}px`
     );
 
-
     petals.appendChild(el);
-
   }
-
-}
-
+       }
 /* =========================================================
    LUCIÉRNAGAS
 ========================================================= */
