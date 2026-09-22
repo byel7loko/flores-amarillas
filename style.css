@@ -1576,7 +1576,6 @@ button {
   .letter-button {
     right: 15px;
     bottom: 48px;
-
     width: 52px;
     height: 52px;
   }
@@ -1584,7 +1583,6 @@ button {
   .letter-card {
     width: 92vw;
     max-height: 80vh;
-
     padding:
       30px
       21px
@@ -1617,4 +1615,4 @@ button {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
+    }
