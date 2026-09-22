@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
 
@@ -25,24 +26,30 @@
 
 <body>
 
-  <!-- =====================================================
-       ESCENA PRINCIPAL
-  ====================================================== -->
-
   <main class="scene" id="scene">
 
-    <!-- Fondo -->
+    <!-- =================================================
+         ESPACIO
+    ================================================== -->
+
     <div class="stars" aria-hidden="true"></div>
-    <div class="gold-dust" id="goldDust" aria-hidden="true"></div>
+    <div class="stars stars-2" aria-hidden="true"></div>
+    <div class="stars stars-3" aria-hidden="true"></div>
 
-    <div class="glow glow-1" aria-hidden="true"></div>
-    <div class="glow glow-2" aria-hidden="true"></div>
-    <div class="glow glow-3" aria-hidden="true"></div>
+    <div
+      class="gold-dust"
+      id="goldDust"
+      aria-hidden="true"
+    ></div>
+
+    <div class="space-glow glow-1"></div>
+    <div class="space-glow glow-2"></div>
+    <div class="space-glow glow-3"></div>
 
 
-    <!-- ===================================================
+    <!-- =================================================
          INTRO
-    ==================================================== -->
+    ================================================== -->
 
     <section class="intro" id="intro">
 
@@ -85,9 +92,9 @@
     </section>
 
 
-    <!-- ===================================================
-         JARDÍN / GALAXIA
-    ==================================================== -->
+    <!-- =================================================
+         JARDÍN
+    ================================================== -->
 
     <section
       class="garden"
@@ -95,27 +102,17 @@
       aria-hidden="true"
     >
 
-      <!-- Fondo espacial -->
-      <div class="moon" aria-hidden="true"></div>
+      <!-- Universo infinito -->
+      <div class="universe" aria-hidden="true"></div>
 
-      <div
-        class="sun-glow"
-        aria-hidden="true"
-      ></div>
+      <div class="nebula nebula-1"></div>
+      <div class="nebula nebula-2"></div>
+      <div class="nebula nebula-3"></div>
 
-      <div
-        class="galaxy-stars"
-        aria-hidden="true"
-      ></div>
-
-      <div
-        class="galaxy-nebula"
-        aria-hidden="true"
-      ></div>
-
+      <div class="moon"></div>
 
       <!-- =================================================
-           GALAXIA INTERACTIVA
+           GALAXIA
       ================================================== -->
 
       <div
@@ -126,16 +123,11 @@
         <div
           class="galaxy-scene"
           id="galaxyScene"
-          aria-label="Galaxia de flores amarillas"
         >
 
-          <!-- Centro -->
           <div class="galaxy-core">
 
-            <div
-              class="core-glow"
-              aria-hidden="true"
-            ></div>
+            <div class="core-glow"></div>
 
             <div class="core-ring">
               <span>🌻</span>
@@ -144,9 +136,9 @@
           </div>
 
 
-          <!-- Órbita 1 -->
-          <div class="orbit orbit-1">
+          <!-- ÓRBITA 1 -->
 
+          <div class="orbit orbit-1">
             <div class="orbit-ring"></div>
 
             <div class="sunflower">
@@ -156,13 +148,12 @@
             <div class="galaxy-orbit-text">
               Para ti 💛
             </div>
-
           </div>
 
 
-          <!-- Órbita 2 -->
-          <div class="orbit orbit-2">
+          <!-- ÓRBITA 2 -->
 
+          <div class="orbit orbit-2">
             <div class="orbit-ring"></div>
 
             <div class="sunflower">
@@ -172,13 +163,12 @@
             <div class="galaxy-orbit-text">
               Siempre ✨
             </div>
-
           </div>
 
 
-          <!-- Órbita 3 -->
-          <div class="orbit orbit-3">
+          <!-- ÓRBITA 3 -->
 
+          <div class="orbit orbit-3">
             <div class="orbit-ring"></div>
 
             <div class="sunflower">
@@ -188,13 +178,12 @@
             <div class="galaxy-orbit-text">
               Con cariño 💛
             </div>
-
           </div>
 
 
-          <!-- Órbita 4 -->
-          <div class="orbit orbit-4">
+          <!-- ÓRBITA 4 -->
 
+          <div class="orbit orbit-4">
             <div class="orbit-ring"></div>
 
             <div class="sunflower">
@@ -204,11 +193,11 @@
             <div class="galaxy-orbit-text">
               Para hacerte sonreír
             </div>
-
           </div>
 
 
-          <!-- Estrellas alrededor -->
+          <!-- ESTRELLAS -->
+
           <div class="floating-star star-1">✦</div>
           <div class="floating-star star-2">✧</div>
           <div class="floating-star star-3">✦</div>
@@ -219,6 +208,8 @@
           <div class="floating-star star-8">✦</div>
           <div class="floating-star star-9">·</div>
           <div class="floating-star star-10">✧</div>
+          <div class="floating-star star-11">✦</div>
+          <div class="floating-star star-12">✧</div>
 
         </div>
 
@@ -226,7 +217,7 @@
 
 
       <!-- =================================================
-           INDICADOR DE INTERACCIÓN
+           MENSAJE GALAXIA
       ================================================== -->
 
       <div
@@ -289,6 +280,22 @@
         Para hacerte sonreír
       </div>
 
+      <div class="floating-text text-13">
+        🌻 Un poquito de felicidad
+      </div>
+
+      <div class="floating-text text-14">
+        Que tu día brille ✨
+      </div>
+
+      <div class="floating-text text-15">
+        Siempre habrá flores para ti 💛
+      </div>
+
+      <div class="floating-text text-16">
+        Sonríe 🌼
+      </div>
+
 
       <!-- =================================================
            MENSAJE CENTRAL
@@ -318,19 +325,8 @@
 
 
       <!-- =================================================
-           ELEMENTOS DE ANIMACIÓN
+           FLORES
       ================================================== -->
-
-      <div
-        class="particle-heart"
-        id="particleHeart"
-        aria-hidden="true"
-      ></div>
-
-      <div
-        class="ground"
-        aria-hidden="true"
-      ></div>
 
       <div
         class="flowers"
@@ -338,11 +334,21 @@
         aria-hidden="true"
       ></div>
 
+
+      <!-- =================================================
+           PÉTALOS
+      ================================================== -->
+
       <div
         class="petals"
         id="petals"
         aria-hidden="true"
       ></div>
+
+
+      <!-- =================================================
+           LUCIÉRNAGAS
+      ================================================== -->
 
       <div
         class="fireflies"
@@ -352,7 +358,18 @@
 
 
       <!-- =================================================
-           BOTÓN DE CARTA
+           PARTÍCULAS
+      ================================================== -->
+
+      <div
+        class="particle-heart"
+        id="particleHeart"
+        aria-hidden="true"
+      ></div>
+
+
+      <!-- =================================================
+           BOTÓN CARTA
       ================================================== -->
 
       <button
@@ -430,7 +447,7 @@
 
 
       <!-- =================================================
-           BOTÓN REPETIR
+           REPETIR
       ================================================== -->
 
       <button
@@ -454,18 +471,10 @@
   </main>
 
 
-  <!-- =====================================================
-       MENSAJE SIN JAVASCRIPT
-  ====================================================== -->
-
   <noscript>
     Esta página necesita JavaScript para mostrar la animación.
   </noscript>
 
-
-  <!-- =====================================================
-       JAVASCRIPT
-  ====================================================== -->
 
   <script src="script.js"></script>
 
