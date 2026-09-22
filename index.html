@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+
   <meta charset="utf-8">
 
   <meta
@@ -22,17 +23,23 @@
   <title>Feliz Día de las Flores Amarillas 🌻</title>
 
   <link rel="stylesheet" href="style.css">
+
 </head>
+
 
 <body>
 
 <main class="scene" id="scene">
 
+
   <!-- =========================
        FONDO
   ========================== -->
 
-  <div class="stars" aria-hidden="true"></div>
+  <div
+    class="stars"
+    aria-hidden="true">
+  </div>
 
   <div
     class="gold-dust"
@@ -45,6 +52,7 @@
   <div class="glow glow-3"></div>
 
 
+
   <!-- =========================
        INTRO
   ========================== -->
@@ -54,7 +62,10 @@
     id="intro"
   >
 
-    <div class="intro-flower" aria-hidden="true">
+    <div
+      class="intro-flower"
+      aria-hidden="true"
+    >
 
       <span></span>
       <span></span>
@@ -117,7 +128,7 @@
 
 
   <!-- =========================
-       JARDÍN
+       JARDÍN / GALAXIA
   ========================== -->
 
   <section
@@ -126,7 +137,10 @@
     aria-hidden="true"
   >
 
-    <!-- Luna -->
+
+    <!-- =========================
+         LUNA
+    ========================== -->
 
     <div
       class="moon"
@@ -134,12 +148,170 @@
     </div>
 
 
-    <!-- Resplandor -->
+    <!-- =========================
+         RESPLANDOR
+    ========================== -->
 
     <div
       class="sun-glow"
       aria-hidden="true">
     </div>
+
+
+
+    <!-- =========================
+         GALAXIA
+    ========================== -->
+
+    <div
+      class="galaxy-stars"
+      aria-hidden="true">
+    </div>
+
+
+    <div
+      class="galaxy-nebula"
+      aria-hidden="true">
+    </div>
+
+
+    <div
+      class="galaxy-scene"
+      id="galaxyScene"
+    >
+
+
+      <!-- =========================
+           CENTRO
+      ========================== -->
+
+      <div class="galaxy-core">
+
+        <div class="core-glow"></div>
+
+        <span>
+          🌻
+        </span>
+
+      </div>
+
+
+
+      <!-- =========================
+           ÓRBITA 1
+      ========================== -->
+
+      <div class="orbit orbit-1">
+
+        <div class="sunflower">
+          🌻
+        </div>
+
+        <div class="galaxy-orbit-text">
+          Para ti 💛
+        </div>
+
+      </div>
+
+
+
+      <!-- =========================
+           ÓRBITA 2
+      ========================== -->
+
+      <div class="orbit orbit-2">
+
+        <div class="sunflower">
+          🌻
+        </div>
+
+        <div class="galaxy-orbit-text">
+          Eres mi pequeño universo ✨
+        </div>
+
+      </div>
+
+
+
+      <!-- =========================
+           ÓRBITA 3
+      ========================== -->
+
+      <div class="orbit orbit-3">
+
+        <div class="sunflower">
+          🌻
+        </div>
+
+        <div class="galaxy-orbit-text">
+          Contigo todo brilla 💛
+        </div>
+
+      </div>
+
+
+
+      <!-- =========================
+           ÓRBITA 4
+      ========================== -->
+
+      <div class="orbit orbit-4">
+
+        <div class="sunflower">
+          🌻
+        </div>
+
+        <div class="galaxy-orbit-text">
+          Siempre florecerá algo bonito 🌼
+        </div>
+
+      </div>
+
+
+
+      <!-- =========================
+           ESTRELLAS
+      ========================== -->
+
+      <div class="floating-star star-1">
+        ✦
+      </div>
+
+      <div class="floating-star star-2">
+        ✧
+      </div>
+
+      <div class="floating-star star-3">
+        ✦
+      </div>
+
+      <div class="floating-star star-4">
+        ·
+      </div>
+
+      <div class="floating-star star-5">
+        ✧
+      </div>
+
+      <div class="floating-star star-6">
+        ✦
+      </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         INDICACIÓN
+    ========================== -->
+
+    <div class="galaxy-message">
+
+      ✨ Gira la galaxia ✨
+
+    </div>
+
 
 
     <!-- =========================
@@ -195,8 +367,9 @@
     </div>
 
 
+
     <!-- =========================
-         MENSAJE
+         MENSAJE PRINCIPAL
     ========================== -->
 
     <div class="hero-message">
@@ -232,6 +405,7 @@
     </div>
 
 
+
     <!-- =========================
          CORAZÓN DE PARTÍCULAS
     ========================== -->
@@ -241,6 +415,7 @@
       id="particleHeart"
       aria-hidden="true">
     </div>
+
 
 
     <!-- =========================
@@ -253,6 +428,7 @@
     </div>
 
 
+
     <!-- =========================
          FLORES
     ========================== -->
@@ -263,7 +439,10 @@
     </div>
 
 
-    <!-- Pétalos -->
+
+    <!-- =========================
+         PÉTALOS
+    ========================== -->
 
     <div
       class="petals"
@@ -271,12 +450,16 @@
     </div>
 
 
-    <!-- Luciérnagas -->
+
+    <!-- =========================
+         LUCIÉRNAGAS
+    ========================== -->
 
     <div
       class="fireflies"
       id="fireflies">
     </div>
+
 
 
     <!-- =========================
@@ -295,6 +478,11 @@
     </button>
 
 
+
+    <!-- =========================
+         CARTA ABIERTA
+    ========================== -->
+
     <div
       class="letter-overlay"
       id="letterOverlay"
@@ -303,13 +491,16 @@
 
       <div class="letter-card">
 
+
         <button
           class="close-letter"
           id="closeLetter"
           type="button"
           aria-label="Cerrar carta"
         >
+
           ×
+
         </button>
 
 
@@ -359,9 +550,11 @@
 
         </p>
 
+
       </div>
 
     </div>
+
 
 
     <!-- =========================
@@ -379,24 +572,47 @@
     </button>
 
 
+
+    <!-- =========================
+         PIE
+    ========================== -->
+
     <p
       class="footer-note"
       id="footerNote"
     >
+
       Hecho especialmente para ti ✨
+
     </p>
+
 
   </section>
 
 </main>
 
 
+
+<!-- =========================
+     SIN JAVASCRIPT
+========================= -->
+
 <noscript>
-  Esta página necesita JavaScript para mostrar la animación.
+
+  Esta página necesita JavaScript
+  para mostrar la animación.
+
 </noscript>
 
 
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
 <script src="script.js"></script>
 
+
 </body>
+
   </html>
