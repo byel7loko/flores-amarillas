@@ -28,7 +28,7 @@ const CONFIG = {
 
   flowerCount: 22,
 
-  petalCount: 38,
+  petalCount: 45,
 
   fireflyCount: 55,
 
@@ -295,7 +295,7 @@ function createFlower(index) {
 
 
 /* =========================================================
-   PÉTALOS
+   🌼 PÉTALOS
 ========================================================= */
 
 function createPetals() {
@@ -303,6 +303,7 @@ function createPetals() {
   if (!petals)
     return;
 
+  petals.innerHTML = "";
 
   for (
     let i = 0;
@@ -313,10 +314,41 @@ function createPetals() {
     const el =
       document.createElement("i");
 
-
     el.className =
       "petal-float";
 
+
+    /*
+      Algunos pétalos nacen cerca
+      de las flores para dar variedad.
+    */
+
+    const fromFlower =
+      Math.random() < 0.25;
+
+
+    if (fromFlower) {
+
+      el.classList.add(
+        "from-flower"
+      );
+
+      el.style.setProperty(
+        "--top",
+        `${rand(58, 78)}%`
+      );
+
+    } else {
+
+      el.style.setProperty(
+        "--top",
+        `${rand(-15, 5)}vh`
+      );
+
+    }
+
+
+    /* Posición horizontal */
 
     el.style.setProperty(
       "--left",
@@ -324,27 +356,35 @@ function createPetals() {
     );
 
 
+    /* Duración */
+
     el.style.setProperty(
       "--duration",
-      `${rand(8, 16).toFixed(1)}s`
+      `${rand(10, 18).toFixed(1)}s`
     );
 
+
+    /* Inicio aleatorio */
 
     el.style.setProperty(
       "--delay",
-      `${rand(-15, 0).toFixed(1)}s`
+      `${rand(-18, 0).toFixed(1)}s`
     );
 
+
+    /* Movimiento lateral */
 
     el.style.setProperty(
       "--drift",
-      `${rand(-160, 160).toFixed(0)}px`
+      `${rand(-180, 180).toFixed(0)}px`
     );
 
 
+    /* Tamaño */
+
     el.style.setProperty(
       "--size",
-      `${rand(8, 16).toFixed(0)}px`
+      `${rand(9, 17).toFixed(0)}px`
     );
 
 
@@ -353,7 +393,6 @@ function createPetals() {
   }
 
 }
-
 
 /* =========================================================
    LUCIÉRNAGAS
