@@ -1707,6 +1707,116 @@ button {
       translate3d(
         var(--drift),
         115vh,
+/* =========================================================
+   🌼 PÉTALOS VOLANDO — NATURALES
+========================================================= */
+
+.petals {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.petal-float {
+  position: absolute;
+
+  left: var(--left);
+  top: var(--top);
+
+  width: var(--size);
+  height: calc(var(--size) * 1.55);
+
+  border-radius: 80% 20% 80% 20%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff06a,
+      #f4b000
+    );
+
+  opacity: 0;
+
+  filter:
+    drop-shadow(
+      0 0 5px
+      rgba(255,210,50,.35)
+    );
+
+  transform-origin: center;
+
+  animation:
+    petalFall
+    var(--duration)
+    ease-in-out
+    var(--delay)
+    infinite;
+}
+
+
+/* =========================================================
+   🌬️ PÉTALOS QUE CAEN DESDE ARRIBA
+========================================================= */
+
+@keyframes petalFall {
+
+  0% {
+    transform:
+      translate3d(
+        0,
+        -15vh,
+        0
+      )
+      rotate(0deg)
+      scale(.75);
+
+    opacity: 0;
+  }
+
+  8% {
+    opacity: .85;
+  }
+
+  25% {
+    transform:
+      translate3d(
+        calc(var(--drift) * .25),
+        25vh,
+        0
+      )
+      rotate(100deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translate3d(
+        calc(var(--drift) * -.35),
+        55vh,
+        0
+      )
+      rotate(210deg)
+      scale(.95);
+  }
+
+  75% {
+    transform:
+      translate3d(
+        calc(var(--drift) * .55),
+        82vh,
+        0
+      )
+      rotate(300deg)
+      scale(.9);
+  }
+
+  100% {
+    transform:
+      translate3d(
+        var(--drift),
+        115vh,
         0
       )
       rotate(430deg)
